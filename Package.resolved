@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "SAKBase",
+        "repositoryURL": "git@github.com:glorysaber/SAKBase.git",
+        "state": {
+          "branch": "develop",
+          "revision": "957aec971ca4405898c637211e803e4bd2e290a9",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
