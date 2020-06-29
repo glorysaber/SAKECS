@@ -721,8 +721,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "git@github.com:glorysaber/SAKBase.git";
 			requirement = {
-				branch = develop;
-				kind = branch;
+				kind = upToNextMinorVersion;
+				minimumVersion = "0.0.1-rc.2";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
