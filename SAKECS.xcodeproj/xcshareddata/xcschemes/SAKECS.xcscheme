@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1130"
+   LastUpgradeVersion = "1200"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CC86A9A724AA652800D06E0D"
+               BlueprintIdentifier = "CC4AA26424AA816C0025C805"
                BuildableName = "SAKECS.framework"
                BlueprintName = "SAKECS"
                ReferencedContainer = "container:SAKECS.xcodeproj">
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CCC1C19923D78B2E0027CD2B"
+               BlueprintIdentifier = "CC4AA26C24AA816C0025C805"
                BuildableName = "SAKECSTests.xctest"
                BlueprintName = "SAKECSTests"
                ReferencedContainer = "container:SAKECS.xcodeproj">
@@ -60,7 +60,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CC86A9A724AA652800D06E0D"
+            BlueprintIdentifier = "CC4AA26424AA816C0025C805"
             BuildableName = "SAKECS.framework"
             BlueprintName = "SAKECS"
             ReferencedContainer = "container:SAKECS.xcodeproj">

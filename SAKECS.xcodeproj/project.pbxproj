@@ -22,6 +22,20 @@
 		CC4AA28A24AA81BF0025C805 /* EntitySystem + Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16423D78B0E0027CD2B /* EntitySystem + Tags.swift */; };
 		CC4AA28B24AA81BF0025C805 /* EntitySystem + RawRepresentableTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16723D78B0E0027CD2B /* EntitySystem + RawRepresentableTags.swift */; };
 		CC4AA28D24AA81FB0025C805 /* SAKBase in Frameworks */ = {isa = PBXBuildFile; productRef = CC4AA28C24AA81FB0025C805 /* SAKBase */; };
+		CC4AA28E24AA865E0025C805 /* MetaEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17023D78B0E0027CD2B /* MetaEntity.swift */; };
+		CC4AA28F24AA865E0025C805 /* MetaEntity + Sythesized.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16E23D78B0E0027CD2B /* MetaEntity + Sythesized.swift */; };
+		CC4AA29024AA865E0025C805 /* MetaEntity+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17123D78B0E0027CD2B /* MetaEntity+Components.swift */; };
+		CC4AA29124AA865E0025C805 /* MetaEntity + Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16F23D78B0E0027CD2B /* MetaEntity + Tags.swift */; };
+		CC4AA29224AA86660025C805 /* ContainedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16A23D78B0E0027CD2B /* ContainedItems.swift */; };
+		CC4AA29324AA86660025C805 /* EntityComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16923D78B0E0027CD2B /* EntityComponent.swift */; };
+		CC4AA29424AA86660025C805 /* EntityQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16C23D78B0E0027CD2B /* EntityQuery.swift */; };
+		CC4AA29524AA86660025C805 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16B23D78B0E0027CD2B /* Entity.swift */; };
+		CC4AA29624AA86660025C805 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17323D78B0E0027CD2B /* Tag.swift */; };
+		CC4AA29724AA86700025C805 /* ECSManager + Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17723D78B0E0027CD2B /* ECSManager + Tags.swift */; };
+		CC4AA29824AA86700025C805 /* ECSManager + Systems.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17B23D78B0E0027CD2B /* ECSManager + Systems.swift */; };
+		CC4AA29924AA86700025C805 /* ECSManager + Entities.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17A23D78B0E0027CD2B /* ECSManager + Entities.swift */; };
+		CC4AA29A24AA86700025C805 /* ECSManager + Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17923D78B0E0027CD2B /* ECSManager + Components.swift */; };
+		CC4AA29B24AA86700025C805 /* ECSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17823D78B0E0027CD2B /* ECSManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -345,7 +359,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1200;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Stephen Kac";
 				TargetAttributes = {
 					CC4AA26424AA816C0025C805 = {
@@ -400,15 +414,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC4AA29224AA86660025C805 /* ContainedItems.swift in Sources */,
 				CC4AA28B24AA81BF0025C805 /* EntitySystem + RawRepresentableTags.swift in Sources */,
 				CC4AA28A24AA81BF0025C805 /* EntitySystem + Tags.swift in Sources */,
 				CC4AA28224AA81BA0025C805 /* EntityComponentEventSystem.swift in Sources */,
 				CC4AA28124AA81BA0025C805 /* EntityComponentSystem.swift in Sources */,
+				CC4AA29324AA86660025C805 /* EntityComponent.swift in Sources */,
+				CC4AA29824AA86700025C805 /* ECSManager + Systems.swift in Sources */,
+				CC4AA29624AA86660025C805 /* Tag.swift in Sources */,
 				CC4AA27F24AA81B60025C805 /* EventSystem.swift in Sources */,
+				CC4AA29524AA86660025C805 /* Entity.swift in Sources */,
 				CC4AA28924AA81BF0025C805 /* EntitySystem + Entity.swift in Sources */,
+				CC4AA29A24AA86700025C805 /* ECSManager + Components.swift in Sources */,
 				CC4AA28824AA81BF0025C805 /* EntitySystem.swift in Sources */,
+				CC4AA29024AA865E0025C805 /* MetaEntity+Components.swift in Sources */,
+				CC4AA28F24AA865E0025C805 /* MetaEntity + Sythesized.swift in Sources */,
 				CC4AA28024AA81B60025C805 /* CentralEventSystem.swift in Sources */,
 				CC4AA28324AA81BA0025C805 /* ComponentSystem.swift in Sources */,
+				CC4AA29924AA86700025C805 /* ECSManager + Entities.swift in Sources */,
+				CC4AA28E24AA865E0025C805 /* MetaEntity.swift in Sources */,
+				CC4AA29724AA86700025C805 /* ECSManager + Tags.swift in Sources */,
+				CC4AA29124AA865E0025C805 /* MetaEntity + Tags.swift in Sources */,
+				CC4AA29B24AA86700025C805 /* ECSManager.swift in Sources */,
+				CC4AA29424AA86660025C805 /* EntityQuery.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -559,6 +587,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -623,6 +652,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
