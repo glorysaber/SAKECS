@@ -29,7 +29,7 @@ public class EventSystem<EventKey: Hashable, EventValue: Any> {
     }
   }
   
-  /// Regisers a target to have its handler called when the even is raised. Objects are autmatically deregistered once
+  /// Regisers a target to have its handler called when the event is raised. Objects are autmatically deregistered once
   public func register(for event: EventKey, with target: AnyObject, handler: @escaping ((AnyObject, RaisedValue) -> (Bool))) -> Disposable? {
     if events[event] != nil {
       return events[event]?.addHandler(target, handler: handler)
@@ -52,29 +52,4 @@ public class EventSystem<EventKey: Hashable, EventValue: Any> {
     }
   }
 }
-
-//public protocol EventSystem {
-//  /// This is the type for events
-//  associatedtype EventKey: Hashable
-//
-//  /// Event Value
-//  associatedtype EventValue: Any
-//
-//  /// Events you can register for from the class
-////  var events: Dictionary<EventKey, Event<EventValue>> { get set }
-//  func register<Target: AnyObject>(for event: EventKey, with target: Target, handler: @escaping (Target) -> ((EventValue) -> ())) -> Disposable?
-//}
-
-//extension EventSystem {
-//  func register<Target: AnyObject>(for event: EventKey, with target: Target, handler: @escaping (Target) -> ((EventValue) -> ())) -> Disposable? {
-//    if events[event] != nil {
-//      return events[event]?.addHandler(target, handler: handler)
-//    } else {
-//      let newEvent = Event<EventValue>()
-//      let disp = newEvent.addHandler(target, handler: handler)
-//      events[event] = newEvent
-//      return disp
-//    }
-//  }
-//}
 

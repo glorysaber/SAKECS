@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CCC1C14C23D78AC70027CD2B"
+               BlueprintIdentifier = "CC86A9A724AA652800D06E0D"
                BuildableName = "SAKECS.framework"
                BlueprintName = "SAKECS"
                ReferencedContainer = "container:SAKECS.xcodeproj">
@@ -60,7 +60,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CCC1C14C23D78AC70027CD2B"
+            BlueprintIdentifier = "CC86A9A724AA652800D06E0D"
             BuildableName = "SAKECS.framework"
             BlueprintName = "SAKECS"
             ReferencedContainer = "container:SAKECS.xcodeproj">

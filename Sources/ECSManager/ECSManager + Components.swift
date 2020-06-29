@@ -56,7 +56,8 @@ extension ECSManager {
     }
     
     entityMasks[entity]?.components.insert(familyID)
-    guard let mask = entityMasks[entity] else { os_log(.error, "Entity Mask was nil when it shouldnt have been."); return }
+    guard let mask = entityMasks[entity]
+      else { os_log(.error, "Entity Mask was nil when it shouldnt have been."); return }
     
     let componentRequiredSystems = prioritySortedSystems.filter() { $0.entityQuery.requiredComponents.contains(familyID)}
     let componentIllegalSystems = prioritySortedSystems.filter() { $0.entityQuery.illegalComponents.contains(familyID) }
