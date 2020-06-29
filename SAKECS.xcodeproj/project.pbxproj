@@ -3,71 +3,57 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CCC1C15223D78AC70027CD2B /* SAKECS.h in Headers */ = {isa = PBXBuildFile; fileRef = CCC1C15023D78AC70027CD2B /* SAKECS.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CCC1C17C23D78B0E0027CD2B /* CentralEventSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C15B23D78B0E0027CD2B /* CentralEventSystem.swift */; };
-		CCC1C17D23D78B0E0027CD2B /* EventSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C15C23D78B0E0027CD2B /* EventSystem.swift */; };
-		CCC1C17E23D78B0E0027CD2B /* EntityComponentEventSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C15E23D78B0E0027CD2B /* EntityComponentEventSystem.swift */; };
-		CCC1C17F23D78B0E0027CD2B /* EntityComponentSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C15F23D78B0E0027CD2B /* EntityComponentSystem.swift */; };
-		CCC1C18023D78B0E0027CD2B /* ComponentSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16023D78B0E0027CD2B /* ComponentSystem.swift */; };
-		CCC1C18223D78B0E0027CD2B /* EntitySystem + Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16423D78B0E0027CD2B /* EntitySystem + Tags.swift */; };
-		CCC1C18323D78B0E0027CD2B /* EntitySystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16523D78B0E0027CD2B /* EntitySystem.swift */; };
-		CCC1C18423D78B0E0027CD2B /* EntitySystem + Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16623D78B0E0027CD2B /* EntitySystem + Entity.swift */; };
-		CCC1C18523D78B0E0027CD2B /* EntitySystem + RawRepresentableTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16723D78B0E0027CD2B /* EntitySystem + RawRepresentableTags.swift */; };
-		CCC1C18623D78B0E0027CD2B /* EntityComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16923D78B0E0027CD2B /* EntityComponent.swift */; };
-		CCC1C18723D78B0E0027CD2B /* ContainedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16A23D78B0E0027CD2B /* ContainedItems.swift */; };
-		CCC1C18823D78B0E0027CD2B /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16B23D78B0E0027CD2B /* Entity.swift */; };
-		CCC1C18923D78B0E0027CD2B /* EntityQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16C23D78B0E0027CD2B /* EntityQuery.swift */; };
-		CCC1C18A23D78B0E0027CD2B /* MetaEntity + Sythesized.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16E23D78B0E0027CD2B /* MetaEntity + Sythesized.swift */; };
-		CCC1C18B23D78B0E0027CD2B /* MetaEntity + Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16F23D78B0E0027CD2B /* MetaEntity + Tags.swift */; };
-		CCC1C18C23D78B0E0027CD2B /* MetaEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17023D78B0E0027CD2B /* MetaEntity.swift */; };
-		CCC1C18D23D78B0E0027CD2B /* MetaEntity+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17123D78B0E0027CD2B /* MetaEntity+Components.swift */; };
-		CCC1C18F23D78B0E0027CD2B /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17323D78B0E0027CD2B /* Tag.swift */; };
-		CCC1C19023D78B0E0027CD2B /* EntityAssemblage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17523D78B0E0027CD2B /* EntityAssemblage.swift */; };
-		CCC1C19123D78B0E0027CD2B /* ECSManager + Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17723D78B0E0027CD2B /* ECSManager + Tags.swift */; };
-		CCC1C19223D78B0E0027CD2B /* ECSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17823D78B0E0027CD2B /* ECSManager.swift */; };
-		CCC1C19323D78B0E0027CD2B /* ECSManager + Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17923D78B0E0027CD2B /* ECSManager + Components.swift */; };
-		CCC1C19423D78B0E0027CD2B /* ECSManager + Entities.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17A23D78B0E0027CD2B /* ECSManager + Entities.swift */; };
-		CCC1C19523D78B0E0027CD2B /* ECSManager + Systems.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17B23D78B0E0027CD2B /* ECSManager + Systems.swift */; };
-		CCC1C19F23D78B2E0027CD2B /* SAKECS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCC1C14D23D78AC70027CD2B /* SAKECS.framework */; };
-		CCC1C1A823D78B600027CD2B /* ECSComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C1A523D78B600027CD2B /* ECSComponentTests.swift */; };
-		CCC1C1A923D78B600027CD2B /* ECSTagsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C1A623D78B600027CD2B /* ECSTagsTests.swift */; };
-		CCC1C1AA23D78B600027CD2B /* SAKECSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C1A723D78B600027CD2B /* SAKECSTests.swift */; };
-		CCC1C1AD23D78BB00027CD2B /* SAKBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCC1C1AC23D78BB00027CD2B /* SAKBase.framework */; };
-		CCC1C1AE23D78BB00027CD2B /* SAKBase.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CCC1C1AC23D78BB00027CD2B /* SAKBase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CC4AA26E24AA816C0025C805 /* SAKECS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC4AA26524AA816C0025C805 /* SAKECS.framework */; };
+		CC4AA27524AA816C0025C805 /* SAKECS.h in Headers */ = {isa = PBXBuildFile; fileRef = CC4AA26724AA816C0025C805 /* SAKECS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CC4AA27C24AA81AD0025C805 /* ECSTagsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C1A623D78B600027CD2B /* ECSTagsTests.swift */; };
+		CC4AA27D24AA81AD0025C805 /* SAKECSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C1A723D78B600027CD2B /* SAKECSTests.swift */; };
+		CC4AA27E24AA81AD0025C805 /* ECSComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C1A523D78B600027CD2B /* ECSComponentTests.swift */; };
+		CC4AA27F24AA81B60025C805 /* EventSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C15C23D78B0E0027CD2B /* EventSystem.swift */; };
+		CC4AA28024AA81B60025C805 /* CentralEventSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C15B23D78B0E0027CD2B /* CentralEventSystem.swift */; };
+		CC4AA28124AA81BA0025C805 /* EntityComponentSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C15F23D78B0E0027CD2B /* EntityComponentSystem.swift */; };
+		CC4AA28224AA81BA0025C805 /* EntityComponentEventSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C15E23D78B0E0027CD2B /* EntityComponentEventSystem.swift */; };
+		CC4AA28324AA81BA0025C805 /* ComponentSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16023D78B0E0027CD2B /* ComponentSystem.swift */; };
+		CC4AA28824AA81BF0025C805 /* EntitySystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16523D78B0E0027CD2B /* EntitySystem.swift */; };
+		CC4AA28924AA81BF0025C805 /* EntitySystem + Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16623D78B0E0027CD2B /* EntitySystem + Entity.swift */; };
+		CC4AA28A24AA81BF0025C805 /* EntitySystem + Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16423D78B0E0027CD2B /* EntitySystem + Tags.swift */; };
+		CC4AA28B24AA81BF0025C805 /* EntitySystem + RawRepresentableTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16723D78B0E0027CD2B /* EntitySystem + RawRepresentableTags.swift */; };
+		CC4AA28D24AA81FB0025C805 /* SAKBase in Frameworks */ = {isa = PBXBuildFile; productRef = CC4AA28C24AA81FB0025C805 /* SAKBase */; };
+		CC4AA28E24AA865E0025C805 /* MetaEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17023D78B0E0027CD2B /* MetaEntity.swift */; };
+		CC4AA28F24AA865E0025C805 /* MetaEntity + Sythesized.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16E23D78B0E0027CD2B /* MetaEntity + Sythesized.swift */; };
+		CC4AA29024AA865E0025C805 /* MetaEntity+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17123D78B0E0027CD2B /* MetaEntity+Components.swift */; };
+		CC4AA29124AA865E0025C805 /* MetaEntity + Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16F23D78B0E0027CD2B /* MetaEntity + Tags.swift */; };
+		CC4AA29224AA86660025C805 /* ContainedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16A23D78B0E0027CD2B /* ContainedItems.swift */; };
+		CC4AA29324AA86660025C805 /* EntityComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16923D78B0E0027CD2B /* EntityComponent.swift */; };
+		CC4AA29424AA86660025C805 /* EntityQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16C23D78B0E0027CD2B /* EntityQuery.swift */; };
+		CC4AA29524AA86660025C805 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16B23D78B0E0027CD2B /* Entity.swift */; };
+		CC4AA29624AA86660025C805 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17323D78B0E0027CD2B /* Tag.swift */; };
+		CC4AA29724AA86700025C805 /* ECSManager + Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17723D78B0E0027CD2B /* ECSManager + Tags.swift */; };
+		CC4AA29824AA86700025C805 /* ECSManager + Systems.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17B23D78B0E0027CD2B /* ECSManager + Systems.swift */; };
+		CC4AA29924AA86700025C805 /* ECSManager + Entities.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17A23D78B0E0027CD2B /* ECSManager + Entities.swift */; };
+		CC4AA29A24AA86700025C805 /* ECSManager + Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17923D78B0E0027CD2B /* ECSManager + Components.swift */; };
+		CC4AA29B24AA86700025C805 /* ECSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17823D78B0E0027CD2B /* ECSManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		CCC1C1A023D78B2E0027CD2B /* PBXContainerItemProxy */ = {
+		CC4AA26F24AA816C0025C805 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CCC1C14423D78AC70027CD2B /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = CCC1C14C23D78AC70027CD2B;
+			remoteGlobalIDString = CC4AA26424AA816C0025C805;
 			remoteInfo = SAKECS;
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		CCC1C1AF23D78BB00027CD2B /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				CCC1C1AE23D78BB00027CD2B /* SAKBase.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		CCC1C14D23D78AC70027CD2B /* SAKECS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SAKECS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CCC1C15023D78AC70027CD2B /* SAKECS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SAKECS.h; sourceTree = "<group>"; };
-		CCC1C15123D78AC70027CD2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CC4AA26524AA816C0025C805 /* SAKECS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SAKECS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC4AA26724AA816C0025C805 /* SAKECS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SAKECS.h; sourceTree = "<group>"; };
+		CC4AA26824AA816C0025C805 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CC4AA26D24AA816C0025C805 /* SAKECSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAKECSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC4AA27424AA816C0025C805 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CCC1C15B23D78B0E0027CD2B /* CentralEventSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CentralEventSystem.swift; sourceTree = "<group>"; };
 		CCC1C15C23D78B0E0027CD2B /* EventSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventSystem.swift; sourceTree = "<group>"; };
 		CCC1C15E23D78B0E0027CD2B /* EntityComponentEventSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityComponentEventSystem.swift; sourceTree = "<group>"; };
@@ -94,8 +80,6 @@
 		CCC1C17923D78B0E0027CD2B /* ECSManager + Components.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ECSManager + Components.swift"; sourceTree = "<group>"; };
 		CCC1C17A23D78B0E0027CD2B /* ECSManager + Entities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ECSManager + Entities.swift"; sourceTree = "<group>"; };
 		CCC1C17B23D78B0E0027CD2B /* ECSManager + Systems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ECSManager + Systems.swift"; sourceTree = "<group>"; };
-		CCC1C19A23D78B2E0027CD2B /* SAKECSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAKECSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CCC1C19E23D78B2E0027CD2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CCC1C1A523D78B600027CD2B /* ECSComponentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ECSComponentTests.swift; sourceTree = "<group>"; };
 		CCC1C1A623D78B600027CD2B /* ECSTagsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ECSTagsTests.swift; sourceTree = "<group>"; };
 		CCC1C1A723D78B600027CD2B /* SAKECSTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SAKECSTests.swift; sourceTree = "<group>"; };
@@ -107,33 +91,61 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		CCC1C14A23D78AC70027CD2B /* Frameworks */ = {
+		CC4AA26224AA816C0025C805 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCC1C1AD23D78BB00027CD2B /* SAKBase.framework in Frameworks */,
+				CC4AA28D24AA81FB0025C805 /* SAKBase in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CCC1C19723D78B2E0027CD2B /* Frameworks */ = {
+		CC4AA26A24AA816C0025C805 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCC1C19F23D78B2E0027CD2B /* SAKECS.framework in Frameworks */,
+				CC4AA26E24AA816C0025C805 /* SAKECS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CC4AA25E24AA811D0025C805 /* SAKECS */ = {
+			isa = PBXGroup;
+			children = (
+				CC4AA26724AA816C0025C805 /* SAKECS.h */,
+				CCC1C15923D78B0E0027CD2B /* CoreSystems */,
+				CCC1C16823D78B0E0027CD2B /* Types */,
+				CCC1C17623D78B0E0027CD2B /* ECSManager */,
+			);
+			path = SAKECS;
+			sourceTree = "<group>";
+		};
+		CC4AA25F24AA813E0025C805 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				CC4AA27424AA816C0025C805 /* Info.plist */,
+				CCC1C19B23D78B2E0027CD2B /* SAKECSTests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		CC4AA27124AA816C0025C805 /* SAKECSTests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SAKECSTests;
+			sourceTree = "<group>";
+		};
 		CCC1C14323D78AC70027CD2B = {
 			isa = PBXGroup;
 			children = (
+				CCC1C17423D78B0E0027CD2B /* Unimplemented */,
 				CCC1C1BA23D78C0F0027CD2B /* Documentation */,
 				CCC1C1BE23D78C0F0027CD2B /* Resources */,
 				CCC1C15823D78B0E0027CD2B /* Sources */,
-				CCC1C14F23D78AC70027CD2B /* SAKECS */,
-				CCC1C19B23D78B2E0027CD2B /* SAKECSTests */,
+				CC4AA25F24AA813E0025C805 /* Tests */,
+				CC4AA27124AA816C0025C805 /* SAKECSTests */,
 				CCC1C14E23D78AC70027CD2B /* Products */,
 				CCC1C1AB23D78BB00027CD2B /* Frameworks */,
 			);
@@ -142,28 +154,17 @@
 		CCC1C14E23D78AC70027CD2B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CCC1C14D23D78AC70027CD2B /* SAKECS.framework */,
-				CCC1C19A23D78B2E0027CD2B /* SAKECSTests.xctest */,
+				CC4AA26524AA816C0025C805 /* SAKECS.framework */,
+				CC4AA26D24AA816C0025C805 /* SAKECSTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		CCC1C14F23D78AC70027CD2B /* SAKECS */ = {
-			isa = PBXGroup;
-			children = (
-				CCC1C15023D78AC70027CD2B /* SAKECS.h */,
-				CCC1C15123D78AC70027CD2B /* Info.plist */,
-			);
-			path = SAKECS;
 			sourceTree = "<group>";
 		};
 		CCC1C15823D78B0E0027CD2B /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				CCC1C15923D78B0E0027CD2B /* CoreSystems */,
-				CCC1C16823D78B0E0027CD2B /* Types */,
-				CCC1C17423D78B0E0027CD2B /* Unimplemented */,
-				CCC1C17623D78B0E0027CD2B /* ECSManager */,
+				CC4AA26824AA816C0025C805 /* Info.plist */,
+				CC4AA25E24AA811D0025C805 /* SAKECS */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -265,8 +266,9 @@
 		CCC1C19B23D78B2E0027CD2B /* SAKECSTests */ = {
 			isa = PBXGroup;
 			children = (
-				CCC1C1C623D7908D0027CD2B /* Sources */,
-				CCC1C1C723D790940027CD2B /* Assets */,
+				CCC1C1A523D78B600027CD2B /* ECSComponentTests.swift */,
+				CCC1C1A623D78B600027CD2B /* ECSTagsTests.swift */,
+				CCC1C1A723D78B600027CD2B /* SAKECSTests.swift */,
 			);
 			path = SAKECSTests;
 			sourceTree = "<group>";
@@ -297,73 +299,57 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		CCC1C1C623D7908D0027CD2B /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				CCC1C1A523D78B600027CD2B /* ECSComponentTests.swift */,
-				CCC1C1A623D78B600027CD2B /* ECSTagsTests.swift */,
-				CCC1C1A723D78B600027CD2B /* SAKECSTests.swift */,
-			);
-			path = Sources;
-			sourceTree = "<group>";
-		};
-		CCC1C1C723D790940027CD2B /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-				CCC1C19E23D78B2E0027CD2B /* Info.plist */,
-			);
-			path = Assets;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		CCC1C14823D78AC70027CD2B /* Headers */ = {
+		CC4AA26024AA816C0025C805 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCC1C15223D78AC70027CD2B /* SAKECS.h in Headers */,
+				CC4AA27524AA816C0025C805 /* SAKECS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		CCC1C14C23D78AC70027CD2B /* SAKECS */ = {
+		CC4AA26424AA816C0025C805 /* SAKECS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CCC1C15523D78AC70027CD2B /* Build configuration list for PBXNativeTarget "SAKECS" */;
+			buildConfigurationList = CC4AA27624AA816C0025C805 /* Build configuration list for PBXNativeTarget "SAKECS" */;
 			buildPhases = (
-				CCC1C14823D78AC70027CD2B /* Headers */,
-				CCC1C14923D78AC70027CD2B /* Sources */,
-				CCC1C14A23D78AC70027CD2B /* Frameworks */,
-				CCC1C14B23D78AC70027CD2B /* Resources */,
-				CCC1C1AF23D78BB00027CD2B /* Embed Frameworks */,
+				CC4AA26024AA816C0025C805 /* Headers */,
+				CC4AA26124AA816C0025C805 /* Sources */,
+				CC4AA26224AA816C0025C805 /* Frameworks */,
+				CC4AA26324AA816C0025C805 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = SAKECS;
+			packageProductDependencies = (
+				CC4AA28C24AA81FB0025C805 /* SAKBase */,
+			);
 			productName = SAKECS;
-			productReference = CCC1C14D23D78AC70027CD2B /* SAKECS.framework */;
+			productReference = CC4AA26524AA816C0025C805 /* SAKECS.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		CCC1C19923D78B2E0027CD2B /* SAKECSTests */ = {
+		CC4AA26C24AA816C0025C805 /* SAKECSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CCC1C1A223D78B2E0027CD2B /* Build configuration list for PBXNativeTarget "SAKECSTests" */;
+			buildConfigurationList = CC4AA27924AA816C0025C805 /* Build configuration list for PBXNativeTarget "SAKECSTests" */;
 			buildPhases = (
-				CCC1C19623D78B2E0027CD2B /* Sources */,
-				CCC1C19723D78B2E0027CD2B /* Frameworks */,
-				CCC1C19823D78B2E0027CD2B /* Resources */,
+				CC4AA26924AA816C0025C805 /* Sources */,
+				CC4AA26A24AA816C0025C805 /* Frameworks */,
+				CC4AA26B24AA816C0025C805 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				CCC1C1A123D78B2E0027CD2B /* PBXTargetDependency */,
+				CC4AA27024AA816C0025C805 /* PBXTargetDependency */,
 			);
 			name = SAKECSTests;
 			productName = SAKECSTests;
-			productReference = CCC1C19A23D78B2E0027CD2B /* SAKECSTests.xctest */;
+			productReference = CC4AA26D24AA816C0025C805 /* SAKECSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -372,16 +358,15 @@
 		CCC1C14423D78AC70027CD2B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1130;
+				LastSwiftUpdateCheck = 1200;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Stephen Kac";
 				TargetAttributes = {
-					CCC1C14C23D78AC70027CD2B = {
-						CreatedOnToolsVersion = 11.3.1;
+					CC4AA26424AA816C0025C805 = {
+						CreatedOnToolsVersion = 12.0;
 					};
-					CCC1C19923D78B2E0027CD2B = {
-						CreatedOnToolsVersion = 11.3.1;
-						LastSwiftMigration = 1130;
+					CC4AA26C24AA816C0025C805 = {
+						CreatedOnToolsVersion = 12.0;
 					};
 				};
 			};
@@ -394,25 +379,28 @@
 				Base,
 			);
 			mainGroup = CCC1C14323D78AC70027CD2B;
+			packageReferences = (
+				CC86A99324AA648000D06E0D /* XCRemoteSwiftPackageReference "SAKBase" */,
+			);
 			productRefGroup = CCC1C14E23D78AC70027CD2B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CCC1C14C23D78AC70027CD2B /* SAKECS */,
-				CCC1C19923D78B2E0027CD2B /* SAKECSTests */,
+				CC4AA26424AA816C0025C805 /* SAKECS */,
+				CC4AA26C24AA816C0025C805 /* SAKECSTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		CCC1C14B23D78AC70027CD2B /* Resources */ = {
+		CC4AA26324AA816C0025C805 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CCC1C19823D78B2E0027CD2B /* Resources */ = {
+		CC4AA26B24AA816C0025C805 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -422,58 +410,157 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		CCC1C14923D78AC70027CD2B /* Sources */ = {
+		CC4AA26124AA816C0025C805 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCC1C19523D78B0E0027CD2B /* ECSManager + Systems.swift in Sources */,
-				CCC1C18B23D78B0E0027CD2B /* MetaEntity + Tags.swift in Sources */,
-				CCC1C18D23D78B0E0027CD2B /* MetaEntity+Components.swift in Sources */,
-				CCC1C19123D78B0E0027CD2B /* ECSManager + Tags.swift in Sources */,
-				CCC1C17E23D78B0E0027CD2B /* EntityComponentEventSystem.swift in Sources */,
-				CCC1C18A23D78B0E0027CD2B /* MetaEntity + Sythesized.swift in Sources */,
-				CCC1C18723D78B0E0027CD2B /* ContainedItems.swift in Sources */,
-				CCC1C18923D78B0E0027CD2B /* EntityQuery.swift in Sources */,
-				CCC1C19423D78B0E0027CD2B /* ECSManager + Entities.swift in Sources */,
-				CCC1C18523D78B0E0027CD2B /* EntitySystem + RawRepresentableTags.swift in Sources */,
-				CCC1C18623D78B0E0027CD2B /* EntityComponent.swift in Sources */,
-				CCC1C17C23D78B0E0027CD2B /* CentralEventSystem.swift in Sources */,
-				CCC1C19023D78B0E0027CD2B /* EntityAssemblage.swift in Sources */,
-				CCC1C17D23D78B0E0027CD2B /* EventSystem.swift in Sources */,
-				CCC1C18F23D78B0E0027CD2B /* Tag.swift in Sources */,
-				CCC1C19323D78B0E0027CD2B /* ECSManager + Components.swift in Sources */,
-				CCC1C17F23D78B0E0027CD2B /* EntityComponentSystem.swift in Sources */,
-				CCC1C18023D78B0E0027CD2B /* ComponentSystem.swift in Sources */,
-				CCC1C18423D78B0E0027CD2B /* EntitySystem + Entity.swift in Sources */,
-				CCC1C18823D78B0E0027CD2B /* Entity.swift in Sources */,
-				CCC1C18C23D78B0E0027CD2B /* MetaEntity.swift in Sources */,
-				CCC1C18223D78B0E0027CD2B /* EntitySystem + Tags.swift in Sources */,
-				CCC1C19223D78B0E0027CD2B /* ECSManager.swift in Sources */,
-				CCC1C18323D78B0E0027CD2B /* EntitySystem.swift in Sources */,
+				CC4AA29224AA86660025C805 /* ContainedItems.swift in Sources */,
+				CC4AA28B24AA81BF0025C805 /* EntitySystem + RawRepresentableTags.swift in Sources */,
+				CC4AA28A24AA81BF0025C805 /* EntitySystem + Tags.swift in Sources */,
+				CC4AA28224AA81BA0025C805 /* EntityComponentEventSystem.swift in Sources */,
+				CC4AA28124AA81BA0025C805 /* EntityComponentSystem.swift in Sources */,
+				CC4AA29324AA86660025C805 /* EntityComponent.swift in Sources */,
+				CC4AA29824AA86700025C805 /* ECSManager + Systems.swift in Sources */,
+				CC4AA29624AA86660025C805 /* Tag.swift in Sources */,
+				CC4AA27F24AA81B60025C805 /* EventSystem.swift in Sources */,
+				CC4AA29524AA86660025C805 /* Entity.swift in Sources */,
+				CC4AA28924AA81BF0025C805 /* EntitySystem + Entity.swift in Sources */,
+				CC4AA29A24AA86700025C805 /* ECSManager + Components.swift in Sources */,
+				CC4AA28824AA81BF0025C805 /* EntitySystem.swift in Sources */,
+				CC4AA29024AA865E0025C805 /* MetaEntity+Components.swift in Sources */,
+				CC4AA28F24AA865E0025C805 /* MetaEntity + Sythesized.swift in Sources */,
+				CC4AA28024AA81B60025C805 /* CentralEventSystem.swift in Sources */,
+				CC4AA28324AA81BA0025C805 /* ComponentSystem.swift in Sources */,
+				CC4AA29924AA86700025C805 /* ECSManager + Entities.swift in Sources */,
+				CC4AA28E24AA865E0025C805 /* MetaEntity.swift in Sources */,
+				CC4AA29724AA86700025C805 /* ECSManager + Tags.swift in Sources */,
+				CC4AA29124AA865E0025C805 /* MetaEntity + Tags.swift in Sources */,
+				CC4AA29B24AA86700025C805 /* ECSManager.swift in Sources */,
+				CC4AA29424AA86660025C805 /* EntityQuery.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CCC1C19623D78B2E0027CD2B /* Sources */ = {
+		CC4AA26924AA816C0025C805 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCC1C1AA23D78B600027CD2B /* SAKECSTests.swift in Sources */,
-				CCC1C1A923D78B600027CD2B /* ECSTagsTests.swift in Sources */,
-				CCC1C1A823D78B600027CD2B /* ECSComponentTests.swift in Sources */,
+				CC4AA27E24AA81AD0025C805 /* ECSComponentTests.swift in Sources */,
+				CC4AA27C24AA81AD0025C805 /* ECSTagsTests.swift in Sources */,
+				CC4AA27D24AA81AD0025C805 /* SAKECSTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		CCC1C1A123D78B2E0027CD2B /* PBXTargetDependency */ = {
+		CC4AA27024AA816C0025C805 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = CCC1C14C23D78AC70027CD2B /* SAKECS */;
-			targetProxy = CCC1C1A023D78B2E0027CD2B /* PBXContainerItemProxy */;
+			target = CC4AA26424AA816C0025C805 /* SAKECS */;
+			targetProxy = CC4AA26F24AA816C0025C805 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		CC4AA27724AA816C0025C805 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = N3S44ULQD4;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Sources/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Stephen-Kac.SAKECS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,6";
+			};
+			name = Debug;
+		};
+		CC4AA27824AA816C0025C805 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = N3S44ULQD4;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Sources/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Stephen-Kac.SAKECS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,6";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CC4AA27A24AA816C0025C805 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N3S44ULQD4;
+				INFOPLIST_FILE = Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Stephen-Kac.SAKECSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CC4AA27B24AA816C0025C805 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N3S44ULQD4;
+				INFOPLIST_FILE = Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Stephen-Kac.SAKECSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		CCC1C15323D78AC70027CD2B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -500,6 +587,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -564,6 +652,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -595,98 +684,27 @@
 			};
 			name = Release;
 		};
-		CCC1C15623D78AC70027CD2B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = N3S44ULQD4;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = SAKECS/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 0.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.stephen-kac.SAKECS";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		CCC1C15723D78AC70027CD2B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = N3S44ULQD4;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = SAKECS/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 0.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.stephen-kac.SAKECS";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		CCC1C1A323D78B2E0027CD2B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = N3S44ULQD4;
-				INFOPLIST_FILE = SAKECSTests/Assets/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.stephen-kac.SAKECSTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		CCC1C1A423D78B2E0027CD2B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = N3S44ULQD4;
-				INFOPLIST_FILE = SAKECSTests/Assets/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.stephen-kac.SAKECSTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		CC4AA27624AA816C0025C805 /* Build configuration list for PBXNativeTarget "SAKECS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC4AA27724AA816C0025C805 /* Debug */,
+				CC4AA27824AA816C0025C805 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC4AA27924AA816C0025C805 /* Build configuration list for PBXNativeTarget "SAKECSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC4AA27A24AA816C0025C805 /* Debug */,
+				CC4AA27B24AA816C0025C805 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		CCC1C14723D78AC70027CD2B /* Build configuration list for PBXProject "SAKECS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -696,25 +714,26 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CCC1C15523D78AC70027CD2B /* Build configuration list for PBXNativeTarget "SAKECS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CCC1C15623D78AC70027CD2B /* Debug */,
-				CCC1C15723D78AC70027CD2B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CCC1C1A223D78B2E0027CD2B /* Build configuration list for PBXNativeTarget "SAKECSTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CCC1C1A323D78B2E0027CD2B /* Debug */,
-				CCC1C1A423D78B2E0027CD2B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CC86A99324AA648000D06E0D /* XCRemoteSwiftPackageReference "SAKBase" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:glorysaber/SAKBase.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = "0.0.1-rc.2";
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CC4AA28C24AA81FB0025C805 /* SAKBase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CC86A99324AA648000D06E0D /* XCRemoteSwiftPackageReference "SAKBase" */;
+			productName = SAKBase;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CCC1C14423D78AC70027CD2B /* Project object */;
 }
