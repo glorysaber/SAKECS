@@ -130,13 +130,6 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
-		CC4AA27124AA816C0025C805 /* SAKECSTests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SAKECSTests;
-			sourceTree = "<group>";
-		};
 		CCC1C14323D78AC70027CD2B = {
 			isa = PBXGroup;
 			children = (
@@ -145,7 +138,6 @@
 				CCC1C1BE23D78C0F0027CD2B /* Resources */,
 				CCC1C15823D78B0E0027CD2B /* Sources */,
 				CC4AA25F24AA813E0025C805 /* Tests */,
-				CC4AA27124AA816C0025C805 /* SAKECSTests */,
 				CCC1C14E23D78AC70027CD2B /* Products */,
 				CCC1C1AB23D78BB00027CD2B /* Frameworks */,
 			);
@@ -725,8 +717,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "git@github.com:glorysaber/SAKBase.git";
 			requirement = {
-				kind = exactVersion;
-				version = "0.0.1-r";
+				branch = develop;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
