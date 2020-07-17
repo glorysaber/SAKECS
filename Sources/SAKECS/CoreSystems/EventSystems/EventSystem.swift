@@ -14,13 +14,14 @@ public class EventSystem<EventKey: Hashable, EventValue: Any> {
 	public typealias Handler = (RaisedValue) -> Void
 
 	/// All events for the EventKeys
-	internal var events = Dictionary<EventKey, Event<RaisedValue>>()
+	internal var events = [EventKey: Event<RaisedValue>]()
 
 	public init() {}
 
 	/// Registers a class for an event witch is tied to the classes lifespan by the DisposeContainer.
-	public func register(for event: EventKey,
-											 handler: @escaping Handler) -> DisposeContainer {
+	public func register(
+		for event: EventKey,
+		handler: @escaping Handler) -> DisposeContainer {
 		if let event = events[event] {
 			return event.addHandler(handler: handler)
 		} else {
@@ -42,4 +43,3 @@ public class EventSystem<EventKey: Hashable, EventValue: Any> {
 		}
 	}
 }
-

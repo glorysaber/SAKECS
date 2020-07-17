@@ -14,21 +14,21 @@ extension MetaEntity {
   public func tagCount() -> Int {
     return ecs?.entitySystem.tagCount ?? 0
   }
-  
+
   /// Returns a set of tags assigned to the entity. Returns an empty set if the entity is invalid.
-  public func tags() -> Set<Tag> {
-    guard let (entity, ecs) = getValidated() else { return Set<Tag>() }
+  public func tags() -> Set<EntityTag> {
+    guard let (entity, ecs) = getValidated() else { return Set<EntityTag>() }
     do {
       return try ecs.entitySystem.getTags(for: entity)
     } catch let error {
       lastError = error
-      return Set<Tag>()
+      return Set<EntityTag>()
     }
-    
+
   }
-  
+
   /// Returns a bool indicating if the tag is contained, if Entity is Invalid false is returned by default.
-  public func contains(tag: Tag) -> Bool {
+  public func contains(tag: EntityTag) -> Bool {
     guard let (entity, ecs) = getValidated() else { return false }
     do {
       return (try ecs.entitySystem.does(entity: entity, contain: tag))
@@ -37,21 +37,21 @@ extension MetaEntity {
       return false
     }
   }
-  
+
   /// Adds the tag to the entity if it still exists
   public func add<Raw: RawRepresentable>(tag: Raw) where Raw.RawValue == String {
     guard let (entity, ecs) = getValidated() else { return }
     ecs.add(tag: tag, to: entity)
   }
-  
+
   /// Removes the tag from the entity if the entity still exists
   public func remove<Raw: RawRepresentable>(tag: Raw) where Raw.RawValue == String {
     guard let (entity, ecs) = getValidated() else { return }
     ecs.remove(tag: tag, from: entity)
   }
-  
+
   /// Returns false if invalid
-  public func contains(_ tags: [Tag]) -> Bool {
+  public func contains(_ tags: [EntityTag]) -> Bool {
     guard let (entity, ecs) = getValidated() else { return false }
     do {
       return try ecs.entitySystem.does(entity: entity, contain: tags)

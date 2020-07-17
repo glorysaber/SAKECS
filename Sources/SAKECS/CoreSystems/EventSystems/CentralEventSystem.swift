@@ -10,7 +10,7 @@ import SAKBase
 
 /// Where all events are registered for and stored
 public class CentralEventSystem {
-  public var tagEvent = EventSystem<ChangeEvent<Tag>, Entity>()
+  public var tagEvent = EventSystem<ChangeEvent<EntityTag>, Entity>()
   public var componentEvent = EventSystem<ChangeEvent<ComponentFamilyID>, Entity>()
   public var entityEvent = EventSystem<ChangeType, Entity>()
   public var contactEvent = Event<(Entity, Entity)>()

@@ -19,24 +19,24 @@ internal protocol ComponentStorage {
 
 /// Holds all the components of a single type
 internal class ComponentSystem<Component: EntityComponent>: ComponentStorage {
-  
+
   var componentCount: Int {
     return componentMap.count
   }
-  
-  var componentMap = Dictionary<Entity, Component>()
-  
+
+  var componentMap = [Entity: Component]()
+
   /// Adds or replaces a component on an entity
   func set(_ component: Component, to entity: Entity) {
     componentMap[entity] = component
   }
-  
+
   /// gets a component pointer for an entity
   func getComponent(for entity: Entity) -> Component? {
     guard componentMap[entity] != nil else { return nil }
     return componentMap[entity]!
   }
-  
+
   /// Removes the componen from the entity
   func removeComponent(from entity: Entity) {
     componentMap[entity] = nil
@@ -46,7 +46,7 @@ internal class ComponentSystem<Component: EntityComponent>: ComponentStorage {
   internal var componentFamilyID: ComponentFamilyID = {
     return ComponentFamilyID(componentType: Component.self)
   }()
-  
+
 //  internal static var typeID: ComponentSystemTypeID = {
 //    return ComponentSystemTypeID(id: ObjectIdentifier(self).hashValue)
 //  }()

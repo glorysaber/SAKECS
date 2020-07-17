@@ -12,7 +12,7 @@ public protocol EntityComponentEventSystem: EntityComponentSystem {
 	// Optional Event handling functions
 	func componentChanged(_ event: (change: ChangeEvent<ComponentFamilyID>,
 																	entity: Entity))
-	func tagChanged(_ event: (change: ChangeEvent<Tag>, entity: Entity))
+	func tagChanged(_ event: (change: ChangeEvent<EntityTag>, entity: Entity))
 	func entityChanged(_ event: (change: ChangeType, entity: Entity))
 }
 
@@ -21,12 +21,13 @@ extension EntityComponentEventSystem {
 	public func componentChanged(_ event: (
 																change: ChangeEvent<ComponentFamilyID>,
 																entity: Entity)) {}
-	public func tagChanged(_ event: (change: ChangeEvent<Tag>, entity: Entity)) {}
+	public func tagChanged(_ event: (change: ChangeEvent<EntityTag>, entity: Entity)) {}
 	public func entityChanged(_ event: (change: ChangeType, entity: Entity)) {}
 
 	/// Convenience function for registering for component change events
-	public func registerForChanges(for changes: [ChangeType],
-																 of components: EntityComponent.Type...)
+	public func registerForChanges(
+		for changes: [ChangeType],
+		of components: EntityComponent.Type...)
 	-> [DisposeContainer] {
 
 		guard let ecs = ecs else {
@@ -56,7 +57,7 @@ extension EntityComponentEventSystem {
 	}
 
 	/// Convenience function for registering for tag change events
-	public func registerForChanges(for changes: [ChangeType], of tags: Tag...) -> [DisposeContainer] {
+	public func registerForChanges(for changes: [ChangeType], of tags: EntityTag...) -> [DisposeContainer] {
 		guard let ecs = ecs else {
 			return []
 		}

@@ -18,23 +18,23 @@
 		CC4AA28224AA81BA0025C805 /* EntityComponentEventSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C15E23D78B0E0027CD2B /* EntityComponentEventSystem.swift */; };
 		CC4AA28324AA81BA0025C805 /* ComponentSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16023D78B0E0027CD2B /* ComponentSystem.swift */; };
 		CC4AA28824AA81BF0025C805 /* EntitySystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16523D78B0E0027CD2B /* EntitySystem.swift */; };
-		CC4AA28924AA81BF0025C805 /* EntitySystem + Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16623D78B0E0027CD2B /* EntitySystem + Entity.swift */; };
-		CC4AA28A24AA81BF0025C805 /* EntitySystem + Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16423D78B0E0027CD2B /* EntitySystem + Tags.swift */; };
-		CC4AA28B24AA81BF0025C805 /* EntitySystem + RawRepresentableTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16723D78B0E0027CD2B /* EntitySystem + RawRepresentableTags.swift */; };
+		CC4AA28924AA81BF0025C805 /* EntitySystem+Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16623D78B0E0027CD2B /* EntitySystem+Entity.swift */; };
+		CC4AA28A24AA81BF0025C805 /* EntitySystem+Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16423D78B0E0027CD2B /* EntitySystem+Tags.swift */; };
+		CC4AA28B24AA81BF0025C805 /* EntitySystem+RawRepresentableTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16723D78B0E0027CD2B /* EntitySystem+RawRepresentableTags.swift */; };
 		CC4AA28D24AA81FB0025C805 /* SAKBase in Frameworks */ = {isa = PBXBuildFile; productRef = CC4AA28C24AA81FB0025C805 /* SAKBase */; };
 		CC4AA28E24AA865E0025C805 /* MetaEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17023D78B0E0027CD2B /* MetaEntity.swift */; };
-		CC4AA28F24AA865E0025C805 /* MetaEntity + Sythesized.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16E23D78B0E0027CD2B /* MetaEntity + Sythesized.swift */; };
+		CC4AA28F24AA865E0025C805 /* MetaEntity+Sythesized.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16E23D78B0E0027CD2B /* MetaEntity+Sythesized.swift */; };
 		CC4AA29024AA865E0025C805 /* MetaEntity+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17123D78B0E0027CD2B /* MetaEntity+Components.swift */; };
-		CC4AA29124AA865E0025C805 /* MetaEntity + Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16F23D78B0E0027CD2B /* MetaEntity + Tags.swift */; };
+		CC4AA29124AA865E0025C805 /* MetaEntity+Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16F23D78B0E0027CD2B /* MetaEntity+Tags.swift */; };
 		CC4AA29224AA86660025C805 /* ContainedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16A23D78B0E0027CD2B /* ContainedItems.swift */; };
 		CC4AA29324AA86660025C805 /* EntityComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16923D78B0E0027CD2B /* EntityComponent.swift */; };
 		CC4AA29424AA86660025C805 /* EntityQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16C23D78B0E0027CD2B /* EntityQuery.swift */; };
 		CC4AA29524AA86660025C805 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16B23D78B0E0027CD2B /* Entity.swift */; };
-		CC4AA29624AA86660025C805 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17323D78B0E0027CD2B /* Tag.swift */; };
-		CC4AA29724AA86700025C805 /* ECSManager + Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17723D78B0E0027CD2B /* ECSManager + Tags.swift */; };
-		CC4AA29824AA86700025C805 /* ECSManager + Systems.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17B23D78B0E0027CD2B /* ECSManager + Systems.swift */; };
-		CC4AA29924AA86700025C805 /* ECSManager + Entities.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17A23D78B0E0027CD2B /* ECSManager + Entities.swift */; };
-		CC4AA29A24AA86700025C805 /* ECSManager + Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17923D78B0E0027CD2B /* ECSManager + Components.swift */; };
+		CC4AA29624AA86660025C805 /* EntityTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17323D78B0E0027CD2B /* EntityTag.swift */; };
+		CC4AA29724AA86700025C805 /* ECSManager+Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17723D78B0E0027CD2B /* ECSManager+Tags.swift */; };
+		CC4AA29824AA86700025C805 /* ECSManager+Systems.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17B23D78B0E0027CD2B /* ECSManager+Systems.swift */; };
+		CC4AA29924AA86700025C805 /* ECSManager+Entities.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17A23D78B0E0027CD2B /* ECSManager+Entities.swift */; };
+		CC4AA29A24AA86700025C805 /* ECSManager+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17923D78B0E0027CD2B /* ECSManager+Components.swift */; };
 		CC4AA29B24AA86700025C805 /* ECSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17823D78B0E0027CD2B /* ECSManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -60,26 +60,26 @@
 		CCC1C15F23D78B0E0027CD2B /* EntityComponentSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityComponentSystem.swift; sourceTree = "<group>"; };
 		CCC1C16023D78B0E0027CD2B /* ComponentSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentSystem.swift; sourceTree = "<group>"; };
 		CCC1C16223D78B0E0027CD2B /* EntitySystem + Components.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EntitySystem + Components.swift"; sourceTree = "<group>"; };
-		CCC1C16423D78B0E0027CD2B /* EntitySystem + Tags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EntitySystem + Tags.swift"; sourceTree = "<group>"; };
+		CCC1C16423D78B0E0027CD2B /* EntitySystem+Tags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EntitySystem+Tags.swift"; sourceTree = "<group>"; };
 		CCC1C16523D78B0E0027CD2B /* EntitySystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntitySystem.swift; sourceTree = "<group>"; };
-		CCC1C16623D78B0E0027CD2B /* EntitySystem + Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EntitySystem + Entity.swift"; sourceTree = "<group>"; };
-		CCC1C16723D78B0E0027CD2B /* EntitySystem + RawRepresentableTags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EntitySystem + RawRepresentableTags.swift"; sourceTree = "<group>"; };
+		CCC1C16623D78B0E0027CD2B /* EntitySystem+Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EntitySystem+Entity.swift"; sourceTree = "<group>"; };
+		CCC1C16723D78B0E0027CD2B /* EntitySystem+RawRepresentableTags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EntitySystem+RawRepresentableTags.swift"; sourceTree = "<group>"; };
 		CCC1C16923D78B0E0027CD2B /* EntityComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityComponent.swift; sourceTree = "<group>"; };
 		CCC1C16A23D78B0E0027CD2B /* ContainedItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainedItems.swift; sourceTree = "<group>"; };
 		CCC1C16B23D78B0E0027CD2B /* Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 		CCC1C16C23D78B0E0027CD2B /* EntityQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityQuery.swift; sourceTree = "<group>"; };
-		CCC1C16E23D78B0E0027CD2B /* MetaEntity + Sythesized.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MetaEntity + Sythesized.swift"; sourceTree = "<group>"; };
-		CCC1C16F23D78B0E0027CD2B /* MetaEntity + Tags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MetaEntity + Tags.swift"; sourceTree = "<group>"; };
+		CCC1C16E23D78B0E0027CD2B /* MetaEntity+Sythesized.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MetaEntity+Sythesized.swift"; sourceTree = "<group>"; };
+		CCC1C16F23D78B0E0027CD2B /* MetaEntity+Tags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MetaEntity+Tags.swift"; sourceTree = "<group>"; };
 		CCC1C17023D78B0E0027CD2B /* MetaEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetaEntity.swift; sourceTree = "<group>"; };
 		CCC1C17123D78B0E0027CD2B /* MetaEntity+Components.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MetaEntity+Components.swift"; sourceTree = "<group>"; };
 		CCC1C17223D78B0E0027CD2B /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
-		CCC1C17323D78B0E0027CD2B /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		CCC1C17323D78B0E0027CD2B /* EntityTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityTag.swift; sourceTree = "<group>"; };
 		CCC1C17523D78B0E0027CD2B /* EntityAssemblage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityAssemblage.swift; sourceTree = "<group>"; };
-		CCC1C17723D78B0E0027CD2B /* ECSManager + Tags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ECSManager + Tags.swift"; sourceTree = "<group>"; };
+		CCC1C17723D78B0E0027CD2B /* ECSManager+Tags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ECSManager+Tags.swift"; sourceTree = "<group>"; };
 		CCC1C17823D78B0E0027CD2B /* ECSManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ECSManager.swift; sourceTree = "<group>"; };
-		CCC1C17923D78B0E0027CD2B /* ECSManager + Components.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ECSManager + Components.swift"; sourceTree = "<group>"; };
-		CCC1C17A23D78B0E0027CD2B /* ECSManager + Entities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ECSManager + Entities.swift"; sourceTree = "<group>"; };
-		CCC1C17B23D78B0E0027CD2B /* ECSManager + Systems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ECSManager + Systems.swift"; sourceTree = "<group>"; };
+		CCC1C17923D78B0E0027CD2B /* ECSManager+Components.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ECSManager+Components.swift"; sourceTree = "<group>"; };
+		CCC1C17A23D78B0E0027CD2B /* ECSManager+Entities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ECSManager+Entities.swift"; sourceTree = "<group>"; };
+		CCC1C17B23D78B0E0027CD2B /* ECSManager+Systems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ECSManager+Systems.swift"; sourceTree = "<group>"; };
 		CCC1C1A523D78B600027CD2B /* ECSComponentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ECSComponentTests.swift; sourceTree = "<group>"; };
 		CCC1C1A623D78B600027CD2B /* ECSTagsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ECSTagsTests.swift; sourceTree = "<group>"; };
 		CCC1C1A723D78B600027CD2B /* SAKECSTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SAKECSTests.swift; sourceTree = "<group>"; };
@@ -201,10 +201,10 @@
 		CCC1C16323D78B0E0027CD2B /* EntitySystem */ = {
 			isa = PBXGroup;
 			children = (
-				CCC1C16423D78B0E0027CD2B /* EntitySystem + Tags.swift */,
+				CCC1C16423D78B0E0027CD2B /* EntitySystem+Tags.swift */,
 				CCC1C16523D78B0E0027CD2B /* EntitySystem.swift */,
-				CCC1C16623D78B0E0027CD2B /* EntitySystem + Entity.swift */,
-				CCC1C16723D78B0E0027CD2B /* EntitySystem + RawRepresentableTags.swift */,
+				CCC1C16623D78B0E0027CD2B /* EntitySystem+Entity.swift */,
+				CCC1C16723D78B0E0027CD2B /* EntitySystem+RawRepresentableTags.swift */,
 			);
 			path = EntitySystem;
 			sourceTree = "<group>";
@@ -217,7 +217,7 @@
 				CCC1C16B23D78B0E0027CD2B /* Entity.swift */,
 				CCC1C16C23D78B0E0027CD2B /* EntityQuery.swift */,
 				CCC1C16D23D78B0E0027CD2B /* MetaEntity */,
-				CCC1C17323D78B0E0027CD2B /* Tag.swift */,
+				CCC1C17323D78B0E0027CD2B /* EntityTag.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -225,8 +225,8 @@
 		CCC1C16D23D78B0E0027CD2B /* MetaEntity */ = {
 			isa = PBXGroup;
 			children = (
-				CCC1C16E23D78B0E0027CD2B /* MetaEntity + Sythesized.swift */,
-				CCC1C16F23D78B0E0027CD2B /* MetaEntity + Tags.swift */,
+				CCC1C16E23D78B0E0027CD2B /* MetaEntity+Sythesized.swift */,
+				CCC1C16F23D78B0E0027CD2B /* MetaEntity+Tags.swift */,
 				CCC1C17023D78B0E0027CD2B /* MetaEntity.swift */,
 				CCC1C17123D78B0E0027CD2B /* MetaEntity+Components.swift */,
 			);
@@ -246,11 +246,11 @@
 		CCC1C17623D78B0E0027CD2B /* ECSManager */ = {
 			isa = PBXGroup;
 			children = (
-				CCC1C17723D78B0E0027CD2B /* ECSManager + Tags.swift */,
+				CCC1C17723D78B0E0027CD2B /* ECSManager+Tags.swift */,
 				CCC1C17823D78B0E0027CD2B /* ECSManager.swift */,
-				CCC1C17923D78B0E0027CD2B /* ECSManager + Components.swift */,
-				CCC1C17A23D78B0E0027CD2B /* ECSManager + Entities.swift */,
-				CCC1C17B23D78B0E0027CD2B /* ECSManager + Systems.swift */,
+				CCC1C17923D78B0E0027CD2B /* ECSManager+Components.swift */,
+				CCC1C17A23D78B0E0027CD2B /* ECSManager+Entities.swift */,
+				CCC1C17B23D78B0E0027CD2B /* ECSManager+Systems.swift */,
 			);
 			path = ECSManager;
 			sourceTree = "<group>";
@@ -311,6 +311,7 @@
 			buildPhases = (
 				CC4AA26024AA816C0025C805 /* Headers */,
 				CC4AA26124AA816C0025C805 /* Sources */,
+				CC7BB11424C1EC9900EB2627 /* Swift-Lint */,
 				CC4AA26224AA816C0025C805 /* Frameworks */,
 				CC4AA26324AA816C0025C805 /* Resources */,
 			);
@@ -331,6 +332,7 @@
 			buildConfigurationList = CC4AA27924AA816C0025C805 /* Build configuration list for PBXNativeTarget "SAKECSTests" */;
 			buildPhases = (
 				CC4AA26924AA816C0025C805 /* Sources */,
+				CC7BB11524C1ECA700EB2627 /* Swift-Lint */,
 				CC4AA26A24AA816C0025C805 /* Frameworks */,
 				CC4AA26B24AA816C0025C805 /* Resources */,
 			);
@@ -401,32 +403,71 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		CC7BB11424C1EC9900EB2627 /* Swift-Lint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Swift-Lint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		CC7BB11524C1ECA700EB2627 /* Swift-Lint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Swift-Lint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		CC4AA26124AA816C0025C805 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				CC4AA29224AA86660025C805 /* ContainedItems.swift in Sources */,
-				CC4AA28B24AA81BF0025C805 /* EntitySystem + RawRepresentableTags.swift in Sources */,
-				CC4AA28A24AA81BF0025C805 /* EntitySystem + Tags.swift in Sources */,
+				CC4AA28B24AA81BF0025C805 /* EntitySystem+RawRepresentableTags.swift in Sources */,
+				CC4AA28A24AA81BF0025C805 /* EntitySystem+Tags.swift in Sources */,
 				CC4AA28224AA81BA0025C805 /* EntityComponentEventSystem.swift in Sources */,
 				CC4AA28124AA81BA0025C805 /* EntityComponentSystem.swift in Sources */,
 				CC4AA29324AA86660025C805 /* EntityComponent.swift in Sources */,
-				CC4AA29824AA86700025C805 /* ECSManager + Systems.swift in Sources */,
-				CC4AA29624AA86660025C805 /* Tag.swift in Sources */,
+				CC4AA29824AA86700025C805 /* ECSManager+Systems.swift in Sources */,
+				CC4AA29624AA86660025C805 /* EntityTag.swift in Sources */,
 				CC4AA27F24AA81B60025C805 /* EventSystem.swift in Sources */,
 				CC4AA29524AA86660025C805 /* Entity.swift in Sources */,
-				CC4AA28924AA81BF0025C805 /* EntitySystem + Entity.swift in Sources */,
-				CC4AA29A24AA86700025C805 /* ECSManager + Components.swift in Sources */,
+				CC4AA28924AA81BF0025C805 /* EntitySystem+Entity.swift in Sources */,
+				CC4AA29A24AA86700025C805 /* ECSManager+Components.swift in Sources */,
 				CC4AA28824AA81BF0025C805 /* EntitySystem.swift in Sources */,
 				CC4AA29024AA865E0025C805 /* MetaEntity+Components.swift in Sources */,
-				CC4AA28F24AA865E0025C805 /* MetaEntity + Sythesized.swift in Sources */,
+				CC4AA28F24AA865E0025C805 /* MetaEntity+Sythesized.swift in Sources */,
 				CC4AA28024AA81B60025C805 /* CentralEventSystem.swift in Sources */,
 				CC4AA28324AA81BA0025C805 /* ComponentSystem.swift in Sources */,
-				CC4AA29924AA86700025C805 /* ECSManager + Entities.swift in Sources */,
+				CC4AA29924AA86700025C805 /* ECSManager+Entities.swift in Sources */,
 				CC4AA28E24AA865E0025C805 /* MetaEntity.swift in Sources */,
-				CC4AA29724AA86700025C805 /* ECSManager + Tags.swift in Sources */,
-				CC4AA29124AA865E0025C805 /* MetaEntity + Tags.swift in Sources */,
+				CC4AA29724AA86700025C805 /* ECSManager+Tags.swift in Sources */,
+				CC4AA29124AA865E0025C805 /* MetaEntity+Tags.swift in Sources */,
 				CC4AA29B24AA86700025C805 /* ECSManager.swift in Sources */,
 				CC4AA29424AA86660025C805 /* EntityQuery.swift in Sources */,
 			);
@@ -472,6 +513,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Stephen-Kac.SAKECS";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -501,6 +543,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Stephen-Kac.SAKECS";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -526,6 +569,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Stephen-Kac.SAKECSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -548,6 +592,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Stephen-Kac.SAKECSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;

@@ -12,12 +12,12 @@ public typealias Component = EntityComponent
 /// Is used to identify a component type
 public struct ComponentFamilyID: Hashable {
   internal let id: ObjectIdentifier
-  
+
   /// gets the family ID for the component
   init(component: EntityComponent) {
     self.id = ObjectIdentifier(type(of: component))
   }
-  
+
   /// Gets the family ID for the component Type
   init(componentType: EntityComponent.Type) {
     self.id = ObjectIdentifier(componentType)
@@ -35,10 +35,9 @@ extension EntityComponent {
   public func familyID() -> ComponentFamilyID {
     return ComponentFamilyID(component: self)
   }
-  
+
   /// The Family Id of the ComponentType
   public static func familyID() -> ComponentFamilyID {
     return ComponentFamilyID(componentType: self)
   }
 }
-
