@@ -166,7 +166,6 @@
 			children = (
 				CCC1C15A23D78B0E0027CD2B /* EventSystems */,
 				CCC1C15D23D78B0E0027CD2B /* EntityComponentSystems */,
-				CCC1C16123D78B0E0027CD2B /* Systems */,
 				CCC1C16323D78B0E0027CD2B /* EntitySystem */,
 			);
 			path = CoreSystems;
@@ -189,13 +188,6 @@
 				CCC1C16023D78B0E0027CD2B /* ComponentSystem.swift */,
 			);
 			path = EntityComponentSystems;
-			sourceTree = "<group>";
-		};
-		CCC1C16123D78B0E0027CD2B /* Systems */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Systems;
 			sourceTree = "<group>";
 		};
 		CCC1C16323D78B0E0027CD2B /* EntitySystem */ = {
