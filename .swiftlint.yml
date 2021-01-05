@@ -11,7 +11,6 @@ opt_in_rules: # some rules are only opt-in
   - private_action
   - private_outlet
   - toggle_bool
-  - unused_private_declaration
   - array_init
   - block_based_kvo
   - closure_end_indentation
@@ -24,6 +23,7 @@ opt_in_rules: # some rules are only opt-in
   - discouraged_optional_boolean
   - discouraged_optional_collection
   - empty_collection_literal
+  - unused_import
 included: # paths to include during linting. `--path` is ignored if present.
   - Sources
   - Tests
@@ -44,3 +44,6 @@ identifier_name:
 nesting:
     type_level: 3 
 reporter: "xcode"
+attributes:
+  always_on_same_line: ["@IBAction", "@IBOutlet", "@IBInspectable"]
+  always_on_line_above: ["@IBDesignable", "@UIApplicationMain", "@discardableResult", "@objc"]
