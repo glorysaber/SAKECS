@@ -13,7 +13,7 @@ extension ECSManager {
   /// Sets a component to an entity and notifies any interested parties.
   public func set<ComponentType: EntityComponent>(component: ComponentType, to entity: Entity) {
     guard entitySystem.contains(entity) else { return }
-    let familyID = component.familyID()
+    let familyID = component.familyID
     if componentSystems[familyID] == nil {
       let componentSystem = ComponentSystem<ComponentType>()
       componentSystem.set(component, to: entity)
@@ -23,7 +23,7 @@ extension ECSManager {
       componentSystem.set(component, to: entity)
     }
 
-    updateMaskWith(entity: entity, removed: false, familyID: ComponentType.familyID())
+    updateMaskWith(entity: entity, removed: false, familyID: ComponentType.familyID)
   }
 
   /// IF the component exists for the entity gets it. Otherwise returns nil.

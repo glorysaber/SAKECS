@@ -27,17 +27,17 @@ public struct ComponentFamilyID: Hashable {
 /// Used to give MultiComponent capabilities
 public protocol EntityComponent {
   /// A Type Unique Identifier
-//  static var classType: String { get }
+	init()
 }
 
 extension EntityComponent {
-/// Gets a component's family ID
-  public func familyID() -> ComponentFamilyID {
-    return ComponentFamilyID(component: self)
+	/// Gets a component's family ID
+	public var familyID: ComponentFamilyID {
+    ComponentFamilyID(component: self)
   }
 
   /// The Family Id of the ComponentType
-  public static func familyID() -> ComponentFamilyID {
-    return ComponentFamilyID(componentType: self)
+  public static var familyID: ComponentFamilyID {
+		ComponentFamilyID(componentType: self)
   }
 }

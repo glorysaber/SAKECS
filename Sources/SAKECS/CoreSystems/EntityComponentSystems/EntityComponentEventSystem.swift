@@ -41,12 +41,12 @@ extension EntityComponentEventSystem {
 				switch change {
 				case .removed:
 					let disposeContainer = ecs.events.componentEvent.register(
-						for: ChangeEvent.removed(component.familyID()),
+						for: ChangeEvent.removed(component.familyID),
 						handler: { self.componentChanged($0) })
 					disposables.append(disposeContainer)
 				case .set:
 					let disposeContainer = ecs.events.componentEvent.register(
-						for: ChangeEvent.set(component.familyID()),
+						for: ChangeEvent.set(component.familyID),
 						handler: { self.componentChanged($0) })
 					disposables.append(disposeContainer)
 				}

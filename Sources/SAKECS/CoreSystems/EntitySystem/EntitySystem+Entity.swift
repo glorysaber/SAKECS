@@ -46,9 +46,4 @@ extension EntitySystem {
         }
     }
 
-    //      /// Returns an MetaEntity matching an identifier
-    //      public func getMetaEntity(for entity: Entity) throws -> MetaEntity {
-    //          guard allEntities.contains(entity) else { throw Error.entityDoesNotExist(entity) }
-    //          return MetaEntity(entity: entity, entitySystem: self)
-    //      }
 }

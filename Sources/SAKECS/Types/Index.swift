@@ -1,0 +1,33 @@
+//
+//  Index.swift
+//  SAKECS
+//
+//  Created by Stephen Kac on 1/3/21.
+//  Copyright © 2021 Stephen Kac. All rights reserved.
+//
+
+import Foundation
+
+public protocol Index: Comparable {
+	var index: Int { get }
+	init(_ index: Int)
+	init(index: Int)
+}
+
+public extension Index {
+	static func < (lhs: Self, rhs: Self) -> Bool {
+		lhs.index < rhs.index
+	}
+
+	static func - (lhs: Self, rhs: Int) -> Self {
+		Self(index: lhs.index - rhs)
+	}
+
+	static func + (lhs: Self, rhs: Int) -> Self {
+		Self(index: lhs.index + rhs)
+	}
+
+	init(_ index: Int) {
+		self.init(index: index)
+	}
+}
