@@ -9,6 +9,10 @@
 import Foundation
 
 public protocol Index: Comparable {
+
+
+	/// An int that only has meaning to the object that created the Index.
+	/// No meaning is to be assumed of this value.
 	var index: Int { get }
 	init(_ index: Int)
 	init(index: Int)

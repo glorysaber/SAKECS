@@ -19,6 +19,8 @@ private protocol RowContainerProtocol: AnyObject {
 	/// - Parameter toGrowBy: The number of columns to grow by
 	func growColumns(by toGrowBy: Int)
 
+
+	/// The contained element
 	var containedElement: ComponentRowProtocol { get }
 }
 
@@ -69,7 +71,7 @@ public struct ComponentMatrix {
 		matrix.first?.count ?? 0
 	}
 
-	/// A map of the index for a copublic mponent family.
+	/// A map of the index for a component family.
 	private(set) var componentFamilyMatrixRowMap = [ComponentFamilyID: ComponentRowIndex]()
 
 	/// The components storage
