@@ -88,7 +88,7 @@ extension MetaEntity: Hashable {
 
 // MARK: Entity functions
 extension MetaEntity {
-  ///Sets entity to nil and removes itself from the component system
+  /// Sets entity to nil and removes itself from the component system
   public func destroy() {
     guard let entity = entity else { return }
     ecs?.destroy(entity: entity)

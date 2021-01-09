@@ -12,7 +12,7 @@ public struct EntitySystem {
 
   public var systemManager: ECSManager?
 
-    /// Last ID used for an entity
+	/// Last ID used for an entity
   internal var lastID: Entity = 0
 
   /// Stores all valid entitys

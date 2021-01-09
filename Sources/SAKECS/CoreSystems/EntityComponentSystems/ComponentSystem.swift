@@ -7,10 +7,6 @@
 
 import Foundation
 
-//internal struct ComponentSystemTypeID: Hashable {
-//  let id: ObjectIdentifier
-//}
-
 /// Basic functions needed when
 internal protocol ComponentStorage {
   var componentCount: Int { get }
