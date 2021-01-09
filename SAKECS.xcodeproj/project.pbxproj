@@ -64,7 +64,6 @@
 		CC61070825A251F1001F120B /* Index.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Index.swift; sourceTree = "<group>"; };
 		CC61070C25A2522B001F120B /* ComponentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentRow.swift; sourceTree = "<group>"; };
 		CC61071025A252CE001F120B /* ComponentRowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentRowTests.swift; sourceTree = "<group>"; };
-		CCA22113259F7938000A0DAA /* ScratchPad.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = ScratchPad.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CCC1C15B23D78B0E0027CD2B /* CentralEventSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CentralEventSystem.swift; sourceTree = "<group>"; };
 		CCC1C15C23D78B0E0027CD2B /* EventSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventSystem.swift; sourceTree = "<group>"; };
 		CCC1C15E23D78B0E0027CD2B /* EntityComponentEventSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityComponentEventSystem.swift; sourceTree = "<group>"; };
@@ -146,7 +145,6 @@
 		CCC1C14323D78AC70027CD2B = {
 			isa = PBXGroup;
 			children = (
-				CCA22113259F7938000A0DAA /* ScratchPad.playground */,
 				CCC4E80825A0050700E0EAFD /* README.md */,
 				CCC1C17423D78B0E0027CD2B /* Unimplemented */,
 				CCC1C1BA23D78C0F0027CD2B /* Documentation */,
