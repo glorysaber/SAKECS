@@ -23,14 +23,6 @@ public extension Index {
 		lhs.index < rhs.index
 	}
 
-	static func - (lhs: Self, rhs: Int) -> Self {
-		Self(index: lhs.index - rhs)
-	}
-
-	static func + (lhs: Self, rhs: Int) -> Self {
-		Self(index: lhs.index + rhs)
-	}
-
 	init(_ index: Int) {
 		self.init(index: index)
 	}

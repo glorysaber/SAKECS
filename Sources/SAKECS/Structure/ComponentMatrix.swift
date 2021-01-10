@@ -136,7 +136,7 @@ public struct ComponentMatrix {
 		}
 
 		for (type, row) in componentFamilyMatrixRowMap where row > componentMatrixRowToRemove {
-			componentFamilyMatrixRowMap[type] = row - 1
+			componentFamilyMatrixRowMap[type] = index(before: row)
 		}
 
 		matrix.remove(at: componentMatrixRowToRemove.index)
@@ -250,16 +250,16 @@ public extension ComponentMatrix {
 
 	/// Returns the position immediately after the given index.
 	/// - Parameter index: A valid index which much be greater than the start index and less than or equal to the end index
-	/// - Returns: A index after the given index
+	/// - Returns: A index after the given index if there is one
 	func columnIndex(after index: ComponentColumnIndex) -> ComponentColumnIndex {
-		matrix.first?.containedElement.index(after: index) ?? index + 1
+		matrix.first?.containedElement.index(after: index) ?? columnEndIndex
 	}
 
 	/// Returns the position immediately before the given index.
 	/// - Parameter index: A valid index which much be greater than the start index and less than or equal to the end index
-	/// - Returns: A index before the given index
+	/// - Returns: A index before the given index if there is one
 	func columnIndex(before index: ComponentColumnIndex) -> ComponentColumnIndex {
-		matrix.first?.containedElement.index(before: index) ?? index - 1
+		matrix.first?.containedElement.index(before: index) ?? columnStartIndex
 	}
 }
 
