@@ -17,6 +17,9 @@ public struct EntityComponentChunk {
 	/// The components for the entities
 	private(set) var components = ComponentMatrix()
 
+	/// Unused component ColumnsIndices
+	private var emptyColumnsIndices = Set<ComponentRowIndex>()
+
 	/// Default Initializer
 	public init() {}
 
@@ -26,16 +29,22 @@ public struct EntityComponentChunk {
 		entities.keys.contains(entity)
 	}
 
-	/// Adds an entity entry to this chunk, grows the underlying storage to accomodate it
+	/// Adds an entity entry to this chunk, grows the underlying storage to accomodate it.
+	///  It will not produce an index for an entity if
 	/// - Parameter entity: The entity to add
 	public mutating func add(entity: Entity) {
-		entities[entity] = components.addColumns(1)
+		entities[entity] =
+			emptyColumnsIndices.first ??
+			components.addColumns(1).first ??
+			.invalid
 	}
 
-	/// Removes an entity entry if it exists
+	/// Sets an entity entry as empty if it exists
 	/// - Parameter entity: The entity to remove
 	public mutating func remove(entity: Entity) {
-		entityComponentRowMap.removeValue(forKey: entity)
+		if let index = entities.removeValue(forKey: entity) {
+			emptyColumnsIndices.insert(index)
+		}
 	}
 
 }

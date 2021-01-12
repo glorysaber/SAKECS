@@ -1,5 +1,5 @@
 //
-//  ArchetypeChunkTests.swift
+//  EntityComponentChunkTests.swift
 //  SAKECSTests
 //
 //  Created by Stephen Kac on 1/2/21.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import SAKECS
 
-class ArchetypeChunkTests: XCTestCase {
+class EntityComponentChunkTests: XCTestCase {
 
 	func test_canAddEntitiesToChunk() {
 		var sut = EntityComponentChunk()
@@ -17,7 +17,7 @@ class ArchetypeChunkTests: XCTestCase {
 		sut.add(entity: 1)
 		sut.add(entity: 3)
 
-		XCTAssertEqual(sut.entityRecordCount, 2)
+		XCTAssertEqual(sut.entities.count, 2)
 		XCTAssertTrue(sut.contains(1))
 		XCTAssertTrue(sut.contains(3))
 	}
@@ -37,7 +37,7 @@ class ArchetypeChunkTests: XCTestCase {
 		sut.add(entity: 1)
 		sut.add(entity: 1)
 
-		XCTAssertEqual(sut.entityRecordCount, 1)
+		XCTAssertEqual(sut.entities.count, 1)
 		XCTAssertTrue(sut.contains(1))
 	}
 
@@ -48,7 +48,7 @@ class ArchetypeChunkTests: XCTestCase {
 		sut.add(entity: 2)
 		sut.remove(entity: 1)
 
-		XCTAssertEqual(sut.entityRecordCount, 1)
+		XCTAssertEqual(sut.entities.count, 1)
 	}
 
 }

@@ -36,7 +36,7 @@
 		CC4AA29924AA86700025C805 /* ECSManager+Entities.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17A23D78B0E0027CD2B /* ECSManager+Entities.swift */; };
 		CC4AA29A24AA86700025C805 /* ECSManager+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17923D78B0E0027CD2B /* ECSManager+Components.swift */; };
 		CC4AA29B24AA86700025C805 /* ECSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17823D78B0E0027CD2B /* ECSManager.swift */; };
-		CC6024D925AAA15600841C71 /* ArchetypeChunkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC6024D825AAA15600841C71 /* ArchetypeChunkTests.swift */; };
+		CC6024D925AAA15600841C71 /* EntityComponentChunkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC6024D825AAA15600841C71 /* EntityComponentChunkTests.swift */; };
 		CC6024E625AAA17D00841C71 /* EntityComponentChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC6024DE25AAA16900841C71 /* EntityComponentChunk.swift */; };
 		CC6106F925A1213B001F120B /* ComponentMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC6106F825A1213B001F120B /* ComponentMatrix.swift */; };
 		CC61070325A12162001F120B /* ComponentMatrixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC61070225A12162001F120B /* ComponentMatrixTests.swift */; };
@@ -60,7 +60,7 @@
 		CC4AA26824AA816C0025C805 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC4AA26D24AA816C0025C805 /* SAKECSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAKECSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC4AA27424AA816C0025C805 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CC6024D825AAA15600841C71 /* ArchetypeChunkTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchetypeChunkTests.swift; sourceTree = "<group>"; };
+		CC6024D825AAA15600841C71 /* EntityComponentChunkTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityComponentChunkTests.swift; sourceTree = "<group>"; };
 		CC6024DE25AAA16900841C71 /* EntityComponentChunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityComponentChunk.swift; sourceTree = "<group>"; };
 		CC6106F825A1213B001F120B /* ComponentMatrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentMatrix.swift; sourceTree = "<group>"; };
 		CC61070225A12162001F120B /* ComponentMatrixTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentMatrixTests.swift; sourceTree = "<group>"; };
@@ -312,7 +312,7 @@
 		CCC4E84A25A1092500E0EAFD /* Structure */ = {
 			isa = PBXGroup;
 			children = (
-				CC6024D825AAA15600841C71 /* ArchetypeChunkTests.swift */,
+				CC6024D825AAA15600841C71 /* EntityComponentChunkTests.swift */,
 				CC61070225A12162001F120B /* ComponentMatrixTests.swift */,
 				CC61071025A252CE001F120B /* ComponentRowTests.swift */,
 			);
@@ -511,7 +511,7 @@
 				CC61071125A252CE001F120B /* ComponentRowTests.swift in Sources */,
 				CC4AA27E24AA81AD0025C805 /* ECSComponentTests.swift in Sources */,
 				CC4AA27C24AA81AD0025C805 /* ECSTagsTests.swift in Sources */,
-				CC6024D925AAA15600841C71 /* ArchetypeChunkTests.swift in Sources */,
+				CC6024D925AAA15600841C71 /* EntityComponentChunkTests.swift in Sources */,
 				CC61070325A12162001F120B /* ComponentMatrixTests.swift in Sources */,
 				CC4AA27D24AA81AD0025C805 /* SAKECSTests.swift in Sources */,
 			);

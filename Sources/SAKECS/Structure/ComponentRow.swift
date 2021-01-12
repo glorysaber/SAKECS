@@ -45,6 +45,8 @@ extension ComponentColumnIndices where Bound == ComponentColumnIndex {
 	public static let empty = ComponentColumnIndices(uncheckedBounds: (.invalid, .invalid))
 }
 
+extension ComponentColumnIndex: Hashable {}
+
 /// A type erasing protocol for component rows, component rows need to be casted for any type safe methods.
 public protocol ComponentRowProtocol {
 
