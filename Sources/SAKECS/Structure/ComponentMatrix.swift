@@ -17,7 +17,7 @@ private protocol RowContainerProtocol: AnyObject {
 
 	/// Grows the columns of the stored row
 	/// - Parameter toGrowBy: The number of columns to grow by
-	func growColumns(by toGrowBy: Int)
+	func growColumns(by toGrowBy: Int) -> ComponentColumnIndices
 
 	/// The contained element
 	var containedElement: ComponentRowProtocol { get }
@@ -57,7 +57,10 @@ public struct ComponentMatrix {
 			row.count
 		}
 
-		func growColumns(by toGrowBy: Int) {
+		/// Grows the columns by the given integer and then returns an empty or non empty collection.
+		/// - Parameter toGrowBy: The number to grow this rows columns by
+		/// - Returns: The additional new indices
+		func growColumns(by toGrowBy: Int) -> ComponentColumnIndices {
 			row.growColumns(by: toGrowBy)
 		}
 
@@ -127,10 +130,14 @@ public struct ComponentMatrix {
 		rowContainer.row[column] = component
 	}
 
-	public mutating func addColumns(_ count: Int) {
+	public mutating func addColumns(_ count: Int) -> ComponentColumnIndices {
+		var indices: ComponentColumnIndices?
+
 		for rowContainer in matrix {
-			rowContainer.growColumns(by: count)
+			indices = rowContainer.growColumns(by: count)
 		}
+
+		return indices ?? .empty
 	}
 
 	/// Removes a component type from the matrix
@@ -237,7 +244,7 @@ extension ComponentMatrix: RandomAccessCollection {
 
 public extension ComponentMatrix {
 
-	var columnIndices: ClosedRange<ComponentColumnIndex> {
+	var columnIndices: ComponentColumnIndices {
 		matrix.first?.containedElement.columnIndices ?? .empty
 	}
 

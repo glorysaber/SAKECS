@@ -25,7 +25,7 @@ class ComponentMatrixTests: XCTestCase {
 	func test_addingNewComponentColumnWithNoTypes() {
 		var sut = ComponentMatrix()
 
-		sut.addColumns(1)
+		_ = sut.addColumns(1)
 
 		checkComponentTypeCount(expected: 0, for: sut)
 		XCTAssertEqual(sut.componentColumns, 0)
@@ -35,7 +35,7 @@ class ComponentMatrixTests: XCTestCase {
 		var sut = ComponentMatrix()
 
 		sut.add(NullComponent.self)
-		sut.addColumns(1)
+		_ = sut.addColumns(1)
 
 		checkComponentTypeCount(expected: 1, for: sut)
 		XCTAssertEqual(sut.componentColumns, 1)
@@ -84,7 +84,7 @@ class ComponentMatrixTests: XCTestCase {
 
 		XCTAssertEqual(components.count, 0)
 
-		sut.addColumns(2)
+		_ = sut.addColumns(2)
 		components = sut.get(NullComponent.self)
 
 		XCTAssertEqual(components.count, 2)
@@ -95,10 +95,10 @@ class ComponentMatrixTests: XCTestCase {
 
 		sut.add(IntComponent.self)
 
-		sut.addColumns(3)
+		_ = sut.addColumns(3)
 
-		for index in sut.columnIndices {
-			sut.set(IntComponent(index.index + 1), for: index)
+		for (count, index) in sut.columnIndices.enumerated() {
+			sut.set(IntComponent(count + 1), for: index)
 		}
 
 		XCTAssertEqual(sut.get(IntComponent.self, for: sut.columnStartIndex), IntComponent(1))
@@ -116,7 +116,7 @@ class ComponentMatrixTests: XCTestCase {
 		let columns = 3
 		let rows = 2
 
-		sut.addColumns(columns)
+		_ = sut.addColumns(columns)
 
 		for (count, index) in sut.columnIndices.enumerated() {
 			sut.set(IntComponent(count), for: index)

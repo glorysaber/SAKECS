@@ -8,6 +8,8 @@
 
 import Foundation
 
+public typealias ComponentColumnIndices = CountableRange<ComponentColumnIndex>
+
 /// The Index type for a column in a component row
 /// This index type has a special provission that it is valid in any ComponentRow
 ///  that is the same length or more as the original where the indice originated.
@@ -39,8 +41,8 @@ extension ComponentColumnIndex: Strideable {
 	public typealias Stride = Int
 }
 
-extension ClosedRange where Bound == ComponentColumnIndex {
-	public static let empty = ClosedRange(uncheckedBounds: (.invalid, .invalid))
+extension ComponentColumnIndices where Bound == ComponentColumnIndex {
+	public static let empty = ComponentColumnIndices(uncheckedBounds: (.invalid, .invalid))
 }
 
 /// A type erasing protocol for component rows, component rows need to be casted for any type safe methods.
@@ -62,12 +64,12 @@ public protocol ComponentRowProtocol {
 	func index(before index: ComponentColumnIndex) -> ComponentColumnIndex
 
 	/// Adds the given number of columns using the default required initializer as the default values
-	mutating func growColumns(by toGrowBy: Int)
+	mutating func growColumns(by toGrowBy: Int) -> ComponentColumnIndices
 
 	/// The typeerased indices of the Component Row without a copy or reference to the structure where
 	/// all indices are valid
 	/// for any given ComponentRowProtocol of the same length or greater
-	var columnIndices: ClosedRange<ComponentColumnIndex> { get }
+	var columnIndices: ComponentColumnIndices { get }
 }
 
 /// A row of like components.
@@ -89,14 +91,17 @@ public struct ComponentRow<Component: EntityComponent>: ComponentRowProtocol {
 	public init() {}
 
 	/// Adds the given number of columns
-	public mutating func growColumns(by toGrowBy: Int) {
+	public mutating func growColumns(by toGrowBy: Int) -> ComponentColumnIndices {
+		// Will be a valid index once we grow
+		let beginningEndIndex = endIndex
 		columns.append(contentsOf: Array(repeating: Component(), count: toGrowBy))
+		return beginningEndIndex != endIndex ? beginningEndIndex..<endIndex : .empty
 	}
 
-	public var columnIndices: ClosedRange<ComponentColumnIndex> {
+	public var columnIndices: ComponentColumnIndices {
 			isEmpty ?
 				.empty :
-				startIndex...index(before: endIndex)
+				startIndex..<endIndex
 		}
 }
 
