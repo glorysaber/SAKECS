@@ -40,7 +40,6 @@
 		CC6024E625AAA17D00841C71 /* EntityComponentChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC6024DE25AAA16900841C71 /* EntityComponentChunk.swift */; };
 		CC6106F925A1213B001F120B /* ComponentMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC6106F825A1213B001F120B /* ComponentMatrix.swift */; };
 		CC61070325A12162001F120B /* ComponentMatrixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC61070225A12162001F120B /* ComponentMatrixTests.swift */; };
-		CC61070925A251F1001F120B /* Index.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC61070825A251F1001F120B /* Index.swift */; };
 		CC61070D25A2522B001F120B /* ComponentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC61070C25A2522B001F120B /* ComponentRow.swift */; };
 		CC61071125A252CE001F120B /* ComponentRowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC61071025A252CE001F120B /* ComponentRowTests.swift */; };
 /* End PBXBuildFile section */
@@ -65,7 +64,6 @@
 		CC6024DE25AAA16900841C71 /* EntityComponentChunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityComponentChunk.swift; sourceTree = "<group>"; };
 		CC6106F825A1213B001F120B /* ComponentMatrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentMatrix.swift; sourceTree = "<group>"; };
 		CC61070225A12162001F120B /* ComponentMatrixTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentMatrixTests.swift; sourceTree = "<group>"; };
-		CC61070825A251F1001F120B /* Index.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Index.swift; sourceTree = "<group>"; };
 		CC61070C25A2522B001F120B /* ComponentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentRow.swift; sourceTree = "<group>"; };
 		CC61071025A252CE001F120B /* ComponentRowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentRowTests.swift; sourceTree = "<group>"; };
 		CCC1C15B23D78B0E0027CD2B /* CentralEventSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CentralEventSystem.swift; sourceTree = "<group>"; };
@@ -227,7 +225,6 @@
 				CCC1C16C23D78B0E0027CD2B /* EntityQuery.swift */,
 				CCC1C16D23D78B0E0027CD2B /* MetaEntity */,
 				CCC1C17323D78B0E0027CD2B /* EntityTag.swift */,
-				CC61070825A251F1001F120B /* Index.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -496,7 +493,6 @@
 				CC4AA28824AA81BF0025C805 /* EntitySystem.swift in Sources */,
 				CC4AA29024AA865E0025C805 /* MetaEntity+Components.swift in Sources */,
 				CC4AA28F24AA865E0025C805 /* MetaEntity+Sythesized.swift in Sources */,
-				CC61070925A251F1001F120B /* Index.swift in Sources */,
 				CC4AA28024AA81B60025C805 /* CentralEventSystem.swift in Sources */,
 				CC4AA28324AA81BA0025C805 /* ComponentSystem.swift in Sources */,
 				CC4AA29924AA86700025C805 /* ECSManager+Entities.swift in Sources */,

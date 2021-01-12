@@ -19,7 +19,6 @@ private protocol RowContainerProtocol: AnyObject {
 	/// - Parameter toGrowBy: The number of columns to grow by
 	func growColumns(by toGrowBy: Int)
 
-
 	/// The contained element
 	var containedElement: ComponentRowProtocol { get }
 }
@@ -27,10 +26,18 @@ private protocol RowContainerProtocol: AnyObject {
 // MARK: - ComponentRowIndex
 
 /// The row for a component array  in the component matrix
-public struct ComponentRowIndex: Index {
-	public let index: Int
+public struct ComponentRowIndex: Comparable {
+	public static func < (lhs: ComponentRowIndex, rhs: ComponentRowIndex) -> Bool {
+		lhs.index < rhs.index
+	}
 
-	public init(index: Int) {
+	/// Indexes are only valid when there collection is non empty,
+	/// so checking against this value is not enough to know if an index is invalid.
+	public static let invalidIndex = ComponentRowIndex(-1)
+
+	fileprivate let index: Int
+
+	fileprivate init(_ index: Int) {
 		self.index = index
 	}
 }
@@ -231,21 +238,19 @@ extension ComponentMatrix: RandomAccessCollection {
 public extension ComponentMatrix {
 
 	var columnIndices: ClosedRange<ComponentColumnIndex> {
-		componentColumns == 0 ?
-			ComponentColumnIndex(0)...ComponentColumnIndex(0) :
-			ComponentColumnIndex(0)...ComponentColumnIndex(componentColumns - 1)
+		matrix.first?.containedElement.columnIndices ?? .empty
 	}
 
 	/// The position of the first element in a nonempty column row,
 	/// gaurenteed to be valid in all ComponentRows of the same length
 	var columnStartIndex: ComponentColumnIndex {
-		matrix.first?.containedElement.startIndex ?? ComponentColumnIndex(0)
+		matrix.first?.containedElement.startIndex ?? .invalid
 	}
 
 	/// The position of the last element plus one in a nonempty column row,
 	/// gaurenteed to be valid in all ComponentRows of the same length
 	var columnEndIndex: ComponentColumnIndex {
-		matrix.first?.containedElement.endIndex ?? ComponentColumnIndex(0)
+		matrix.first?.containedElement.endIndex ?? .invalid
 	}
 
 	/// Returns the position immediately after the given index.
