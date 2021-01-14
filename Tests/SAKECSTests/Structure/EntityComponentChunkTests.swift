@@ -51,4 +51,25 @@ class EntityComponentChunkTests: XCTestCase {
 		XCTAssertEqual(sut.entities.count, 1)
 	}
 
+	func test_addComponentToEntity() {
+		var sut = EntityComponentChunk()
+
+		sut.add(entity: 1)
+
+		sut.add(NullComponent.self)
+
+		XCTAssertEqual(sut.components.count, 1)
+	}
+
+	func test_addsComponentTypeOnlyOnce() {
+		var sut = EntityComponentChunk()
+
+		sut.add(NullComponent.self)
+		sut.add(NullComponent.self)
+
+		XCTAssertEqual(sut.components.count, 1)
+	}
+
+	private struct NullComponent: EntityComponent {}
+
 }

@@ -47,6 +47,11 @@ public struct ComponentRowIndex: Comparable {
 /// The storage representation of the components which belong to entities
 public struct ComponentMatrix {
 
+	enum Error: Swift.Error {
+		/// Component Types cannot be added twice
+		case componentAlreadyExists
+	}
+
 	/// A contianer for each row to allow mutability
 	private class RowContainer<Component: EntityComponent>: RowContainerProtocol {
 		var containedElement: ComponentRowProtocol {
@@ -116,7 +121,8 @@ public struct ComponentMatrix {
 		return (matrix[componentMatrixRow.index] as? RowContainer<Component>)?.row[column] ?? nil
 	}
 
-	/// Gets the component for the given type and column
+	/// Gets the component for the given type and column.
+	/// Does nothing if the component type does not  already have a row.
 	/// - Parameter component: The component to add
 	public mutating func set<Component: EntityComponent>(_ component: Component, for column: ComponentColumnIndex) {
 		guard let componentMatrixRow = componentFamilyMatrixRowMap[Component.familyID] else {
@@ -158,10 +164,14 @@ public struct ComponentMatrix {
 	}
 
 	/// Adds a new component type to the internal storage.  O(1) Time Complexity operation.
+	/// If the component type already exists it returns the same row as the original
 	/// - Parameter familyID: The type of component for the array
 	/// - Returns: The row for the new matrix row
 	@discardableResult
 	public mutating func add<Component: EntityComponent>(_ type: Component.Type) -> ComponentRowIndex {
+		if let componentMatrixRow =  componentFamilyMatrixRowMap[Component.familyID] {
+			return componentMatrixRow
+		}
 		let componentMatrixRow = ComponentRowIndex(matrix.count)
 
 		// Create a new component array filled with the same number of columns as the other components arrays

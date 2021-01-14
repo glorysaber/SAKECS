@@ -29,6 +29,8 @@ public struct EntityComponentChunk {
 		entities.keys.contains(entity)
 	}
 
+	// MARK: Entities
+
 	/// Adds an entity entry to this chunk, grows the underlying storage to accomodate it.
 	///  It will not produce an index for an entity if
 	/// - Parameter entity: The entity to add
@@ -45,6 +47,26 @@ public struct EntityComponentChunk {
 		if let index = entities.removeValue(forKey: entity) {
 			emptyColumnsIndices.insert(index)
 		}
+	}
+
+	// MARK: Components
+
+	/// If the given enity exists, set this component.
+	/// If the component does not exist in the chunk does nothing.
+	/// - Parameters:
+	///   - component: The object to set
+	///   - entity: the entity to find the column for and set the component
+	public mutating func set<Component: EntityComponent>(_ component: Component, for entity: Entity) {
+		guard let columnIndex = entities[entity] else { return }
+		components.set(component, for: columnIndex)
+	}
+
+	/// Adds the given componentType, throws if the component type already exists
+	/// - Parameters:
+	///   - component: The object to set
+	///   - entity: the entity to find the column for and set the component
+	public mutating func add<Component: EntityComponent>(_ componentType: Component.Type) {
+		components.add(componentType)
 	}
 
 }

@@ -41,6 +41,12 @@ class ComponentMatrixTests: XCTestCase {
 		XCTAssertEqual(sut.componentColumns, 1)
 	}
 
+	func test_addingSameTypeTwiceReturnsSameColumn() {
+		var sut = ComponentMatrix()
+
+		XCTAssertEqual(sut.add(NullComponent.self), sut.add(NullComponent.self))
+	}
+
 	func test_removeingComponentType() {
 		var sut = ComponentMatrix()
 
