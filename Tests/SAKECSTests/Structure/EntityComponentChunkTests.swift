@@ -70,6 +70,43 @@ class EntityComponentChunkTests: XCTestCase {
 		XCTAssertEqual(sut.components.count, 1)
 	}
 
+	func test_addsMultipleCOmponentTypes() {
+		var sut = EntityComponentChunk()
+
+		sut.add(NullComponent.self)
+		sut.add(IntComponent.self)
+
+		XCTAssertEqual(sut.components.count, 2)
+	}
+
+	func test_addComponentAndGetSameOne() {
+		var sut = EntityComponentChunk()
+
+		sut.add(entity: 1)
+		sut.add(NullComponent.self)
+		sut.add(IntComponent.self)
+
+		sut.set(IntComponent(2), for: 1)
+
+		XCTAssertEqual(sut.get(IntComponent.self, for: 1)?.value, 2)
+	}
+
 	private struct NullComponent: EntityComponent {}
+	private struct IntComponent: EntityComponent, Hashable, Comparable {
+
+		static func < (lhs: Self, rhs: Self) -> Bool {
+			lhs.value < rhs.value
+		}
+
+		let value: Int
+
+		init() {
+			self.init(0)
+		}
+
+		init(_ value: Int) {
+			self.value = value
+		}
+	}
 
 }

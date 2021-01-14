@@ -175,7 +175,8 @@ public struct ComponentMatrix {
 		let componentMatrixRow = ComponentRowIndex(matrix.count)
 
 		// Create a new component array filled with the same number of columns as the other components arrays
-		let componentRow = ComponentRow<Component>()
+		var componentRow = ComponentRow<Component>()
+		_ = componentRow.growColumns(by: matrix.first?.count ?? 0)
 		matrix.append(RowContainer(componentRow))
 		componentFamilyMatrixRowMap[Component.familyID] = componentMatrixRow
 		return componentMatrixRow

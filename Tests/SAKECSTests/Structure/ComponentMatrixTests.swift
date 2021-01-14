@@ -155,6 +155,17 @@ class ComponentMatrixTests: XCTestCase {
 		XCTAssertNil(sut.last)
 	}
 
+	// regression test
+	func test_addingComponentGrowThenAddingAndGettingComponent_DoesNotCrash() {
+		var sut = ComponentMatrix()
+
+		sut.add(NullComponent.self)
+		let indexes = sut.addColumns(1)
+		sut.add(IntComponent.self)
+		
+		sut.set(IntComponent(2), for: indexes.first!)
+	}
+
 	// MARK: Helpers
 
 	private struct NullComponent: EntityComponent {}
