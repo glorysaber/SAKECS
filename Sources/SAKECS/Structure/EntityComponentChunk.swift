@@ -51,6 +51,12 @@ public struct EntityComponentChunk {
 
 	// MARK: Components
 
+	/// - Parameter componentType: The component type to check for
+	/// - Returns: true if the entity componentType exists, false otherwise
+	func contains<Component: EntityComponent>(_ componentType: Component.Type) -> Bool {
+		components.contains(componentType)
+	}
+
 	/// If the given enity exists, set this component.
 	/// If the component does not exist in the chunk does nothing.
 	/// - Parameters:
@@ -61,10 +67,9 @@ public struct EntityComponentChunk {
 		components.set(component, for: columnIndex)
 	}
 
-	/// Adds the given componentType, throws if the component type already exists
+	/// Adds the given componentType if it does not already exist
 	/// - Parameters:
-	///   - component: The object to set
-	///   - entity: the entity to find the column for and set the component
+	///   - componentType: The component type to add
 	public mutating func add<Component: EntityComponent>(_ componentType: Component.Type) {
 		components.add(componentType)
 
@@ -72,6 +77,13 @@ public struct EntityComponentChunk {
 		// storage has no columns. This should be optimized away by most modern cpus by branch prediction
 		// once it has ran once.
 		_ = growStorageToMatchOnce
+	}
+
+	/// removes the given componentType if it exists
+	/// - Parameters:
+	///   - componentType: The component type to remove
+	public mutating func remove<Component: EntityComponent>(_ componentType: Component.Type) {
+		components.remove(componentType)
 	}
 
 	/// Gets the given component for the entity or nil otherwise

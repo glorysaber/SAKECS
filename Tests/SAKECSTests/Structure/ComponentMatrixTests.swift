@@ -14,9 +14,11 @@ class ComponentMatrixTests: XCTestCase {
 	func test_addingANewComponentType() {
 		var sut = ComponentMatrix()
 
+		XCTAssertFalse(sut.contains(NullComponent.self))
 		sut.add(NullComponent.self)
 
 		checkComponentTypeCount(expected: 1, for: sut)
+		XCTAssertTrue(sut.contains(NullComponent.self))
 
 		sut.add(NullComponent.self)
 		checkComponentTypeCount(expected: 1, for: sut)
@@ -56,7 +58,9 @@ class ComponentMatrixTests: XCTestCase {
 		// There should be two types
 		checkComponentTypeCount(expected: 2, for: sut)
 
+		XCTAssertTrue(sut.contains(NullComponent.self))
 		sut.remove(NullComponent.self)
+		XCTAssertFalse(sut.contains(NullComponent.self))
 
 		// now 1
 		checkComponentTypeCount(expected: 1, for: sut)

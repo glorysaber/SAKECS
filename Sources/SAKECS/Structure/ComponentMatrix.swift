@@ -87,12 +87,18 @@ public struct ComponentMatrix {
 	}
 
 	/// A map of the index for a component family.
-	private(set) var componentFamilyMatrixRowMap = [ComponentFamilyID: ComponentRowIndex]()
+	private var componentFamilyMatrixRowMap = [ComponentFamilyID: ComponentRowIndex]()
 
 	/// The components storage
 	private var matrix = [RowContainerProtocol]()
 
 	public init() {}
+
+	/// Checks if the component type is contained
+	/// - Parameter type: the type to check for
+	public func contains<Component: EntityComponent>(_ type: Component.Type) -> Bool {
+		componentFamilyMatrixRowMap.keys.contains(type.familyID)
+	}
 
 	/// Gets the components of the given type, returns an empty array otherwise.
 	/// - Parameter type: The type of components to get

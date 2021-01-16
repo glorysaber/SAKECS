@@ -70,7 +70,7 @@ class EntityComponentChunkTests: XCTestCase {
 		XCTAssertEqual(sut.components.count, 1)
 	}
 
-	func test_addsMultipleCOmponentTypes() {
+	func test_addsMultipleComponentTypes() {
 		var sut = EntityComponentChunk()
 
 		sut.add(NullComponent.self)
@@ -91,6 +91,14 @@ class EntityComponentChunkTests: XCTestCase {
 		XCTAssertEqual(sut.get(IntComponent.self, for: 1)?.value, 2)
 	}
 
+	func test_addRemovingComponents() {
+		var (sut, _) = makeSUT(with: 10)
+
+		XCTAssertTrue(sut.contains(NullComponent.self))
+		sut.remove(NullComponent.self)
+		XCTAssertFalse(sut.contains(NullComponent.self))
+	}
+
 	private struct NullComponent: EntityComponent {}
 	private struct IntComponent: EntityComponent, Hashable, Comparable {
 
@@ -107,6 +115,25 @@ class EntityComponentChunkTests: XCTestCase {
 		init(_ value: Int) {
 			self.value = value
 		}
+	}
+
+	/// Returns a sut with two component types, Int and Null, with the specified number of columns,
+	/// and IntComponents ever increasing in value to match index
+	private func makeSUT(with numberOfColumns: Int) -> (EntityComponentChunk, [Entity: IntComponent]) {
+		var sut = EntityComponentChunk()
+
+		sut.add(NullComponent.self)
+		sut.add(IntComponent.self)
+
+		var entitiesAndComps = [Entity: IntComponent]()
+
+		for entity in 0...20 {
+			sut.add(entity: Entity(entity))
+			sut.set(IntComponent(entity), for: Entity(entity))
+			entitiesAndComps[Entity(entity)] = IntComponent(entity)
+		}
+
+		return (sut, entitiesAndComps)
 	}
 
 }
