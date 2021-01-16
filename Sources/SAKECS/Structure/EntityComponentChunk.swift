@@ -12,10 +12,20 @@ public struct EntityComponentChunk {
 	typealias ComponentRowIndex = ComponentColumnIndex
 
 	/// Count of entities
-	private(set) var entities = [Entity: ComponentRowIndex]()
+	public var entityCount: Int {
+		entities.count
+	}
+
+	/// Entity map to their row
+	private var entities = [Entity: ComponentRowIndex]()
+
+	/// Count of componentTypes
+	public var componentTypeCount: Int {
+		components.count
+	}
 
 	/// The components for the entities
-	private(set) var components = ComponentMatrix()
+	private var components = ComponentMatrix()
 
 	/// Unused component ColumnsIndices
 	private var emptyColumnsIndices = Set<ComponentColumnIndex>()
@@ -27,7 +37,7 @@ public struct EntityComponentChunk {
 
 	/// - Parameter entity: The entity to check for
 	/// - Returns: true if the entity record exists, false otherwise
-	func contains(_ entity: Entity) -> Bool {
+	public func contains(_ entity: Entity) -> Bool {
 		entities.keys.contains(entity)
 	}
 
@@ -53,7 +63,7 @@ public struct EntityComponentChunk {
 
 	/// - Parameter componentType: The component type to check for
 	/// - Returns: true if the entity componentType exists, false otherwise
-	func contains<Component: EntityComponent>(_ componentType: Component.Type) -> Bool {
+	public func contains<Component: EntityComponent>(_ componentType: Component.Type) -> Bool {
 		components.contains(componentType)
 	}
 

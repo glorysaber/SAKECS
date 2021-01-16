@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import SAKECS
+import SAKECS
 
 class EntityComponentChunkTests: XCTestCase {
 
@@ -17,7 +17,7 @@ class EntityComponentChunkTests: XCTestCase {
 		sut.add(entity: 1)
 		sut.add(entity: 3)
 
-		XCTAssertEqual(sut.entities.count, 2)
+		XCTAssertEqual(sut.entityCount, 2)
 		XCTAssertTrue(sut.contains(1))
 		XCTAssertTrue(sut.contains(3))
 	}
@@ -37,7 +37,7 @@ class EntityComponentChunkTests: XCTestCase {
 		sut.add(entity: 1)
 		sut.add(entity: 1)
 
-		XCTAssertEqual(sut.entities.count, 1)
+		XCTAssertEqual(sut.entityCount, 1)
 		XCTAssertTrue(sut.contains(1))
 	}
 
@@ -48,7 +48,7 @@ class EntityComponentChunkTests: XCTestCase {
 		sut.add(entity: 2)
 		sut.remove(entity: 1)
 
-		XCTAssertEqual(sut.entities.count, 1)
+		XCTAssertEqual(sut.entityCount, 1)
 	}
 
 	func test_addComponentToEntity() {
@@ -58,7 +58,7 @@ class EntityComponentChunkTests: XCTestCase {
 
 		sut.add(NullComponent.self)
 
-		XCTAssertEqual(sut.components.count, 1)
+		XCTAssertEqual(sut.componentTypeCount, 1)
 	}
 
 	func test_addsComponentTypeOnlyOnce() {
@@ -67,7 +67,7 @@ class EntityComponentChunkTests: XCTestCase {
 		sut.add(NullComponent.self)
 		sut.add(NullComponent.self)
 
-		XCTAssertEqual(sut.components.count, 1)
+		XCTAssertEqual(sut.componentTypeCount, 1)
 	}
 
 	func test_addsMultipleComponentTypes() {
@@ -76,7 +76,7 @@ class EntityComponentChunkTests: XCTestCase {
 		sut.add(NullComponent.self)
 		sut.add(IntComponent.self)
 
-		XCTAssertEqual(sut.components.count, 2)
+		XCTAssertEqual(sut.componentTypeCount, 2)
 	}
 
 	func test_addComponentAndGetSameOne() {
