@@ -97,7 +97,7 @@ public struct ComponentRow<Component: EntityComponent>: ComponentRowProtocol {
 		// Will be a valid index once we grow
 		let beginningEndIndex = endIndex
 		columns.append(contentsOf: Array(repeating: Component(), count: toGrowBy))
-		return beginningEndIndex != endIndex ? beginningEndIndex..<endIndex : .empty
+		return beginningEndIndex..<endIndex
 	}
 
 	public var columnIndices: ComponentColumnIndices {
