@@ -109,7 +109,7 @@ public struct ComponentMatrix {
 		}
 
 		guard let rowContainer = matrix[componentMatrixRow.index] as? RowContainer<Component> else {
-			assert(false, "Internal logic error, the componentFamilyMatrixRowMap does not match the matrix")
+			assertionFailure("Internal logic error, the componentFamilyMatrixRowMap does not match the matrix")
 			return []
 		}
 
@@ -136,20 +136,37 @@ public struct ComponentMatrix {
 		}
 
 		guard let rowContainer = matrix[componentMatrixRow.index] as? RowContainer<Component>  else {
-			assert(false, "Encountered nexpected type at row: \(componentMatrixRow.index) ")
+			assertionFailure("Encountered nexpected type at row: \(componentMatrixRow.index) ")
 			return
 		}
 		rowContainer.row[column] = component
 	}
 
-	public mutating func addColumns(_ count: Int) -> ComponentColumnIndices {
-		var indices: ComponentColumnIndices?
+	public mutating func addColumns(_ columnsToGrowBy: Int) -> ComponentColumnIndices {
 
-		for rowContainer in matrix {
-			indices = rowContainer.growColumns(by: count)
+		var iterator = matrix.makeIterator()
+
+		guard columnsToGrowBy > 0, let firstComponentRow = iterator.next() else { return .empty }
+
+		let firstIndices = firstComponentRow.growColumns(by: columnsToGrowBy)
+
+		guard firstIndices != .empty else {
+			return .empty
 		}
 
-		return indices ?? .empty
+		while let componentRow = iterator.next(), componentRow.count < firstComponentRow.count {
+			let growBy = Swift.min(firstComponentRow.count - componentRow.count, columnsToGrowBy)
+			guard componentRow.growColumns(by: growBy) != .empty else {
+				assertionFailure("Failed to grow columns.")
+				return .empty
+			}
+		}
+
+		assert(matrix.map({ $0.count == firstComponentRow.count})
+						.reduce(true, { $0 && $1 }) == true,
+					 "Component rows are not equal length")
+
+		return firstIndices
 	}
 
 	/// Removes a component type from the matrix
