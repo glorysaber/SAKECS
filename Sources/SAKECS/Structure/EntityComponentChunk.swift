@@ -103,7 +103,8 @@ public struct EntityComponentChunk {
 	/// - Returns: The component if the component exists, nil otherwise
 	public mutating func get<Component: EntityComponent>(
 		_ componentType: Component.Type,
-		for entity: Entity) -> Component? {
+		for entity: Entity
+	) -> Component? {
 		guard let columnIndex = entities[entity] else { return nil }
 		return components.get(componentType, for: columnIndex)
 	}

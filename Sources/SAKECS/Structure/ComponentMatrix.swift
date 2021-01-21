@@ -162,8 +162,7 @@ public struct ComponentMatrix {
 			}
 		}
 
-		assert(matrix.map({ $0.count == firstComponentRow.count})
-						.reduce(true, { $0 && $1 }) == true,
+		assert(matrix.allSatisfy({ $0.count == firstComponentRow.count }),
 					 "Component rows are not equal length")
 
 		return firstIndices

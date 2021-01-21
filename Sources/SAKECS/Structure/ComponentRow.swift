@@ -104,10 +104,8 @@ public struct ComponentRow<Component: EntityComponent>: ComponentRowProtocol {
 	}
 
 	public var columnIndices: ComponentColumnIndices {
-			isEmpty ?
-				.emptyInvalid :
-				startIndex..<endIndex
-		}
+		isEmpty ? .emptyInvalid : startIndex..<endIndex
+	}
 }
 
 extension ComponentRow: RandomAccessCollection {
