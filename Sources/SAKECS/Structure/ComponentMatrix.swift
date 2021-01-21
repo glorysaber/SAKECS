@@ -146,19 +146,19 @@ public struct ComponentMatrix {
 
 		var iterator = matrix.makeIterator()
 
-		guard columnsToGrowBy > 0, let firstComponentRow = iterator.next() else { return .empty }
+		guard columnsToGrowBy > 0, let firstComponentRow = iterator.next() else { return .emptyInvalid }
 
 		let firstIndices = firstComponentRow.growColumns(by: columnsToGrowBy)
 
-		guard firstIndices != .empty else {
-			return .empty
+		guard firstIndices.isEmpty == false else {
+			return .emptyInvalid
 		}
 
 		while let componentRow = iterator.next(), componentRow.count < firstComponentRow.count {
 			let growBy = Swift.min(firstComponentRow.count - componentRow.count, columnsToGrowBy)
-			guard componentRow.growColumns(by: growBy) != .empty else {
+			guard componentRow.growColumns(by: growBy).isEmpty == false else {
 				assertionFailure("Failed to grow columns.")
-				return .empty
+				return .emptyInvalid
 			}
 		}
 
@@ -279,7 +279,7 @@ extension ComponentMatrix: RandomAccessCollection {
 public extension ComponentMatrix {
 
 	var columnIndices: ComponentColumnIndices {
-		matrix.first?.containedElement.columnIndices ?? .empty
+		matrix.first?.containedElement.columnIndices ?? .emptyInvalid
 	}
 
 	/// The position of the first element in a nonempty column row,

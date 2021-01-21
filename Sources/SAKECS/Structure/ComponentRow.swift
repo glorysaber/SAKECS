@@ -42,7 +42,10 @@ extension ComponentColumnIndex: Strideable {
 }
 
 extension ComponentColumnIndices where Bound == ComponentColumnIndex {
-	public static let empty = ComponentColumnIndices(uncheckedBounds: (.invalid, .invalid))
+
+	/// Returns an empty Invalid Range, not all empty ranges are invalid.
+	/// use the .isEmpty property to check if a range is empty.
+	public static let emptyInvalid = ComponentColumnIndices(uncheckedBounds: (.invalid, .invalid))
 }
 
 extension ComponentColumnIndex: Hashable {}
@@ -102,7 +105,7 @@ public struct ComponentRow<Component: EntityComponent>: ComponentRowProtocol {
 
 	public var columnIndices: ComponentColumnIndices {
 			isEmpty ?
-				.empty :
+				.emptyInvalid :
 				startIndex..<endIndex
 		}
 }
