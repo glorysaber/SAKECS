@@ -17,8 +17,7 @@ private protocol RowContainerProtocol: AnyObject {
 
 	/// Grows the columns of the stored row
 	/// - Parameter toGrowBy: The number of columns to grow by
-	func growColumns(by toGrowBy: Int)
-
+	func growColumns(by toGrowBy: Int) -> ComponentColumnIndices
 
 	/// The contained element
 	var containedElement: ComponentRowProtocol { get }
@@ -27,10 +26,18 @@ private protocol RowContainerProtocol: AnyObject {
 // MARK: - ComponentRowIndex
 
 /// The row for a component array  in the component matrix
-public struct ComponentRowIndex: Index {
-	public let index: Int
+public struct ComponentRowIndex: Comparable {
+	public static func < (lhs: ComponentRowIndex, rhs: ComponentRowIndex) -> Bool {
+		lhs.index < rhs.index
+	}
 
-	public init(index: Int) {
+	/// Indexes are only valid when there collection is non empty,
+	/// so checking against this value is not enough to know if an index is invalid.
+	public static let invalidIndex = ComponentRowIndex(-1)
+
+	fileprivate let index: Int
+
+	fileprivate init(_ index: Int) {
 		self.index = index
 	}
 }
@@ -39,6 +46,11 @@ public struct ComponentRowIndex: Index {
 
 /// The storage representation of the components which belong to entities
 public struct ComponentMatrix {
+
+	enum Error: Swift.Error {
+		/// Component Types cannot be added twice
+		case componentAlreadyExists
+	}
 
 	/// A contianer for each row to allow mutability
 	private class RowContainer<Component: EntityComponent>: RowContainerProtocol {
@@ -50,7 +62,10 @@ public struct ComponentMatrix {
 			row.count
 		}
 
-		func growColumns(by toGrowBy: Int) {
+		/// Grows the columns by the given integer and then returns an empty or non empty collection.
+		/// - Parameter toGrowBy: The number to grow this rows columns by
+		/// - Returns: The additional new indices
+		func growColumns(by toGrowBy: Int) -> ComponentColumnIndices {
 			row.growColumns(by: toGrowBy)
 		}
 
@@ -72,12 +87,18 @@ public struct ComponentMatrix {
 	}
 
 	/// A map of the index for a component family.
-	private(set) var componentFamilyMatrixRowMap = [ComponentFamilyID: ComponentRowIndex]()
+	private var componentFamilyMatrixRowMap = [ComponentFamilyID: ComponentRowIndex]()
 
 	/// The components storage
 	private var matrix = [RowContainerProtocol]()
 
 	public init() {}
+
+	/// Checks if the component type is contained
+	/// - Parameter type: the type to check for
+	public func contains<Component: EntityComponent>(_ type: Component.Type) -> Bool {
+		componentFamilyMatrixRowMap.keys.contains(type.familyID)
+	}
 
 	/// Gets the components of the given type, returns an empty array otherwise.
 	/// - Parameter type: The type of components to get
@@ -88,7 +109,7 @@ public struct ComponentMatrix {
 		}
 
 		guard let rowContainer = matrix[componentMatrixRow.index] as? RowContainer<Component> else {
-			assert(false, "Internal logic error, the componentFamilyMatrixRowMap does not match the matrix")
+			assertionFailure("Internal logic error, the componentFamilyMatrixRowMap does not match the matrix")
 			return []
 		}
 
@@ -106,7 +127,8 @@ public struct ComponentMatrix {
 		return (matrix[componentMatrixRow.index] as? RowContainer<Component>)?.row[column] ?? nil
 	}
 
-	/// Gets the component for the given type and column
+	/// Gets the component for the given type and column.
+	/// Does nothing if the component type does not  already have a row.
 	/// - Parameter component: The component to add
 	public mutating func set<Component: EntityComponent>(_ component: Component, for column: ComponentColumnIndex) {
 		guard let componentMatrixRow = componentFamilyMatrixRowMap[Component.familyID] else {
@@ -114,16 +136,36 @@ public struct ComponentMatrix {
 		}
 
 		guard let rowContainer = matrix[componentMatrixRow.index] as? RowContainer<Component>  else {
-			assert(false, "Encountered nexpected type at row: \(componentMatrixRow.index) ")
+			assertionFailure("Encountered nexpected type at row: \(componentMatrixRow.index) ")
 			return
 		}
 		rowContainer.row[column] = component
 	}
 
-	public mutating func addColumns(_ count: Int) {
-		for rowContainer in matrix {
-			rowContainer.growColumns(by: count)
+	public mutating func addColumns(_ columnsToGrowBy: Int) -> ComponentColumnIndices {
+
+		var iterator = matrix.makeIterator()
+
+		guard columnsToGrowBy > 0, let firstComponentRow = iterator.next() else { return .emptyInvalid }
+
+		let firstIndices = firstComponentRow.growColumns(by: columnsToGrowBy)
+
+		guard firstIndices.isEmpty == false else {
+			return .emptyInvalid
 		}
+
+		while let componentRow = iterator.next(), componentRow.count < firstComponentRow.count {
+			let growBy = Swift.min(firstComponentRow.count - componentRow.count, columnsToGrowBy)
+			guard componentRow.growColumns(by: growBy).isEmpty == false else {
+				assertionFailure("Failed to grow columns.")
+				return .emptyInvalid
+			}
+		}
+
+		assert(matrix.allSatisfy({ $0.count == firstComponentRow.count }),
+					 "Component rows are not equal length")
+
+		return firstIndices
 	}
 
 	/// Removes a component type from the matrix
@@ -144,14 +186,19 @@ public struct ComponentMatrix {
 	}
 
 	/// Adds a new component type to the internal storage.  O(1) Time Complexity operation.
+	/// If the component type already exists it returns the same row as the original
 	/// - Parameter familyID: The type of component for the array
 	/// - Returns: The row for the new matrix row
 	@discardableResult
 	public mutating func add<Component: EntityComponent>(_ type: Component.Type) -> ComponentRowIndex {
+		if let componentMatrixRow =  componentFamilyMatrixRowMap[Component.familyID] {
+			return componentMatrixRow
+		}
 		let componentMatrixRow = ComponentRowIndex(matrix.count)
 
 		// Create a new component array filled with the same number of columns as the other components arrays
-		let componentRow = ComponentRow<Component>()
+		var componentRow = ComponentRow<Component>()
+		_ = componentRow.growColumns(by: matrix.first?.count ?? 0)
 		matrix.append(RowContainer(componentRow))
 		componentFamilyMatrixRowMap[Component.familyID] = componentMatrixRow
 		return componentMatrixRow
@@ -230,22 +277,20 @@ extension ComponentMatrix: RandomAccessCollection {
 
 public extension ComponentMatrix {
 
-	var columnIndices: ClosedRange<ComponentColumnIndex> {
-		componentColumns == 0 ?
-			ComponentColumnIndex(0)...ComponentColumnIndex(0) :
-			ComponentColumnIndex(0)...ComponentColumnIndex(componentColumns - 1)
+	var columnIndices: ComponentColumnIndices {
+		matrix.first?.containedElement.columnIndices ?? .emptyInvalid
 	}
 
 	/// The position of the first element in a nonempty column row,
 	/// gaurenteed to be valid in all ComponentRows of the same length
 	var columnStartIndex: ComponentColumnIndex {
-		matrix.first?.containedElement.startIndex ?? ComponentColumnIndex(0)
+		matrix.first?.containedElement.startIndex ?? .invalid
 	}
 
 	/// The position of the last element plus one in a nonempty column row,
 	/// gaurenteed to be valid in all ComponentRows of the same length
 	var columnEndIndex: ComponentColumnIndex {
-		matrix.first?.containedElement.endIndex ?? ComponentColumnIndex(0)
+		matrix.first?.containedElement.endIndex ?? .invalid
 	}
 
 	/// Returns the position immediately after the given index.

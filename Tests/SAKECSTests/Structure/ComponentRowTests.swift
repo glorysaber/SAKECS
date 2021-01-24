@@ -20,7 +20,7 @@ class ComponentRowTests: XCTestCase {
 	func test_componentRowsGrow() {
 		var sut = ComponentRow<NullComponent>()
 
-		sut.growColumns(by: 3)
+		_ = sut.growColumns(by: 3)
 
 		XCTAssertEqual(sut.count, 3)
 	}
@@ -28,7 +28,7 @@ class ComponentRowTests: XCTestCase {
 	func test_settingAndRetrievingComponentForRow() {
 		var sut = ComponentRow<NullComponent>()
 
-		sut.growColumns(by: 3)
+		_ = sut.growColumns(by: 3)
 
 		let nullComponent = NullComponent()
 		sut[sut.startIndex] = nullComponent
@@ -39,7 +39,7 @@ class ComponentRowTests: XCTestCase {
 	func test_enumeratingAllElements() {
 		var sut = ComponentRow<IntComponent>()
 
-		sut.growColumns(by: 3)
+		_ = sut.growColumns(by: 3)
 
 		for (count, index) in sut.indices.enumerated() {
 			sut[index] = IntComponent(count)
@@ -60,7 +60,7 @@ class ComponentRowTests: XCTestCase {
 	func test_lastAndFirstMatchIndexedAndAreNotNil() {
 		var sut = ComponentRow<NullComponent>()
 
-		sut.growColumns(by: 2)
+		_ = sut.growColumns(by: 2)
 
 		XCTAssertNotNil(sut.first)
 		XCTAssertNotNil(sut.last)
@@ -73,7 +73,7 @@ class ComponentRowTests: XCTestCase {
 	func test_enumerationGivesAllComponents() {
 		var sut = ComponentRow<NullComponent>()
 
-		sut.growColumns(by: 2)
+		_ = sut.growColumns(by: 2)
 
 		var allComponents = [sut.first!, sut.last!]
 

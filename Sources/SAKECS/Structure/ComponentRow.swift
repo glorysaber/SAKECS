@@ -8,30 +8,47 @@
 
 import Foundation
 
-/// The Index type for a column in a component row
-public struct ComponentColumnIndex: Index {
-	public let index: Int
+public typealias ComponentColumnIndices = CountableRange<ComponentColumnIndex>
 
-	public init(index: Int) {
+/// The Index type for a column in a component row
+/// This index type has a special provission that it is valid in any ComponentRow
+///  that is the same length or more as the original where the indice originated.
+public struct ComponentColumnIndex: Comparable {
+	public static func < (lhs: ComponentColumnIndex, rhs: ComponentColumnIndex) -> Bool {
+		lhs.index < rhs.index
+	}
+
+	/// Indexes are only valid when there collection is non empty,
+	/// so checking against this value is not enough to know if an index is invalid.
+	public static let invalid = ComponentColumnIndex(-1)
+
+	fileprivate let index: Int
+
+	fileprivate init(_ index: Int) {
 		self.index = index
 	}
 }
+
 extension ComponentColumnIndex: Strideable {
 	public func distance(to other: ComponentColumnIndex) -> Int {
 		other.index - index
 	}
 
 	public func advanced(by advances: Int) -> ComponentColumnIndex {
-		self + advances
+		ComponentColumnIndex(self.index + advances)
 	}
 
 	public typealias Stride = Int
-
-	public static func < (lhs: Self, rhs: Self) -> Bool {
-		lhs.index < rhs.index
-	}
-
 }
+
+extension ComponentColumnIndices where Bound == ComponentColumnIndex {
+
+	/// Returns an empty Invalid Range, not all empty ranges are invalid.
+	/// use the .isEmpty property to check if a range is empty.
+	public static let emptyInvalid = ComponentColumnIndices(uncheckedBounds: (.invalid, .invalid))
+}
+
+extension ComponentColumnIndex: Hashable {}
 
 /// A type erasing protocol for component rows, component rows need to be casted for any type safe methods.
 public protocol ComponentRowProtocol {
@@ -52,7 +69,12 @@ public protocol ComponentRowProtocol {
 	func index(before index: ComponentColumnIndex) -> ComponentColumnIndex
 
 	/// Adds the given number of columns using the default required initializer as the default values
-	mutating func growColumns(by toGrowBy: Int)
+	mutating func growColumns(by toGrowBy: Int) -> ComponentColumnIndices
+
+	/// The typeerased indices of the Component Row without a copy or reference to the structure where
+	/// all indices are valid
+	/// for any given ComponentRowProtocol of the same length or greater
+	var columnIndices: ComponentColumnIndices { get }
 }
 
 /// A row of like components.
@@ -74,8 +96,15 @@ public struct ComponentRow<Component: EntityComponent>: ComponentRowProtocol {
 	public init() {}
 
 	/// Adds the given number of columns
-	public mutating func growColumns(by toGrowBy: Int) {
+	public mutating func growColumns(by toGrowBy: Int) -> ComponentColumnIndices {
+		// Will be a valid index once we grow
+		let beginningEndIndex = endIndex
 		columns.append(contentsOf: Array(repeating: Component(), count: toGrowBy))
+		return beginningEndIndex..<endIndex
+	}
+
+	public var columnIndices: ComponentColumnIndices {
+		isEmpty ? .emptyInvalid : startIndex..<endIndex
 	}
 }
 
