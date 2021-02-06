@@ -7,22 +7,30 @@
 //
 
 /// Comprises a chunk of like entities of a specific archetype, all entities share the same types applied to it.
-public struct EntityComponentChunk {
+public struct EntityComponentChunk: ArchetypeGroup {
+	public var freeIndexCount: Int = 0
+
+	// MARK: - Types
+
 	/// The row for a component in the components
-	typealias ComponentRowIndex = ComponentColumnIndex
+	private typealias ComponentRowIndex = ComponentColumnIndex
+
+	// MARK: - Properties
 
 	/// Count of entities
 	public var entityCount: Int {
 		entities.count
 	}
 
-	/// Entity map to their row
-	private var entities = [Entity: ComponentRowIndex]()
-
 	/// Count of componentTypes
 	public var componentTypeCount: Int {
 		components.count
 	}
+
+	// MARK: private
+
+	/// Entity map to their row
+	private var entities = [Entity: ComponentRowIndex]()
 
 	/// The components for the entities
 	private var components = ComponentMatrix()
@@ -30,10 +38,28 @@ public struct EntityComponentChunk {
 	/// Unused component ColumnsIndices
 	private var emptyColumnsIndices = Set<ComponentColumnIndex>()
 
-	/// Default Initializer
+	/// Take this into account to reduce allocations
+	public var minimumCapacity: Int = 0 {
+		didSet {
+			entities.reserveCapacity(minimumCapacity)
+			emptyColumnsIndices.reserveCapacity(minimumCapacity)
+			if minimumCapacity - components.componentColumns > 0 {
+				let newIndexes = components.addColumns(minimumCapacity - components.count)
+				emptyColumnsIndices.formUnion(newIndexes)
+			}
+		}
+	}
+
+	// MARK: - LifeCycle
 	public init() {}
 
-	// MARK: Entities
+	// MARK: - Entities
+
+	public mutating func reserveCapacity(_ minimumCapacity: Int) {
+		if minimumCapacity > self.minimumCapacity {
+			self.minimumCapacity = minimumCapacity
+		}
+	}
 
 	/// - Parameter entity: The entity to check for
 	/// - Returns: true if the entity record exists, false otherwise
@@ -101,7 +127,7 @@ public struct EntityComponentChunk {
 	///   - componentType: The component type to get
 	///   - entity: The Entity to get the component for
 	/// - Returns: The component if the component exists, nil otherwise
-	public mutating func get<Component: EntityComponent>(
+	public func get<Component: EntityComponent>(
 		_ componentType: Component.Type,
 		for entity: Entity
 	) -> Component? {
