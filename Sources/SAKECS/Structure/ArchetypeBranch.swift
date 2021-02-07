@@ -44,6 +44,9 @@ public struct ArchetypeBranch<Chunk: ArchetypeGroup> {
 
 // MARK: - Shared Components
 extension ArchetypeBranch {
+
+	/// Sets a component for the branch.
+	/// - Parameter component: The component to add or set
 	public mutating func setShared<Component: EntityComponent>(_ component: Component) {
 		if let index = sharedComponentsIndexes[Component.familyID] {
 			sharedComponents[index] = component
@@ -54,6 +57,8 @@ extension ArchetypeBranch {
 		}
 	}
 
+	/// Gets the shared component of the given type
+	/// - Returns: The component or nil
 	public func getShared<Component: EntityComponent>() -> Component? {
 		guard let index = sharedComponentsIndexes[Component.familyID] else {
 			return nil
@@ -62,10 +67,15 @@ extension ArchetypeBranch {
 		return sharedComponents[index] as? Component
 	}
 
+	/// Gets the shared component of the given type
+	/// - Returns: The component or nil
 	public func getShared<Component: EntityComponent>(_ component: Component.Type) -> Component? {
 		return getShared()
 	}
 
+	
+	/// Removes the shared component if it exists
+	/// - Parameter component: The component type to remove.
 	public mutating func removeShared<Component: EntityComponent>(_ component: Component.Type) {
 		guard let index = sharedComponentsIndexes[Component.familyID] else {
 			return

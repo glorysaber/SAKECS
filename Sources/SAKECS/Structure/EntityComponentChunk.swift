@@ -7,13 +7,13 @@
 //
 
 /// Comprises a chunk of like entities of a specific archetype, all entities share the same types applied to it.
-public struct EntityComponentChunk: ArchetypeGroup {
+public struct EntityComponentChunk {
 	public var freeIndexCount: Int = 0
 
 	// MARK: - Types
 
 	/// The row for a component in the components
-	private typealias ComponentRowIndex = ComponentColumnIndex
+	public typealias ComponentRowIndex = ComponentColumnIndex
 
 	// MARK: - Properties
 
@@ -53,6 +53,17 @@ public struct EntityComponentChunk: ArchetypeGroup {
 	// MARK: - LifeCycle
 	public init() {}
 
+	/// Only for the first get of this variable will it attempt to grow the storage to match...
+	/// Should be equivalent to dispatch_once.
+	private lazy var growStorageToMatchOnce: Void = {
+		growStorageToMatch()
+	}()
+
+}
+
+// MARK: - ArchetypeGroup
+extension EntityComponentChunk: ArchetypeGroup {
+
 	// MARK: - Entities
 
 	public mutating func reserveCapacity(_ minimumCapacity: Int) {
@@ -61,15 +72,10 @@ public struct EntityComponentChunk: ArchetypeGroup {
 		}
 	}
 
-	/// - Parameter entity: The entity to check for
-	/// - Returns: true if the entity record exists, false otherwise
 	public func contains(_ entity: Entity) -> Bool {
 		entities.keys.contains(entity)
 	}
 
-	/// Adds an entity entry to this chunk, grows the underlying storage to accomodate it.
-	///  It will not produce an index for an entity if
-	/// - Parameter entity: The entity to add
 	public mutating func add(entity: Entity) {
 		entities[entity] =
 			emptyColumnsIndices.first ??
@@ -77,8 +83,6 @@ public struct EntityComponentChunk: ArchetypeGroup {
 			.invalid
 	}
 
-	/// Sets an entity entry as empty if it exists
-	/// - Parameter entity: The entity to remove
 	public mutating func remove(entity: Entity) {
 		if let index = entities.removeValue(forKey: entity) {
 			emptyColumnsIndices.insert(index)
@@ -87,25 +91,15 @@ public struct EntityComponentChunk: ArchetypeGroup {
 
 	// MARK: Components
 
-	/// - Parameter componentType: The component type to check for
-	/// - Returns: true if the entity componentType exists, false otherwise
 	public func contains<Component: EntityComponent>(_ componentType: Component.Type) -> Bool {
 		components.contains(componentType)
 	}
 
-	/// If the given enity exists, set this component.
-	/// If the component does not exist in the chunk does nothing.
-	/// - Parameters:
-	///   - component: The object to set
-	///   - entity: the entity to find the column for and set the component
 	public mutating func set<Component: EntityComponent>(_ component: Component, for entity: Entity) {
 		guard let columnIndex = entities[entity] else { return }
 		components.set(component, for: columnIndex)
 	}
 
-	/// Adds the given componentType if it does not already exist
-	/// - Parameters:
-	///   - componentType: The component type to add
 	public mutating func add<Component: EntityComponent>(_ componentType: Component.Type) {
 		components.add(componentType)
 
@@ -115,18 +109,10 @@ public struct EntityComponentChunk: ArchetypeGroup {
 		_ = growStorageToMatchOnce
 	}
 
-	/// removes the given componentType if it exists
-	/// - Parameters:
-	///   - componentType: The component type to remove
 	public mutating func remove<Component: EntityComponent>(_ componentType: Component.Type) {
 		components.remove(componentType)
 	}
 
-	/// Gets the given component for the entity or nil otherwise
-	/// - Parameters:
-	///   - componentType: The component type to get
-	///   - entity: The Entity to get the component for
-	/// - Returns: The component if the component exists, nil otherwise
 	public func get<Component: EntityComponent>(
 		_ componentType: Component.Type,
 		for entity: Entity
@@ -134,19 +120,20 @@ public struct EntityComponentChunk: ArchetypeGroup {
 		guard let columnIndex = entities[entity] else { return nil }
 		return components.get(componentType, for: columnIndex)
 	}
+}
 
-	// MARK: - Private Helpers
-
-	private lazy var growStorageToMatchOnce: Void = {
-		growStorageToMatch()
-	}()
-
+// MARK: - Private Helpers
+private extension EntityComponentChunk {
+	/// Grows the internal storage of a the component matrix to match the
+	/// size of the entities or the minimum component size
 	private mutating func growStorageToMatch() {
 		guard entities.count > components.componentColumns else {
 			return
 		}
 
-		emptyColumnsIndices.formUnion(components.addColumns(entities.count - components.componentColumns))
+		let columnsToAdd = Swift.max(entities.count - components.componentColumns, minimumCapacity)
+		let newIndexes = components.addColumns(columnsToAdd)
+		emptyColumnsIndices.formUnion(newIndexes)
 
 		for (entity, column) in entities where column == .invalid && emptyColumnsIndices.isEmpty == false {
 			entities[entity] = emptyColumnsIndices.removeFirst()
