@@ -12,7 +12,7 @@ import SAKECS
 class ArchetypeBranchTests: XCTestCase {
 
 	func test_canAddEntitiesToChunk() {
-		var sut = EntityComponentBranch()
+		var sut = makeSUT()
 
 		sut.add(entity: 1)
 		sut.add(entity: 3)
@@ -23,7 +23,7 @@ class ArchetypeBranchTests: XCTestCase {
 	}
 
 	func test_doesNotContainEntity() {
-		var sut = EntityComponentBranch()
+		var sut = makeSUT()
 
 		sut.add(entity: 1)
 		sut.add(entity: 3)
@@ -32,7 +32,7 @@ class ArchetypeBranchTests: XCTestCase {
 	}
 
 	func test_addingSameEntityDoesNotDuplicate() {
-		var sut = EntityComponentBranch()
+		var sut = makeSUT()
 
 		sut.add(entity: 1)
 		sut.add(entity: 1)
@@ -42,7 +42,7 @@ class ArchetypeBranchTests: XCTestCase {
 	}
 
 	func test_removeEntity() {
-		var sut = EntityComponentBranch()
+		var sut = makeSUT()
 
 		sut.add(entity: 1)
 		sut.add(entity: 2)
@@ -52,7 +52,7 @@ class ArchetypeBranchTests: XCTestCase {
 	}
 
 	func test_addComponentToEntity() {
-		var sut = EntityComponentBranch()
+		var sut = makeSUT()
 
 		sut.add(entity: 1)
 
@@ -62,7 +62,7 @@ class ArchetypeBranchTests: XCTestCase {
 	}
 
 	func test_addsComponentTypeOnlyOnce() {
-		var sut = EntityComponentBranch()
+		var sut = makeSUT()
 
 		sut.add(NullComponent.self)
 		sut.add(NullComponent.self)
@@ -71,7 +71,7 @@ class ArchetypeBranchTests: XCTestCase {
 	}
 
 	func test_addsMultipleComponentTypes() {
-		var sut = EntityComponentBranch()
+		var sut = makeSUT()
 
 		sut.add(NullComponent.self)
 		sut.add(IntComponent.self)
@@ -80,7 +80,7 @@ class ArchetypeBranchTests: XCTestCase {
 	}
 
 	func test_addComponentAndGetSameOne() {
-		var sut = EntityComponentBranch()
+		var sut = makeSUT()
 
 		sut.add(entity: 1)
 		sut.add(NullComponent.self)
@@ -97,6 +97,18 @@ class ArchetypeBranchTests: XCTestCase {
 		XCTAssertTrue(sut.contains(NullComponent.self))
 		sut.remove(NullComponent.self)
 		XCTAssertFalse(sut.contains(NullComponent.self))
+	}
+
+	func test_IndexesBetweenStartAndEndAreValid() {
+		let (sut, _) = makeSUT(with: 10)
+
+		XCTAssertEqual(sut.count, 1)
+
+		var index = sut.startIndex
+		while index != sut.endIndex {
+			_ = sut[index]
+			index = sut.index(after: index)
+		}
 	}
 
 	private struct NullComponent: EntityComponent {}
@@ -117,10 +129,18 @@ class ArchetypeBranchTests: XCTestCase {
 		}
 	}
 
+	private func makeSUT() -> EntityComponentBranch {
+		EntityComponentBranch {
+			EntityComponentChunk()
+		}
+	}
+
 	/// Returns a sut with two component types, Int and Null, with the specified number of columns,
 	/// and IntComponents ever increasing in value to match index
 	private func makeSUT(with numberOfColumns: Int) -> (EntityComponentBranch, [Entity: IntComponent]) {
-		var sut = EntityComponentBranch()
+		var sut = EntityComponentBranch {
+			EntityComponentChunk()
+		}
 
 		sut.add(NullComponent.self)
 		sut.add(IntComponent.self)

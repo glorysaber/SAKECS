@@ -21,9 +21,6 @@ public protocol ArchetypeGroup {
 	/// Take this into account to reduce allocations
 	var minimumCapacity: Int { get }
 
-	// MARK: Initialization
-	init()
-
 	// MARK: Storage
 
 	/// Reserves capacity for the given amount of entities. Best used after you have assigned the component types.

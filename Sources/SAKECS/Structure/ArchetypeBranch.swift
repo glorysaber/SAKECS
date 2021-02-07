@@ -18,52 +18,60 @@ public typealias EntityComponentBranch = ArchetypeBranch<EntityComponentChunk>
 public struct ArchetypeBranch<Chunk: ArchetypeGroup> {
 
 	fileprivate final class Container {
-		var chunk: Chunk = Chunk()
-		required init() {}
+		var chunk: Chunk
+		init(_ chunk: Chunk) {
+			self.chunk = chunk
+		}
 	}
-
-	public init() {}
 
 	/**
 	All of the chunks should be of the same archetype, this must
 	be gaurenteed by the branch..
+	I use containers as I will need to alterthe contents without copying.
 	*/
-	private var componentChunks = [Container()]
+	private var chunkContainers: [Container]
+
+	private let chunkConstructor: () -> Chunk
+
+	public init(chunkConstructor: @escaping () -> Chunk) {
+		self.chunkConstructor = chunkConstructor
+		self.chunkContainers = [Container(chunkConstructor())]
+	}
 }
 
 extension ArchetypeBranch: ArchetypeGroup {
 
 	public var entityCount: Int {
-		componentChunks.reduce(0) { $0 + $1.entityCount }
+		chunkContainers.reduce(0) { $0 + $1.entityCount }
 	}
 
 	public var componentTypeCount: Int {
-		componentChunks.first?.componentTypeCount ?? 0
+		chunkContainers.first?.componentTypeCount ?? 0
 	}
 
 	public var freeIndexCount: Int {
-		componentChunks.reduce(0) { $0 + $1.freeIndexCount }
+		chunkContainers.reduce(0) { $0 + $1.freeIndexCount }
 	}
 
 	public var minimumCapacity: Int {
-		componentChunks.first?.componentTypeCount ?? 0
+		chunkContainers.first?.componentTypeCount ?? 0
 	}
 
 	public mutating func reserveCapacity(_ minimumCapcity: Int) {
 		if minimumCapcity > self.minimumCapacity {
-			componentChunks.forEach { $0.reserveCapacity(minimumCapcity) }
+			chunkContainers.forEach { $0.reserveCapacity(minimumCapcity) }
 		}
 	}
 
 	public func contains(_ entity: Entity) -> Bool {
-		componentChunks.contains { $0.contains(entity) }
+		chunkContainers.contains { $0.contains(entity) }
 	}
 
 	public mutating func add(entity: Entity) {
 		// adding more than one chunk will be based on performance... so one chunk passes all tests for now.
-		let chunk = componentChunks.first ?? {
-			let chunk = Container()
-			componentChunks.append(chunk)
+		let chunk = chunkContainers.first ?? {
+			let chunk = Container(chunkConstructor())
+			chunkContainers.append(chunk)
 			return chunk
 		}()
 
@@ -71,30 +79,52 @@ extension ArchetypeBranch: ArchetypeGroup {
 	}
 
 	public mutating func remove(entity: Entity) {
-		componentChunks.first(where: { $0.contains(entity) })?
+		chunkContainers.first(where: { $0.contains(entity) })?
 			.remove(entity: entity)
 	}
 
 	public func contains<Component: EntityComponent>(_ componentType: Component.Type) -> Bool {
-		componentChunks.contains { $0.contains(componentType) }
+		chunkContainers.contains { $0.contains(componentType) }
 	}
 
 	public mutating func set<Component: EntityComponent>(_ component: Component, for entity: Entity) {
-		componentChunks.first(where: { $0.contains(entity) })?
+		chunkContainers.first(where: { $0.contains(entity) })?
 			.set(component, for: entity)
 	}
 
 	public mutating func add<Component: EntityComponent>(_ componentType: Component.Type) {
-		componentChunks.forEach { $0.add(componentType) }
+		chunkContainers.forEach { $0.add(componentType) }
 	}
 
 	public mutating func remove<Component: EntityComponent>(_ componentType: Component.Type) {
-		componentChunks.forEach { $0.remove(componentType) }
+		chunkContainers.forEach { $0.remove(componentType) }
 	}
 
 	public func get<Component: EntityComponent>(_ componentType: Component.Type, for entity: Entity) -> Component? {
-		componentChunks.first(where: { $0.contains(entity) })?
+		chunkContainers.first(where: { $0.contains(entity) })?
 			.get(componentType, for: entity)
+	}
+}
+
+extension ArchetypeBranch: RandomAccessCollection {
+	public typealias Element = Chunk
+
+	public typealias Index = Int
+
+	public var count: Int {
+		chunkContainers.count
+	}
+
+	public var startIndex: Int {
+		chunkContainers.startIndex
+	}
+
+	public var endIndex: Int {
+		chunkContainers.endIndex
+	}
+
+	public subscript(position: Int) -> Chunk {
+			chunkContainers[position].chunk
 	}
 }
 
