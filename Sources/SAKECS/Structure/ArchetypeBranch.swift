@@ -29,16 +29,18 @@ public struct ArchetypeBranch<Chunk: ArchetypeGroup> {
 	be gaurenteed by the branch..
 	I use containers as I will need to alterthe contents without copying.
 	*/
-	private var chunkContainers: [Container]
+	private var chunkContainers = [Container]()
 
 	private let chunkConstructor: () -> Chunk
+	private let columnsInEachChunk: Int
 
 	private var sharedComponentsIndexes = [ComponentFamilyID: Int]()
 	private var sharedComponents = [EntityComponent]()
 
-	public init(chunkConstructor: @escaping () -> Chunk) {
+	public init(columnsInEachChunk: Int, chunkConstructor: @escaping () -> Chunk) {
 		self.chunkConstructor = chunkConstructor
-		self.chunkContainers = [Container(chunkConstructor())]
+		self.columnsInEachChunk = columnsInEachChunk
+		_ = addChunk()
 	}
 }
 
@@ -73,7 +75,6 @@ extension ArchetypeBranch {
 		return getShared()
 	}
 
-	
 	/// Removes the shared component if it exists
 	/// - Parameter component: The component type to remove.
 	public mutating func removeShared<Component: EntityComponent>(_ component: Component.Type) {
@@ -121,12 +122,9 @@ extension ArchetypeBranch: ArchetypeGroup {
 	}
 
 	public mutating func add(entity: Entity) {
-		// adding more than one chunk will be based on performance... so one chunk passes all tests for now.
-		let chunk = chunkContainers.first ?? {
-			let chunk = Container(chunkConstructor())
-			chunkContainers.append(chunk)
-			return chunk
-		}()
+		guard contains(entity) == false else { return }
+
+		let chunk = chunkContainers.first { $0.minimumCapacity > $0.entityCount } ?? addChunk()
 
 		chunk.add(entity: entity)
 	}
@@ -179,6 +177,16 @@ extension ArchetypeBranch: RandomAccessCollection {
 
 	public subscript(position: Int) -> Chunk {
 			chunkContainers[position].chunk
+	}
+}
+
+// MARK: - Chunk Management
+private extension ArchetypeBranch {
+	mutating func addChunk() -> Container {
+		let chunk = Container(chunkConstructor())
+		chunk.reserveCapacity(columnsInEachChunk)
+		chunkContainers.append(chunk)
+		return chunk
 	}
 }
 

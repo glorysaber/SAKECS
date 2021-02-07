@@ -106,13 +106,21 @@ class ArchetypeBranchTests: XCTestCase {
 	func test_IndexesBetweenStartAndEndAreValid() {
 		let (sut, _) = makeSUT(with: 10)
 
-		XCTAssertEqual(sut.count, 1)
+		XCTAssertGreaterThan(sut.count, 1)
 
 		var index = sut.startIndex
 		while index != sut.endIndex {
 			_ = sut[index]
 			index = sut.index(after: index)
 		}
+	}
+
+	// MARK: Chunks
+
+	func test_makesProperAmountOfchunks() {
+		let (sut, _) = makeSUT(with: 10)
+
+		XCTAssertEqual(sut.count, 5)
 	}
 
 	// MARK: Shared Components
@@ -157,7 +165,7 @@ class ArchetypeBranchTests: XCTestCase {
 	}
 
 	private func makeSUT() -> EntityComponentBranch {
-		EntityComponentBranch {
+		EntityComponentBranch(columnsInEachChunk: 1) {
 			EntityComponentChunk()
 		}
 	}
@@ -165,7 +173,7 @@ class ArchetypeBranchTests: XCTestCase {
 	/// Returns a sut with two component types, Int and Null, with the specified number of columns,
 	/// and IntComponents ever increasing in value to match index
 	private func makeSUT(with numberOfColumns: Int) -> (EntityComponentBranch, [Entity: IntComponent]) {
-		var sut = EntityComponentBranch {
+		var sut = EntityComponentBranch(columnsInEachChunk: 2) {
 			EntityComponentChunk()
 		}
 
@@ -174,7 +182,7 @@ class ArchetypeBranchTests: XCTestCase {
 
 		var entitiesAndComps = [Entity: IntComponent]()
 
-		for entity in 0...20 {
+		for entity in 0..<numberOfColumns {
 			sut.add(entity: Entity(entity))
 			sut.set(IntComponent(entity), for: Entity(entity))
 			entitiesAndComps[Entity(entity)] = IntComponent(entity)
