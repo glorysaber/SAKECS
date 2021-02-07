@@ -33,12 +33,55 @@ public struct ArchetypeBranch<Chunk: ArchetypeGroup> {
 
 	private let chunkConstructor: () -> Chunk
 
+	private var sharedComponentsIndexes = [ComponentFamilyID: Int]()
+	private var sharedComponents = [EntityComponent]()
+
 	public init(chunkConstructor: @escaping () -> Chunk) {
 		self.chunkConstructor = chunkConstructor
 		self.chunkContainers = [Container(chunkConstructor())]
 	}
 }
 
+// MARK: - Shared Components
+extension ArchetypeBranch {
+	public mutating func setShared<Component: EntityComponent>(_ component: Component) {
+		if let index = sharedComponentsIndexes[Component.familyID] {
+			sharedComponents[index] = component
+		} else {
+			sharedComponents.append(component)
+			sharedComponentsIndexes[Component.familyID] =
+				sharedComponents.endIndex.advanced(by: -1)
+		}
+	}
+
+	public func getShared<Component: EntityComponent>() -> Component? {
+		guard let index = sharedComponentsIndexes[Component.familyID] else {
+			return nil
+		}
+
+		return sharedComponents[index] as? Component
+	}
+
+	public func getShared<Component: EntityComponent>(_ component: Component.Type) -> Component? {
+		return getShared()
+	}
+
+	public mutating func removeShared<Component: EntityComponent>(_ component: Component.Type) {
+		guard let index = sharedComponentsIndexes[Component.familyID] else {
+			return
+		}
+
+		sharedComponents.remove(at: index)
+
+		for (key, value) in sharedComponentsIndexes where value > index {
+			sharedComponentsIndexes[key] = value - 1
+		}
+
+		sharedComponentsIndexes[Component.familyID] = nil
+	}
+}
+
+// MARK: - ArchetypeGroup
 extension ArchetypeBranch: ArchetypeGroup {
 
 	public var entityCount: Int {
@@ -106,6 +149,7 @@ extension ArchetypeBranch: ArchetypeGroup {
 	}
 }
 
+// MARK: - RandomAccessCollection
 extension ArchetypeBranch: RandomAccessCollection {
 	public typealias Element = Chunk
 

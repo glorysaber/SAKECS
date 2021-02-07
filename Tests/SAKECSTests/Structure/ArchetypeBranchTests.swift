@@ -11,6 +11,8 @@ import SAKECS
 
 class ArchetypeBranchTests: XCTestCase {
 
+	// MARK: ArchetypeGroup
+
 	func test_canAddEntitiesToChunk() {
 		var sut = makeSUT()
 
@@ -99,6 +101,8 @@ class ArchetypeBranchTests: XCTestCase {
 		XCTAssertFalse(sut.contains(NullComponent.self))
 	}
 
+	// MARK: Collection
+
 	func test_IndexesBetweenStartAndEndAreValid() {
 		let (sut, _) = makeSUT(with: 10)
 
@@ -110,6 +114,29 @@ class ArchetypeBranchTests: XCTestCase {
 			index = sut.index(after: index)
 		}
 	}
+
+	// MARK: Shared Components
+
+	func test_sharedComponents() {
+		var sut = makeSUT()
+
+		let numberToTestFor = 4
+
+		sut.setShared(IntComponent(numberToTestFor - 1))
+
+		sut.setShared(IntComponent(numberToTestFor))
+
+		sut.setShared(NullComponent())
+
+		XCTAssertEqual(sut.getShared(IntComponent.self)?.value, numberToTestFor)
+
+		sut.removeShared(IntComponent.self)
+
+		XCTAssertNil(sut.getShared(IntComponent.self))
+		XCTAssertNotNil(sut.getShared(NullComponent.self))
+	}
+
+	// MARK: Private Helpers
 
 	private struct NullComponent: EntityComponent {}
 	private struct IntComponent: EntityComponent, Hashable, Comparable {
