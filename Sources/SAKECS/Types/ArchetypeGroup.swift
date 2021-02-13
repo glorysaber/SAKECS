@@ -21,6 +21,9 @@ public protocol ArchetypeGroup {
 	/// Take this into account to reduce allocations
 	var minimumCapacity: Int { get }
 
+	/// Makes a copy of the group with all enitties being unassigned.
+	var archetype: Self { get }
+
 	// MARK: Storage
 
 	/// Reserves capacity for the given amount of entities. Best used after you have assigned the component types.

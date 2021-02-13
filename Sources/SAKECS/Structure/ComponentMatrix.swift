@@ -191,7 +191,7 @@ public struct ComponentMatrix {
 	/// - Returns: The row for the new matrix row
 	@discardableResult
 	public mutating func add<Component: EntityComponent>(_ type: Component.Type) -> ComponentRowIndex {
-		if let componentMatrixRow =  componentFamilyMatrixRowMap[Component.familyID] {
+		if let componentMatrixRow = componentFamilyMatrixRowMap[Component.familyID] {
 			return componentMatrixRow
 		}
 		let componentMatrixRow = ComponentRowIndex(matrix.count)

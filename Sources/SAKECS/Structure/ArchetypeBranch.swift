@@ -95,6 +95,10 @@ extension ArchetypeBranch {
 // MARK: - ArchetypeGroup
 extension ArchetypeBranch: ArchetypeGroup {
 
+	public var archetype: ArchetypeBranch<Chunk> {
+		fatalError()
+	}
+
 	public var entityCount: Int {
 		chunkContainers.reduce(0) { $0 + $1.entityCount }
 	}
@@ -183,10 +187,14 @@ extension ArchetypeBranch: RandomAccessCollection {
 // MARK: - Chunk Management
 private extension ArchetypeBranch {
 	mutating func addChunk() -> Container {
-		let chunk = Container(chunkConstructor())
-		chunk.reserveCapacity(columnsInEachChunk)
-		chunkContainers.append(chunk)
-		return chunk
+		var chunk = chunkContainers.first?.chunk.archetype ?? {
+			var chunk = chunkConstructor()
+			chunk.reserveCapacity(columnsInEachChunk)
+			return chunk
+		}()
+		let chunkContainer = Container(chunk)
+		chunkContainers.append(Container(chunk))
+		return chunkContainer
 	}
 }
 
@@ -209,6 +217,10 @@ extension ArchetypeBranch.Container: ArchetypeGroup {
 
 	func reserveCapacity(_ minimumCapcity: Int) {
 		chunk.reserveCapacity(minimumCapcity)
+	}
+
+	var archetype: Self {
+		Self(chunk.archetype)
 	}
 
 	func contains(_ entity: Entity) -> Bool {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC1DD1D425D6CBE6003B18A1 /* MutableArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1DD1D325D6CBE6003B18A1 /* MutableArrayTests.swift */; };
 		CC3322D925BD06F1000978FD /* ArchetypeBranchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3322D825BD06F1000978FD /* ArchetypeBranchTests.swift */; };
 		CC3322DD25BD0825000978FD /* ArchetypeBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3322DC25BD0825000978FD /* ArchetypeBranch.swift */; };
 		CC3322E125BD0D9C000978FD /* ArchetypeGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3322E025BD0D9C000978FD /* ArchetypeGroup.swift */; };
@@ -45,6 +46,9 @@
 		CC61070325A12162001F120B /* ComponentMatrixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC61070225A12162001F120B /* ComponentMatrixTests.swift */; };
 		CC61070D25A2522B001F120B /* ComponentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC61070C25A2522B001F120B /* ComponentRow.swift */; };
 		CC61071125A252CE001F120B /* ComponentRowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC61071025A252CE001F120B /* ComponentRowTests.swift */; };
+		CC8110D125D84852004D8038 /* MutableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8110D025D84852004D8038 /* MutableArray.swift */; };
+		CC8110D525D84F93004D8038 /* MutableValueReferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8110D425D84F93004D8038 /* MutableValueReferenceTests.swift */; };
+		CCE4D5E525D63317000E8172 /* MutableValueReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE4D5E425D63317000E8172 /* MutableValueReference.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +62,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CC1DD1D325D6CBE6003B18A1 /* MutableArrayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutableArrayTests.swift; sourceTree = "<group>"; };
 		CC3322D825BD06F1000978FD /* ArchetypeBranchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchetypeBranchTests.swift; sourceTree = "<group>"; };
 		CC3322DC25BD0825000978FD /* ArchetypeBranch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchetypeBranch.swift; sourceTree = "<group>"; };
 		CC3322E025BD0D9C000978FD /* ArchetypeGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchetypeGroup.swift; sourceTree = "<group>"; };
@@ -72,6 +77,8 @@
 		CC61070225A12162001F120B /* ComponentMatrixTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentMatrixTests.swift; sourceTree = "<group>"; };
 		CC61070C25A2522B001F120B /* ComponentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentRow.swift; sourceTree = "<group>"; };
 		CC61071025A252CE001F120B /* ComponentRowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentRowTests.swift; sourceTree = "<group>"; };
+		CC8110D025D84852004D8038 /* MutableArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutableArray.swift; sourceTree = "<group>"; };
+		CC8110D425D84F93004D8038 /* MutableValueReferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutableValueReferenceTests.swift; sourceTree = "<group>"; };
 		CCC1C15B23D78B0E0027CD2B /* CentralEventSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CentralEventSystem.swift; sourceTree = "<group>"; };
 		CCC1C15C23D78B0E0027CD2B /* EventSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventSystem.swift; sourceTree = "<group>"; };
 		CCC1C15E23D78B0E0027CD2B /* EntityComponentEventSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityComponentEventSystem.swift; sourceTree = "<group>"; };
@@ -105,6 +112,7 @@
 		CCC1C1BD23D78C0F0027CD2B /* Design.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Design.md; sourceTree = "<group>"; };
 		CCC1C1BF23D78C0F0027CD2B /* EntitiesWithTypes.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = EntitiesWithTypes.jpg; sourceTree = "<group>"; };
 		CCC4E80825A0050700E0EAFD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		CCE4D5E425D63317000E8172 /* MutableValueReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutableValueReference.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +135,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CC1DD1D025D6CBBC003B18A1 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				CC1DD1D325D6CBE6003B18A1 /* MutableArrayTests.swift */,
+				CC8110D425D84F93004D8038 /* MutableValueReferenceTests.swift */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
 		CC4AA25E24AA811D0025C805 /* SAKECS */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,6 +240,7 @@
 		CCC1C16823D78B0E0027CD2B /* Types */ = {
 			isa = PBXGroup;
 			children = (
+				CCE4D5E325D63303000E8172 /* Helper */,
 				CCC1C16923D78B0E0027CD2B /* EntityComponent.swift */,
 				CCC1C16A23D78B0E0027CD2B /* ContainedItems.swift */,
 				CCC1C16B23D78B0E0027CD2B /* Entity.swift */,
@@ -268,6 +286,7 @@
 		CCC1C19B23D78B2E0027CD2B /* SAKECSTests */ = {
 			isa = PBXGroup;
 			children = (
+				CC1DD1D025D6CBBC003B18A1 /* Types */,
 				CCC4E84A25A1092500E0EAFD /* Structure */,
 				CCC1C1A523D78B600027CD2B /* ECSComponentTests.swift */,
 				CCC1C1A623D78B600027CD2B /* ECSTagsTests.swift */,
@@ -322,6 +341,15 @@
 				CC3322D825BD06F1000978FD /* ArchetypeBranchTests.swift */,
 			);
 			path = Structure;
+			sourceTree = "<group>";
+		};
+		CCE4D5E325D63303000E8172 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				CCE4D5E425D63317000E8172 /* MutableValueReference.swift */,
+				CC8110D025D84852004D8038 /* MutableArray.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -494,6 +522,7 @@
 				CC4AA27F24AA81B60025C805 /* EventSystem.swift in Sources */,
 				CC4AA29524AA86660025C805 /* Entity.swift in Sources */,
 				CC4AA28924AA81BF0025C805 /* EntitySystem+Entity.swift in Sources */,
+				CCE4D5E525D63317000E8172 /* MutableValueReference.swift in Sources */,
 				CC4AA29A24AA86700025C805 /* ECSManager+Components.swift in Sources */,
 				CC4AA28824AA81BF0025C805 /* EntitySystem.swift in Sources */,
 				CC4AA29024AA865E0025C805 /* MetaEntity+Components.swift in Sources */,
@@ -503,6 +532,7 @@
 				CC4AA28324AA81BA0025C805 /* ComponentSystem.swift in Sources */,
 				CC4AA29924AA86700025C805 /* ECSManager+Entities.swift in Sources */,
 				CC4AA28E24AA865E0025C805 /* MetaEntity.swift in Sources */,
+				CC8110D125D84852004D8038 /* MutableArray.swift in Sources */,
 				CC4AA29724AA86700025C805 /* ECSManager+Tags.swift in Sources */,
 				CC4AA29124AA865E0025C805 /* MetaEntity+Tags.swift in Sources */,
 				CC3322E125BD0D9C000978FD /* ArchetypeGroup.swift in Sources */,
@@ -521,7 +551,9 @@
 				CC6024D925AAA15600841C71 /* EntityComponentChunkTests.swift in Sources */,
 				CC3322D925BD06F1000978FD /* ArchetypeBranchTests.swift in Sources */,
 				CC61070325A12162001F120B /* ComponentMatrixTests.swift in Sources */,
+				CC1DD1D425D6CBE6003B18A1 /* MutableArrayTests.swift in Sources */,
 				CC4AA27D24AA81AD0025C805 /* SAKECSTests.swift in Sources */,
+				CC8110D525D84F93004D8038 /* MutableValueReferenceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

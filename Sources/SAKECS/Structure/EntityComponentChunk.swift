@@ -72,6 +72,13 @@ extension EntityComponentChunk: ArchetypeGroup {
 		}
 	}
 
+	public var archetype: Self {
+		var newArchetype = self
+		newArchetype.emptyColumnsIndices.formUnion(newArchetype.entities.values)
+		newArchetype.entities.removeAll(keepingCapacity: true)
+		return newArchetype
+	}
+
 	public func contains(_ entity: Entity) -> Bool {
 		entities.keys.contains(entity)
 	}
