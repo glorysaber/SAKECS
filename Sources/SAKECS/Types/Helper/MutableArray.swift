@@ -8,25 +8,37 @@
 
 import Foundation
 
+public protocol ArrayElementContainer: AnyObject {
+	associatedtype Element
+
+	var value: Element { get set }
+
+	init(_ value: Element)
+}
+
+public typealias MutableArray<Element> = ContainerArray<MutableValueReference<Element>>
+
+extension MutableValueReference: ArrayElementContainer {}
+
 /// Acts like an array but allows structs to be mutable if declared in a variable with COW semantics.
 /// It is recomended to extend the RefContainer type to conform to the protocol of the contained type for ease of use.
-public struct MutableArray<Element> {
+public struct ContainerArray<Container: ArrayElementContainer> {
 
-	private var internalArray: [MutableValueReference<Element>]
+	private var internalArray: [Container]
 
 	public init() {
 		internalArray = []
 	}
 
-	public init<S: Sequence>(_ sequence: S) where S.Element == Element {
-		internalArray = sequence.map { MutableValueReference($0) }
+	public init<S: Sequence>(_ sequence: S) where S.Element == Container.Element {
+		internalArray = sequence.map { Container($0) }
 	}
 }
 
-extension MutableArray: Collection {
+extension ContainerArray: Collection {
 	public typealias Iterator = IndexingIterator<Self>
 
-	public typealias Element = Element
+	public typealias Element = Container.Element
 
 	public typealias Index = Int
 
@@ -62,7 +74,7 @@ extension MutableArray: Collection {
 
 	/// This is what makes the mutable array special. We can get a reference to the container for the element
 	/// and change its contents.
-	public mutating func getContainer(for index: Index) -> MutableValueReference<Element> {
+	public mutating func getContainer(for index: Index) -> Container {
 		// Due to returning mutable references, we need to copy our cotents if not
 		// uniquely referenced.
 		makeSureIsUniquelyReferenced(at: index)
@@ -74,43 +86,43 @@ extension MutableArray: Collection {
 	}
 }
 
-extension MutableArray: ExpressibleByArrayLiteral {
+extension ContainerArray: ExpressibleByArrayLiteral {
 	public typealias ArrayLiteralElement = Element
 
 	public init(arrayLiteral elements: ArrayLiteralElement...) {
-		internalArray = elements.map { MutableValueReference($0) }
+		internalArray = elements.map { Container($0) }
 	}
 }
-extension MutableArray: BidirectionalCollection {
+extension ContainerArray: BidirectionalCollection {
 	public func index(before index: Int) -> Int {
 		internalArray.index(before: index)
 	}
 }
 
-extension MutableArray: RandomAccessCollection {}
+extension ContainerArray: RandomAccessCollection {}
 
-extension MutableArray: CustomStringConvertible where Element: CustomStringConvertible {
+extension ContainerArray: CustomStringConvertible where Element: CustomStringConvertible {
 	public var description: String {
 		"[\(map(\.description).joined(separator: ", "))]"
 	}
 }
 
-extension MutableArray: CustomDebugStringConvertible {
+extension ContainerArray: CustomDebugStringConvertible {
 	public var debugDescription: String {
 		"\(Self.self)(\(internalArray))"
 	}
 }
 
-extension MutableArray: Sequence {
+extension ContainerArray: Sequence {
 
 }
 
 // MARK: - Private helpers
-private extension MutableArray {
+private extension ContainerArray {
 	/// Call this function to make sure we are uniquely referenced before making mutating changes.
 	mutating func makeSureIsUniquelyReferenced(at index: Index) {
 		if !isKnownUniquelyReferenced(&internalArray[index]) {
-			internalArray = internalArray.map { MutableValueReference($0.value) }
+			internalArray = internalArray.map { Container($0.value) }
 		}
 	}
 }
