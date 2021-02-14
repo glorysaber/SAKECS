@@ -198,7 +198,7 @@ private extension ArchetypeBranch {
 	}
 }
 
-extension ArrayElementContainer where Element: ArchetypeGroup {
+extension MutableValueReference where Element: ArchetypeGroup {
 	var entityCount: Int {
 		value.entityCount
 	}
@@ -217,10 +217,6 @@ extension ArrayElementContainer where Element: ArchetypeGroup {
 
 	func reserveCapacity(_ minimumCapcity: Int) {
 		value.reserveCapacity(minimumCapcity)
-	}
-
-	var archetype: Self {
-		deepCopy
 	}
 
 	func contains(_ entity: Entity) -> Bool {
