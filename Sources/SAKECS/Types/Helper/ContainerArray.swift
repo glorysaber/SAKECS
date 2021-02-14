@@ -1,16 +1,37 @@
 //
-//  MutableArray.swift
+//  ContainerArray.swift
 //  SAKECS
 //
-//  Created by Stephen Kac on 2/13/21.
+//  Created by Stephen Kac on 2/14/21.
 //  Copyright © 2021 Stephen Kac. All rights reserved.
 //
 
 import Foundation
 
+public protocol ArrayElementContainer: AnyObject {
+	associatedtype Element
+
+	var value: Element { get set }
+
+	/// Make a deep copy
+	var deepCopy: Self { get }
+}
+
+protocol ElementInitializable {
+	associatedtype Element
+
+	init(_: Element)
+}
+
+extension MutableValueReference: ArrayElementContainer {
+	public var deepCopy: MutableValueReference<Element> {
+		MutableValueReference(value)
+	}
+}
+
 /// Acts like an array but allows structs to be mutable if declared in a variable with COW semantics.
-public struct MutableArray<Element> {
-	public typealias Container = MutableValueReference<Element>
+/// It is recomended to extend the RefContainer type to conform to the protocol of the contained type for ease of use.
+public struct ContainerArray<Container: ArrayElementContainer> {
 
 	private var internalArray: [Container]
 
@@ -18,14 +39,14 @@ public struct MutableArray<Element> {
 		internalArray = []
 	}
 
-	public init<S: Sequence>(_ sequence: S) where S.Element == Container.Element {
-		internalArray = sequence.map { Container($0) }
+	public init<S: Sequence>(_ sequence: S) where S.Element == Container {
+		internalArray = Array(sequence)
 	}
 }
 
 // MARK: - Element
 // MARK: Collection
-extension MutableArray: Collection {
+extension ContainerArray: Collection {
 	public typealias Iterator = IndexingIterator<Self>
 
 	public typealias Element = Container.Element
@@ -67,15 +88,8 @@ extension MutableArray: Collection {
 	}
 }
 
-// MARK: Element Methods
-extension MutableArray {
-	public mutating func append(_ element: Element) {
-		internalArray.append(Container(element))
-	}
-}
-
 // MARK: - Container methods
-extension MutableArray {
+extension ContainerArray {
 
 	/// This is what makes the mutable array special. We can get a reference to the container for the element
 	/// and change its contents.
@@ -102,45 +116,45 @@ extension MutableArray {
 
 }
 
-extension MutableArray: ExpressibleByArrayLiteral {
-	public typealias ArrayLiteralElement = Element
+extension ContainerArray: ExpressibleByArrayLiteral {
+	public typealias ArrayLiteralElement = Container
 
 	public init(arrayLiteral elements: ArrayLiteralElement...) {
-		internalArray = elements.map { Container($0) }
+		internalArray = Array(elements)
 	}
 }
-extension MutableArray: BidirectionalCollection {
+extension ContainerArray: BidirectionalCollection {
 	public func index(before index: Int) -> Int {
 		internalArray.index(before: index)
 	}
 }
 
-extension MutableArray: RandomAccessCollection {}
+extension ContainerArray: RandomAccessCollection {}
 
-extension MutableArray: CustomStringConvertible where Element: CustomStringConvertible {
+extension ContainerArray: CustomStringConvertible where Element: CustomStringConvertible {
 	public var description: String {
 		"[\(map(\.description).joined(separator: ", "))]"
 	}
 }
 
-extension MutableArray: CustomDebugStringConvertible {
+extension ContainerArray: CustomDebugStringConvertible {
 	public var debugDescription: String {
 		"\(Self.self)(\(internalArray))"
 	}
 }
 
-extension MutableArray: Sequence {
+extension ContainerArray: Sequence {
 
 }
 
 // MARK: - Private helpers
-private extension MutableArray {
+private extension ContainerArray {
 	/// Call this function to make sure we are uniquely referenced before making mutating changes.
 	mutating func makeSureIsUniquelyReferenced(at index: Index = 0) {
 		guard isEmpty == false else { return }
 
 		if !isKnownUniquelyReferenced(&internalArray[index]) {
-			internalArray = internalArray.map { Container($0.value) }
+			internalArray = internalArray.map { $0.deepCopy }
 		}
 	}
 }

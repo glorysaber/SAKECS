@@ -37,6 +37,11 @@ public struct ArchetypeBranch<Chunk: ArchetypeGroup> {
 		self.columnsInEachChunk = columnsInEachChunk
 		_ = addChunk()
 	}
+
+	private init(_ branch: ArchetypeBranch) {
+		self.chunkConstructor = branch.chunkConstructor
+		self.columnsInEachChunk = branch.columnsInEachChunk
+	}
 }
 
 // MARK: - Shared Components
@@ -215,7 +220,7 @@ extension ArrayElementContainer where Element: ArchetypeGroup {
 	}
 
 	var archetype: Self {
-		Self(value.archetype)
+		deepCopy
 	}
 
 	func contains(_ entity: Entity) -> Bool {

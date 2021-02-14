@@ -48,6 +48,7 @@
 		CC61071125A252CE001F120B /* ComponentRowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC61071025A252CE001F120B /* ComponentRowTests.swift */; };
 		CC8110D125D84852004D8038 /* MutableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8110D025D84852004D8038 /* MutableArray.swift */; };
 		CC8110D525D84F93004D8038 /* MutableValueReferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8110D425D84F93004D8038 /* MutableValueReferenceTests.swift */; };
+		CC8110D725D9574F004D8038 /* ContainerArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8110D625D9574F004D8038 /* ContainerArray.swift */; };
 		CCE4D5E525D63317000E8172 /* MutableValueReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE4D5E425D63317000E8172 /* MutableValueReference.swift */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +80,7 @@
 		CC61071025A252CE001F120B /* ComponentRowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentRowTests.swift; sourceTree = "<group>"; };
 		CC8110D025D84852004D8038 /* MutableArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutableArray.swift; sourceTree = "<group>"; };
 		CC8110D425D84F93004D8038 /* MutableValueReferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutableValueReferenceTests.swift; sourceTree = "<group>"; };
+		CC8110D625D9574F004D8038 /* ContainerArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerArray.swift; sourceTree = "<group>"; };
 		CCC1C15B23D78B0E0027CD2B /* CentralEventSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CentralEventSystem.swift; sourceTree = "<group>"; };
 		CCC1C15C23D78B0E0027CD2B /* EventSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventSystem.swift; sourceTree = "<group>"; };
 		CCC1C15E23D78B0E0027CD2B /* EntityComponentEventSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityComponentEventSystem.swift; sourceTree = "<group>"; };
@@ -348,6 +350,7 @@
 			children = (
 				CCE4D5E425D63317000E8172 /* MutableValueReference.swift */,
 				CC8110D025D84852004D8038 /* MutableArray.swift */,
+				CC8110D625D9574F004D8038 /* ContainerArray.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -520,6 +523,7 @@
 				CC61070D25A2522B001F120B /* ComponentRow.swift in Sources */,
 				CC4AA29624AA86660025C805 /* EntityTag.swift in Sources */,
 				CC4AA27F24AA81B60025C805 /* EventSystem.swift in Sources */,
+				CC8110D725D9574F004D8038 /* ContainerArray.swift in Sources */,
 				CC4AA29524AA86660025C805 /* Entity.swift in Sources */,
 				CC4AA28924AA81BF0025C805 /* EntitySystem+Entity.swift in Sources */,
 				CCE4D5E525D63317000E8172 /* MutableValueReference.swift in Sources */,
