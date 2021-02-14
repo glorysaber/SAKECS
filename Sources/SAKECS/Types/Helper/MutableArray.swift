@@ -35,6 +35,8 @@ public struct ContainerArray<Container: ArrayElementContainer> {
 	}
 }
 
+// MARK: - Element
+// MARK: Collection
 extension ContainerArray: Collection {
 	public typealias Iterator = IndexingIterator<Self>
 
@@ -72,6 +74,21 @@ extension ContainerArray: Collection {
 		}
 	}
 
+	public func index(after index: Index) -> Int {
+		internalArray.index(after: index)
+	}
+}
+
+// MARK: Element Methods
+extension ContainerArray {
+	public mutating func append(_ element: Element) {
+		internalArray.append(Container(element))
+	}
+}
+
+// MARK: - Container methods
+extension ContainerArray {
+
 	/// This is what makes the mutable array special. We can get a reference to the container for the element
 	/// and change its contents.
 	public mutating func getContainer(for index: Index) -> Container {
@@ -81,9 +98,20 @@ extension ContainerArray: Collection {
 		return internalArray[index]
 	}
 
-	public func index(after index: Index) -> Int {
-		internalArray.index(after: index)
+	public mutating func firstContainer(where predicate: (Container) throws -> Bool) rethrows -> Container? {
+		makeSureIsUniquelyReferenced()
+		return try internalArray.first(where: predicate)
 	}
+
+	public mutating func forEachContainer(_ body: (Container) throws -> Void) rethrows {
+		makeSureIsUniquelyReferenced()
+		try internalArray.forEach(body)
+	}
+
+	public mutating func append(_ container: Container) {
+		internalArray.append(container)
+	}
+
 }
 
 extension ContainerArray: ExpressibleByArrayLiteral {
@@ -120,7 +148,9 @@ extension ContainerArray: Sequence {
 // MARK: - Private helpers
 private extension ContainerArray {
 	/// Call this function to make sure we are uniquely referenced before making mutating changes.
-	mutating func makeSureIsUniquelyReferenced(at index: Index) {
+	mutating func makeSureIsUniquelyReferenced(at index: Index = 0) {
+		guard isEmpty == false else { return }
+
 		if !isKnownUniquelyReferenced(&internalArray[index]) {
 			internalArray = internalArray.map { Container($0.value) }
 		}

@@ -17,19 +17,14 @@ public typealias EntityComponentBranch = ArchetypeBranch<EntityComponentChunk>
 /// A branch of like entity components
 public struct ArchetypeBranch<Chunk: ArchetypeGroup> {
 
-	fileprivate final class Container {
-		var chunk: Chunk
-		init(_ chunk: Chunk) {
-			self.chunk = chunk
-		}
-	}
+	typealias Container = MutableValueReference<Chunk>
 
 	/**
 	All of the chunks should be of the same archetype, this must
 	be gaurenteed by the branch..
 	I use containers as I will need to alterthe contents without copying.
 	*/
-	private var chunkContainers = [Container]()
+	private var chunks = MutableArray<Chunk>()
 
 	private let chunkConstructor: () -> Chunk
 	private let columnsInEachChunk: Int
@@ -96,67 +91,67 @@ extension ArchetypeBranch {
 extension ArchetypeBranch: ArchetypeGroup {
 
 	public var archetype: ArchetypeBranch<Chunk> {
-		fatalError()
+		fatalError("Not implemenented yet")
 	}
 
 	public var entityCount: Int {
-		chunkContainers.reduce(0) { $0 + $1.entityCount }
+		chunks.reduce(0) { $0 + $1.entityCount }
 	}
 
 	public var componentTypeCount: Int {
-		chunkContainers.first?.componentTypeCount ?? 0
+		chunks.first?.componentTypeCount ?? 0
 	}
 
 	public var freeIndexCount: Int {
-		chunkContainers.reduce(0) { $0 + $1.freeIndexCount }
+		chunks.reduce(0) { $0 + $1.freeIndexCount }
 	}
 
 	public var minimumCapacity: Int {
-		chunkContainers.first?.componentTypeCount ?? 0
+		chunks.first?.componentTypeCount ?? 0
 	}
 
 	public mutating func reserveCapacity(_ minimumCapcity: Int) {
 		if minimumCapcity > self.minimumCapacity {
-			chunkContainers.forEach { $0.reserveCapacity(minimumCapcity) }
+			chunks.forEachContainer { $0.reserveCapacity(minimumCapcity) }
 		}
 	}
 
 	public func contains(_ entity: Entity) -> Bool {
-		chunkContainers.contains { $0.contains(entity) }
+		chunks.contains { $0.contains(entity) }
 	}
 
 	public mutating func add(entity: Entity) {
 		guard contains(entity) == false else { return }
 
-		let chunk = chunkContainers.first { $0.minimumCapacity > $0.entityCount } ?? addChunk()
+		let chunk = chunks.firstContainer { $0.minimumCapacity > $0.entityCount } ?? addChunk()
 
 		chunk.add(entity: entity)
 	}
 
 	public mutating func remove(entity: Entity) {
-		chunkContainers.first(where: { $0.contains(entity) })?
+		chunks.firstContainer(where: { $0.contains(entity) })?
 			.remove(entity: entity)
 	}
 
 	public func contains<Component: EntityComponent>(_ componentType: Component.Type) -> Bool {
-		chunkContainers.contains { $0.contains(componentType) }
+		chunks.contains { $0.contains(componentType) }
 	}
 
 	public mutating func set<Component: EntityComponent>(_ component: Component, for entity: Entity) {
-		chunkContainers.first(where: { $0.contains(entity) })?
+		chunks.firstContainer(where: { $0.contains(entity) })?
 			.set(component, for: entity)
 	}
 
 	public mutating func add<Component: EntityComponent>(_ componentType: Component.Type) {
-		chunkContainers.forEach { $0.add(componentType) }
+		chunks.forEachContainer { $0.add(componentType) }
 	}
 
 	public mutating func remove<Component: EntityComponent>(_ componentType: Component.Type) {
-		chunkContainers.forEach { $0.remove(componentType) }
+		chunks.forEachContainer { $0.remove(componentType) }
 	}
 
 	public func get<Component: EntityComponent>(_ componentType: Component.Type, for entity: Entity) -> Component? {
-		chunkContainers.first(where: { $0.contains(entity) })?
+		chunks.first(where: { $0.contains(entity) })?
 			.get(componentType, for: entity)
 	}
 }
@@ -168,90 +163,90 @@ extension ArchetypeBranch: RandomAccessCollection {
 	public typealias Index = Int
 
 	public var count: Int {
-		chunkContainers.count
+		chunks.count
 	}
 
 	public var startIndex: Int {
-		chunkContainers.startIndex
+		chunks.startIndex
 	}
 
 	public var endIndex: Int {
-		chunkContainers.endIndex
+		chunks.endIndex
 	}
 
 	public subscript(position: Int) -> Chunk {
-			chunkContainers[position].chunk
+		chunks[position]
 	}
 }
 
 // MARK: - Chunk Management
 private extension ArchetypeBranch {
 	mutating func addChunk() -> Container {
-		var chunk = chunkContainers.first?.chunk.archetype ?? {
+		let chunk = chunks.first?.archetype ?? {
 			var chunk = chunkConstructor()
 			chunk.reserveCapacity(columnsInEachChunk)
 			return chunk
 		}()
-		let chunkContainer = Container(chunk)
-		chunkContainers.append(Container(chunk))
-		return chunkContainer
+		let container = Container(chunk)
+		chunks.append(container)
+		return container
 	}
 }
 
-extension ArchetypeBranch.Container: ArchetypeGroup {
+extension ArrayElementContainer where Element: ArchetypeGroup {
 	var entityCount: Int {
-		chunk.entityCount
+		value.entityCount
 	}
 
 	var componentTypeCount: Int {
-		chunk.componentTypeCount
+		value.componentTypeCount
 	}
 
 	var freeIndexCount: Int {
-		chunk.freeIndexCount
+		value.freeIndexCount
 	}
 
 	var minimumCapacity: Int {
-		chunk.minimumCapacity
+		value.minimumCapacity
 	}
 
 	func reserveCapacity(_ minimumCapcity: Int) {
-		chunk.reserveCapacity(minimumCapcity)
+		value.reserveCapacity(minimumCapcity)
 	}
 
 	var archetype: Self {
-		Self(chunk.archetype)
+		Self(value.archetype)
 	}
 
 	func contains(_ entity: Entity) -> Bool {
-		chunk.contains(entity)
+		value.contains(entity)
 	}
 
 	func add(entity: Entity) {
-		chunk.add(entity: entity)
+		value.add(entity: entity)
 	}
 
 	func remove(entity: Entity) {
-		chunk.remove(entity: entity)
+		value.remove(entity: entity)
 	}
 
 	func contains<Component: EntityComponent>(_ componentType: Component.Type) -> Bool {
-		chunk.contains(componentType)
+		value.contains(componentType)
 	}
 
 	func set<Component: EntityComponent>(_ component: Component, for entity: Entity) {
-		chunk.set(component, for: entity)
+		value.set(component, for: entity)
 	}
 
 	func add<Component: EntityComponent>(_ componentType: Component.Type) {
-		chunk.add(componentType)
+		value.add(componentType)
 	}
 
 	func remove<Component: EntityComponent>(_ componentType: Component.Type) {
-		chunk.remove(componentType)
+		value.remove(componentType)
 	}
 
 	func get<Component: EntityComponent>(_ componentType: Component.Type, for entity: Entity) -> Component? {
-		chunk.get(componentType, for: entity)
+		value.get(componentType, for: entity)
 	}
 }
