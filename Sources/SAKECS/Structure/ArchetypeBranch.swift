@@ -41,6 +41,7 @@ public struct ArchetypeBranch<Chunk: ArchetypeGroup> {
 	private init(_ branch: ArchetypeBranch) {
 		self.chunkConstructor = branch.chunkConstructor
 		self.columnsInEachChunk = branch.columnsInEachChunk
+		self.chunks = MutableArray(branch.chunks.map { $0.archetype })
 	}
 }
 
@@ -96,7 +97,7 @@ extension ArchetypeBranch {
 extension ArchetypeBranch: ArchetypeGroup {
 
 	public var archetype: ArchetypeBranch<Chunk> {
-		fatalError("Not implemenented yet")
+		Self(self)
 	}
 
 	public var entityCount: Int {
