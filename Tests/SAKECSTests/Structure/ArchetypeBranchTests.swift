@@ -125,19 +125,19 @@ class ArchetypeBranchTests: XCTestCase {
 
 	// MARK: Special test cases
 
-	func test_hasCom() {
-//		var sut = makeSUT()
-//
-//		sut.add(entity: 1)
-//		sut.add(entity: 3)
-//
-//		sut.add(IntComponent.self)
-//
-//		sut.add(entity: 5)
-//		sut.add(entity: 6)
-//
-//		XCTAssertEqual(sut.entityCount, 4)
-//		XCTAssertNotNil(sut.get(IntComponent.self, for: 5))
+	func test_AddingEntitiesBeforeAndAfterTheComponent() {
+		var sut = makeSUT()
+
+		sut.add(entity: 1)
+		sut.add(entity: 3)
+
+		sut.add(IntComponent.self)
+
+		sut.add(entity: 5)
+		sut.add(entity: 6)
+
+		XCTAssertEqual(sut.entityCount, 4)
+		XCTAssertNotNil(sut.get(IntComponent.self, for: 5))
 	}
 
 	// MARK: Shared Components
