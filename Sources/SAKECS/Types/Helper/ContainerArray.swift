@@ -11,7 +11,7 @@ import Foundation
 public protocol ArrayElementContainer: AnyObject {
 	associatedtype Element
 
-	var value: Element { get set }
+	var value: Element { get }
 
 	/// Make a deep copy
 	var deepCopy: Self { get }
@@ -74,13 +74,7 @@ extension ContainerArray: Collection {
 	}
 
 	public subscript(_ position: Index) -> Element {
-		get {
 			internalArray[position].value
-		}
-		set {
-			makeSureIsUniquelyReferenced(at: position)
-			internalArray[position].value = newValue
-		}
 	}
 
 	public func index(after index: Index) -> Int {

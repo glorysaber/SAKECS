@@ -53,7 +53,14 @@ public struct ComponentMatrix {
 	}
 
 	/// A contianer for each row to allow mutability
-	private class RowContainer<Component: EntityComponent>: RowContainerProtocol {
+	private final class RowContainer<Component: EntityComponent>: RowContainerProtocol, ArrayElementContainer {
+
+		var value: RowContainerProtocol {
+			 self
+		}
+
+		typealias Element = RowContainerProtocol
+
 		var containedElement: ComponentRowProtocol {
 			row
 		}
@@ -70,6 +77,10 @@ public struct ComponentMatrix {
 		}
 
 		var row: ComponentRow<Component>
+
+		var deepCopy: ComponentMatrix.RowContainer<Component> {
+			Self(row)
+		}
 
 		init(_ row: ComponentRow<Component>) {
 			self.row = row
