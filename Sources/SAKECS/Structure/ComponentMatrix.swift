@@ -8,6 +8,8 @@
 
 import Foundation
 
+private class NullClass {}
+
 // MARK: - RowContainerProtocol
 
 // Used to allow for homogeneous storage of reference wrapping containers
@@ -21,6 +23,8 @@ private protocol RowContainerProtocol: AnyObject {
 
 	/// The contained element
 	var containedElement: ComponentRowProtocol { get }
+
+	var deepCopy: Self { get }
 }
 
 // MARK: - ComponentRowIndex
@@ -53,7 +57,14 @@ public struct ComponentMatrix {
 	}
 
 	/// A contianer for each row to allow mutability
-	private class RowContainer<Component: EntityComponent>: RowContainerProtocol {
+	private final class RowContainer<Component: EntityComponent>: RowContainerProtocol, ArrayElementContainer {
+
+		var value: RowContainerProtocol {
+			 self
+		}
+
+		typealias Element = RowContainerProtocol
+
 		var containedElement: ComponentRowProtocol {
 			row
 		}
@@ -70,6 +81,10 @@ public struct ComponentMatrix {
 		}
 
 		var row: ComponentRow<Component>
+
+		var deepCopy: ComponentMatrix.RowContainer<Component> {
+			Self(row)
+		}
 
 		init(_ row: ComponentRow<Component>) {
 			self.row = row
@@ -91,6 +106,8 @@ public struct ComponentMatrix {
 
 	/// The components storage
 	private var matrix = [RowContainerProtocol]()
+
+	private var nullReference = NullClass()
 
 	public init() {}
 
@@ -131,6 +148,8 @@ public struct ComponentMatrix {
 	/// Does nothing if the component type does not  already have a row.
 	/// - Parameter component: The component to add
 	public mutating func set<Component: EntityComponent>(_ component: Component, for column: ComponentColumnIndex) {
+		makeSureIsUniquelyReferenced()
+
 		guard let componentMatrixRow = componentFamilyMatrixRowMap[Component.familyID] else {
 			return
 		}
@@ -143,6 +162,7 @@ public struct ComponentMatrix {
 	}
 
 	public mutating func addColumns(_ columnsToGrowBy: Int) -> ComponentColumnIndices {
+		makeSureIsUniquelyReferenced()
 
 		var iterator = matrix.makeIterator()
 
@@ -172,6 +192,7 @@ public struct ComponentMatrix {
 	/// O(C) Time complexity wher C is the number of component types
 	/// - Parameter type: The component type being removed
 	public mutating func remove<Component: EntityComponent>(_ type: Component.Type) {
+		makeSureIsUniquelyReferenced()
 		guard let componentMatrixRowToRemove = componentFamilyMatrixRowMap[Component.familyID] else {
 			// Do nothing as we do not have that componenet type
 			return
@@ -191,7 +212,8 @@ public struct ComponentMatrix {
 	/// - Returns: The row for the new matrix row
 	@discardableResult
 	public mutating func add<Component: EntityComponent>(_ type: Component.Type) -> ComponentRowIndex {
-		if let componentMatrixRow =  componentFamilyMatrixRowMap[Component.familyID] {
+		makeSureIsUniquelyReferenced()
+		if let componentMatrixRow = componentFamilyMatrixRowMap[Component.familyID] {
 			return componentMatrixRow
 		}
 		let componentMatrixRow = ComponentRowIndex(matrix.count)
@@ -305,6 +327,16 @@ public extension ComponentMatrix {
 	/// - Returns: A index before the given index if there is one
 	func columnIndex(before index: ComponentColumnIndex) -> ComponentColumnIndex {
 		matrix.first?.containedElement.index(before: index) ?? columnStartIndex
+	}
+}
+
+private extension ComponentMatrix {
+	/// Call this function to make sure we are uniquely referenced before making mutating changes.
+	mutating func makeSureIsUniquelyReferenced() {
+		if !isKnownUniquelyReferenced(&nullReference) {
+			matrix = matrix.map { $0.deepCopy }
+			nullReference = NullClass()
+		}
 	}
 }
 

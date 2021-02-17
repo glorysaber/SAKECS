@@ -166,7 +166,7 @@ class ComponentMatrixTests: XCTestCase {
 		sut.add(NullComponent.self)
 		let indexes = sut.addColumns(1)
 		sut.add(IntComponent.self)
-		
+
 		sut.set(IntComponent(2), for: indexes.first!)
 	}
 
