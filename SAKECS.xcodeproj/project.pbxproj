@@ -154,6 +154,16 @@
 			path = Types;
 			sourceTree = "<group>";
 		};
+		CC3842A825DEB3B20063692A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				CC3842A625DEAFFF0063692A /* WorldSystemService.swift */,
+				CCADF7A825DEAEF2002974A8 /* WorldTagService.swift */,
+				CCADF7AA25DEAF21002974A8 /* WorldEntityComponentService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		CC4AA25E24AA811D0025C805 /* SAKECS */ = {
 			isa = PBXGroup;
 			children = (
@@ -180,9 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				CCADF7A625DEABC1002974A8 /* World.swift */,
-				CC3842A625DEAFFF0063692A /* WorldSystemService.swift */,
-				CCADF7A825DEAEF2002974A8 /* WorldTagService.swift */,
-				CCADF7AA25DEAF21002974A8 /* WorldEntityComponentService.swift */,
+				CC3842A825DEB3B20063692A /* Services */,
 			);
 			path = World;
 			sourceTree = "<group>";
