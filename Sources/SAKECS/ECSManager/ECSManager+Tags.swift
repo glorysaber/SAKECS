@@ -8,7 +8,7 @@
 import Foundation
 import os.log
 
-extension ECSManager {
+extension ECSManager: WorldTagService {
   /// Adds an entity to a Tag
   public func add<Raw: RawRepresentable>(tag: Raw, to entity: Entity) where Raw.RawValue == String {
     add(tag: tag.rawValue, to: entity)
