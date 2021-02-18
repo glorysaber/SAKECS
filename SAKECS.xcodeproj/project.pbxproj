@@ -50,7 +50,7 @@
 		CC8110D525D84F93004D8038 /* MutableValueReferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8110D425D84F93004D8038 /* MutableValueReferenceTests.swift */; };
 		CC8110D725D9574F004D8038 /* ContainerArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8110D625D9574F004D8038 /* ContainerArray.swift */; };
 		CCADF7A725DEABC1002974A8 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCADF7A625DEABC1002974A8 /* World.swift */; };
-		CCADF7A925DEAEF2002974A8 /* WolrdTagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCADF7A825DEAEF2002974A8 /* WolrdTagService.swift */; };
+		CCADF7A925DEAEF2002974A8 /* WorldTagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCADF7A825DEAEF2002974A8 /* WorldTagService.swift */; };
 		CCADF7AB25DEAF21002974A8 /* WorldEntityComponentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCADF7AA25DEAF21002974A8 /* WorldEntityComponentService.swift */; };
 		CCE4D5E525D63317000E8172 /* MutableValueReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE4D5E425D63317000E8172 /* MutableValueReference.swift */; };
 /* End PBXBuildFile section */
@@ -85,7 +85,7 @@
 		CC8110D425D84F93004D8038 /* MutableValueReferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutableValueReferenceTests.swift; sourceTree = "<group>"; };
 		CC8110D625D9574F004D8038 /* ContainerArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerArray.swift; sourceTree = "<group>"; };
 		CCADF7A625DEABC1002974A8 /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
-		CCADF7A825DEAEF2002974A8 /* WolrdTagService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WolrdTagService.swift; sourceTree = "<group>"; };
+		CCADF7A825DEAEF2002974A8 /* WorldTagService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldTagService.swift; sourceTree = "<group>"; };
 		CCADF7AA25DEAF21002974A8 /* WorldEntityComponentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldEntityComponentService.swift; sourceTree = "<group>"; };
 		CCC1C15B23D78B0E0027CD2B /* CentralEventSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CentralEventSystem.swift; sourceTree = "<group>"; };
 		CCC1C15C23D78B0E0027CD2B /* EventSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventSystem.swift; sourceTree = "<group>"; };
@@ -178,7 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				CCADF7A625DEABC1002974A8 /* World.swift */,
-				CCADF7A825DEAEF2002974A8 /* WolrdTagService.swift */,
+				CCADF7A825DEAEF2002974A8 /* WorldTagService.swift */,
 				CCADF7AA25DEAF21002974A8 /* WorldEntityComponentService.swift */,
 			);
 			path = World;
@@ -533,7 +533,7 @@
 				CC4AA28B24AA81BF0025C805 /* EntitySystem+RawRepresentableTags.swift in Sources */,
 				CC4AA28A24AA81BF0025C805 /* EntitySystem+Tags.swift in Sources */,
 				CC4AA28224AA81BA0025C805 /* EntityComponentEventSystem.swift in Sources */,
-				CCADF7A925DEAEF2002974A8 /* WolrdTagService.swift in Sources */,
+				CCADF7A925DEAEF2002974A8 /* WorldTagService.swift in Sources */,
 				CC6106F925A1213B001F120B /* ComponentMatrix.swift in Sources */,
 				CC4AA28124AA81BA0025C805 /* EntityComponentSystem.swift in Sources */,
 				CC4AA29324AA86660025C805 /* EntityComponent.swift in Sources */,
