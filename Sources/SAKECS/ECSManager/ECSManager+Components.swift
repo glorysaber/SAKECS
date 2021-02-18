@@ -8,7 +8,7 @@
 import Foundation
 import os.log
 
-extension ECSManager {
+extension ECSManager: WorldEntityComponentService {
 
   /// Sets a component to an entity and notifies any interested parties.
   public func set<ComponentType: EntityComponent>(component: ComponentType, to entity: Entity) {
