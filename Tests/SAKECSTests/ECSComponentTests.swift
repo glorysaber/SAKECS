@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import SAKECS
+import SAKECS
 
 class ECSComponentTests: XCTestCase {
 
