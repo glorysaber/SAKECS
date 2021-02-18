@@ -11,6 +11,7 @@
 		CC3322D925BD06F1000978FD /* ArchetypeBranchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3322D825BD06F1000978FD /* ArchetypeBranchTests.swift */; };
 		CC3322DD25BD0825000978FD /* ArchetypeBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3322DC25BD0825000978FD /* ArchetypeBranch.swift */; };
 		CC3322E125BD0D9C000978FD /* ArchetypeGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3322E025BD0D9C000978FD /* ArchetypeGroup.swift */; };
+		CC3842A725DEAFFF0063692A /* WorldSystemService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3842A625DEAFFF0063692A /* WorldSystemService.swift */; };
 		CC4AA26E24AA816C0025C805 /* SAKECS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC4AA26524AA816C0025C805 /* SAKECS.framework */; };
 		CC4AA27524AA816C0025C805 /* SAKECS.h in Headers */ = {isa = PBXBuildFile; fileRef = CC4AA26724AA816C0025C805 /* SAKECS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CC4AA27C24AA81AD0025C805 /* ECSTagsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C1A623D78B600027CD2B /* ECSTagsTests.swift */; };
@@ -70,6 +71,7 @@
 		CC3322D825BD06F1000978FD /* ArchetypeBranchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchetypeBranchTests.swift; sourceTree = "<group>"; };
 		CC3322DC25BD0825000978FD /* ArchetypeBranch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchetypeBranch.swift; sourceTree = "<group>"; };
 		CC3322E025BD0D9C000978FD /* ArchetypeGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchetypeGroup.swift; sourceTree = "<group>"; };
+		CC3842A625DEAFFF0063692A /* WorldSystemService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldSystemService.swift; sourceTree = "<group>"; };
 		CC4AA26524AA816C0025C805 /* SAKECS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SAKECS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC4AA26724AA816C0025C805 /* SAKECS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SAKECS.h; sourceTree = "<group>"; };
 		CC4AA26824AA816C0025C805 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				CCADF7A625DEABC1002974A8 /* World.swift */,
+				CC3842A625DEAFFF0063692A /* WorldSystemService.swift */,
 				CCADF7A825DEAEF2002974A8 /* WorldTagService.swift */,
 				CCADF7AA25DEAF21002974A8 /* WorldEntityComponentService.swift */,
 			);
@@ -540,6 +543,7 @@
 				CC4AA29824AA86700025C805 /* ECSManager+Systems.swift in Sources */,
 				CC6024E625AAA17D00841C71 /* EntityComponentChunk.swift in Sources */,
 				CC61070D25A2522B001F120B /* ComponentRow.swift in Sources */,
+				CC3842A725DEAFFF0063692A /* WorldSystemService.swift in Sources */,
 				CC4AA29624AA86660025C805 /* EntityTag.swift in Sources */,
 				CC4AA27F24AA81B60025C805 /* EventSystem.swift in Sources */,
 				CC8110D725D9574F004D8038 /* ContainerArray.swift in Sources */,

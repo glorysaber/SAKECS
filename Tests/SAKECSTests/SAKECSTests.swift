@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import SAKECS
+import SAKECS
 import SAKBase
 
 class SAKECSTests: XCTestCase {
@@ -35,7 +35,7 @@ class SAKECSTests: XCTestCase {
       XCTAssert(ecs.componentCount == 0)
       XCTAssert(ecs.systemTime ~= 0.0000)
 
-      XCTAssertTrue(ecs.componentSystems.isEmpty)
+			XCTAssertEqual(ecs.systemCount, 0)
       XCTAssertTrue(ecs.entitySystem.allEntities.isEmpty)
       XCTAssertTrue(ecs.entityMasks.isEmpty)
     }
@@ -73,7 +73,7 @@ class SAKECSTests: XCTestCase {
 
       for _ in 0..<10000 {
         let random = entities.randomElement()!
-        ecs.entitySystem.destroy(random)
+				ecs.destroy(entity: random)
         XCTAssert(!ecs.entitySystem.contains(random))
       }
 

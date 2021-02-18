@@ -32,7 +32,7 @@ public class ECSManager {
   public let events = CentralEventSystem()
 
   /// All entities with contained items
-  internal var entityMasks = [Entity: ContainedItems]()
+	public internal(set) var entityMasks = [Entity: ContainedItems]()
 
   /// Holds all the types of components and manages what entity they are set too.
   internal var componentSystems = [ComponentFamilyID: ComponentStorage]()
