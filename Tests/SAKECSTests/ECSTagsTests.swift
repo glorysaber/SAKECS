@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import SAKECS
+import SAKECS
 
 class ECSTagsTests: XCTestCase {
 
@@ -172,8 +172,8 @@ class ECSTagsTests: XCTestCase {
       case one, two, three, none
     }
 
-    ecs.add(tag: "one", to: entities[0])
-    XCTAssertNotNil(try? ecs.entitySystem.add("two", to: entities[1]))
+		ecs.add(tag: Tags.one, to: entities[0])
+		ecs.add(tag: Tags.two, to: entities[1])
 
     ecs.add(tag: Tags.three, to: entities[2])
 
