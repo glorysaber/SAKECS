@@ -6,11 +6,11 @@
 //  Copyright © 2021 Stephen Kac. All rights reserved.
 //
 
-struct WorldServiceAdapterECSManager {
+struct ECSManagerWorldService {
 	let manager = ECSManager()
 }
 
-extension WorldServiceAdapterECSManager: WorldSystemService {
+extension ECSManagerWorldService: WorldSystemService {
 	var systemCount: Int {
 		manager.systemCount
 	}
@@ -42,7 +42,7 @@ extension WorldServiceAdapterECSManager: WorldSystemService {
 	}
 }
 
-extension WorldServiceAdapterECSManager: WorldTagService {
+extension ECSManagerWorldService: WorldTagService {
 	func add<Raw>(tag: Raw, to entity: Entity) where Raw: RawRepresentable, Raw.RawValue == EntityTag {
 		manager.add(tag: tag, to: entity)
 	}
@@ -60,7 +60,7 @@ extension WorldServiceAdapterECSManager: WorldTagService {
 	}
 }
 
-extension WorldServiceAdapterECSManager: WorldEntityService {
+extension ECSManagerWorldService: WorldEntityService {
 	var componentCount: Int {
 		manager.componentCount
 	}
@@ -82,7 +82,7 @@ extension WorldServiceAdapterECSManager: WorldEntityService {
 	}
 }
 
-extension WorldServiceAdapterECSManager: WorldEntityComponentService {
+extension ECSManagerWorldService: WorldEntityComponentService {
 	func set<ComponentType>(
 		component: ComponentType,
 		to entity: Entity

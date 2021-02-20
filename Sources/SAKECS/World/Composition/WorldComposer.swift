@@ -11,7 +11,7 @@ import Foundation
 struct WorldComposer {
 
 	func composeECSManagerWorld() -> World {
-		let adapter = WorldServiceAdapterECSManager()
+		let adapter = ECSManagerWorldService()
 		return World(
 			systems: adapter,
 			tags: adapter,
