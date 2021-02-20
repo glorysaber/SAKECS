@@ -54,6 +54,8 @@
 		CCADF7A725DEABC1002974A8 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCADF7A625DEABC1002974A8 /* World.swift */; };
 		CCADF7A925DEAEF2002974A8 /* WorldTagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCADF7A825DEAEF2002974A8 /* WorldTagService.swift */; };
 		CCADF7AB25DEAF21002974A8 /* WorldEntityComponentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCADF7AA25DEAF21002974A8 /* WorldEntityComponentService.swift */; };
+		CCDA56E325E1B89F004DBFBE /* WorldComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDA56E225E1B89F004DBFBE /* WorldComposer.swift */; };
+		CCDA56E625E1B8E6004DBFBE /* WorldServiceAdapterECSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDA56E525E1B8E6004DBFBE /* WorldServiceAdapterECSManager.swift */; };
 		CCE4D5E525D63317000E8172 /* MutableValueReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE4D5E425D63317000E8172 /* MutableValueReference.swift */; };
 /* End PBXBuildFile section */
 
@@ -124,6 +126,8 @@
 		CCC1C1BD23D78C0F0027CD2B /* Design.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Design.md; sourceTree = "<group>"; };
 		CCC1C1BF23D78C0F0027CD2B /* EntitiesWithTypes.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = EntitiesWithTypes.jpg; sourceTree = "<group>"; };
 		CCC4E80825A0050700E0EAFD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		CCDA56E225E1B89F004DBFBE /* WorldComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldComposer.swift; sourceTree = "<group>"; };
+		CCDA56E525E1B8E6004DBFBE /* WorldServiceAdapterECSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldServiceAdapterECSManager.swift; sourceTree = "<group>"; };
 		CCE4D5E425D63317000E8172 /* MutableValueReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutableValueReference.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -192,6 +196,7 @@
 		CCADF7A025DEA9B8002974A8 /* World */ = {
 			isa = PBXGroup;
 			children = (
+				CCDA56E425E1B8C7004DBFBE /* Composition */,
 				CCADF7A625DEABC1002974A8 /* World.swift */,
 				CC3842A825DEB3B20063692A /* Services */,
 			);
@@ -374,6 +379,15 @@
 				CC3322D825BD06F1000978FD /* ArchetypeBranchTests.swift */,
 			);
 			path = Structure;
+			sourceTree = "<group>";
+		};
+		CCDA56E425E1B8C7004DBFBE /* Composition */ = {
+			isa = PBXGroup;
+			children = (
+				CCDA56E225E1B89F004DBFBE /* WorldComposer.swift */,
+				CCDA56E525E1B8E6004DBFBE /* WorldServiceAdapterECSManager.swift */,
+			);
+			path = Composition;
 			sourceTree = "<group>";
 		};
 		CCE4D5E325D63303000E8172 /* Helper */ = {
@@ -564,9 +578,11 @@
 				CCE4D5E525D63317000E8172 /* MutableValueReference.swift in Sources */,
 				CC4AA29A24AA86700025C805 /* ECSManager+Components.swift in Sources */,
 				CC4AA28824AA81BF0025C805 /* EntitySystem.swift in Sources */,
+				CCDA56E625E1B8E6004DBFBE /* WorldServiceAdapterECSManager.swift in Sources */,
 				CC4AA29024AA865E0025C805 /* MetaEntity+Components.swift in Sources */,
 				CC4AA28F24AA865E0025C805 /* MetaEntity+Sythesized.swift in Sources */,
 				CC3322DD25BD0825000978FD /* ArchetypeBranch.swift in Sources */,
+				CCDA56E325E1B89F004DBFBE /* WorldComposer.swift in Sources */,
 				CC3842AA25DEB3D80063692A /* WorldEntityService.swift in Sources */,
 				CC4AA28024AA81B60025C805 /* CentralEventSystem.swift in Sources */,
 				CC4AA28324AA81BA0025C805 /* ComponentSystem.swift in Sources */,

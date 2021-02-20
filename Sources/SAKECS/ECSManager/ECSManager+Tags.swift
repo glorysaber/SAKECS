@@ -10,12 +10,12 @@ import os.log
 
 extension ECSManager: WorldTagService {
   /// Adds an entity to a Tag
-  public func add<Raw: RawRepresentable>(tag: Raw, to entity: Entity) where Raw.RawValue == String {
+  public func add<Raw: RawRepresentable>(tag: Raw, to entity: Entity) where Raw.RawValue == EntityTag {
     add(tag: tag.rawValue, to: entity)
   }
 
   /// Removes a tag from an entity.
-  public func remove<Raw: RawRepresentable>(tag: Raw, from entity: Entity) where Raw.RawValue == String {
+  public func remove<Raw: RawRepresentable>(tag: Raw, from entity: Entity) where Raw.RawValue == EntityTag {
     remove(tag: tag.rawValue, from: entity)
   }
 
