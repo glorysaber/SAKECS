@@ -19,16 +19,25 @@ public struct ComponentFamilyID: Hashable {
   }
 }
 
-private enum StaticComponentFamilyID<Component: EntityComponent> {
+// Exclusively used to store the familyID in each type that conforms to  EntityComponent.
+public struct StaticComponentFamilyID<Component: EntityComponent> {
+
 	/// The Family Id of the ComponentType
-	fileprivate static var familyID: ComponentFamilyID {
+	fileprivate var familyID: ComponentFamilyID =
 		ComponentFamilyID(componentType: Component.self)
-	}
+
+	// Make public once SE-0309 is implemented.
+//	public init() {}
 }
 
 /// Used to give MultiComponent capabilities
 public protocol EntityComponent {
-	static var familyID: ComponentFamilyID { get }
+
+/// Use getFamilyIDStatic
+	static var familyIDStatic: ComponentFamilyID { get }
+
+	// Switch to this once SE-0309 is implemented.
+//	static var familyIDStatic: StaticComponentFamilyID<Self> { get }
 
   /// A Type Unique Identifier
 	init()
@@ -40,11 +49,14 @@ extension EntityComponent {
 		Self.familyID
 	}
 
-	public static func getFamilyID() -> ComponentFamilyID {
-		getFamilyID(type: Self.self)
+	static var familyID: ComponentFamilyID {
+		// Switch to this once SE-0309 is implemented.
+//		Self.familyIDStatic.familyID
+		Self.familyIDStatic
 	}
 
-	private static func getFamilyID<T: EntityComponent>(type: T.Type) -> ComponentFamilyID {
-		StaticComponentFamilyID<T>.familyID
+	// Remove once SE-0309 is implemented.
+	static func getFamilyIDStatic() -> ComponentFamilyID {
+		StaticComponentFamilyID<Self>().familyID
 	}
 }
