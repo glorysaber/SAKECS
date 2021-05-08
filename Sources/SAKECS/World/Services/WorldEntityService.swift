@@ -11,13 +11,12 @@ import Foundation
 public protocol WorldEntityService {
 
 	/// Gets the total component count of all componentTypes
-	var componentCount: Int { get }
+	var entityCount: Int { get }
+
+	func contains(entity: Entity) -> Bool
 
 	/// removes an entity from all systems
 	func destroy(entity: Entity)
-
-	/// Removes a group of entities from all entities
-	func destroy(entities: [Entity])
 
 	/// Creates an entity, returns nil if unsuccessfully created
 	func createEntity() -> Entity?

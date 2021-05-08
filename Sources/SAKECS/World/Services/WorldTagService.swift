@@ -10,6 +10,10 @@ import Foundation
 
 public protocol WorldTagService {
 
+	func contains<Raw: RawRepresentable>(tag: Raw) -> Bool  where Raw.RawValue == EntityTag
+
+	func does<Raw: RawRepresentable>(entity: Entity, contain tag: Raw) -> Bool  where Raw.RawValue == EntityTag
+
 	/// Adds an entity to a Tag
 	func add<Raw: RawRepresentable>(tag: Raw, to entity: Entity) where Raw.RawValue == EntityTag
 

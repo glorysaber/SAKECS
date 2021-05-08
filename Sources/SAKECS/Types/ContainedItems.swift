@@ -18,7 +18,7 @@ public struct ContainedItems {
   /// Creates a ContainedItems with the given components and tags
   public init(components: [EntityComponent.Type], tags: [EntityTag]) {
     self.components = components.reduce(into: Set<ComponentFamilyID>()) {
-      $0.insert(ComponentFamilyID(componentType: $1))
+			$0.insert($1.familyID)
     }
 
     self.tags = Set(tags)
@@ -32,12 +32,12 @@ public struct ContainedItems {
 
   /// Removes the component
   mutating func remove(component: EntityComponent) {
-    components.remove(ComponentFamilyID(component: component))
+		components.remove(component.familyID)
   }
 
   /// adds the component
   mutating func add(component: EntityComponent) {
-    components.insert(ComponentFamilyID(component: component))
+		components.insert(component.familyID)
   }
 
 }

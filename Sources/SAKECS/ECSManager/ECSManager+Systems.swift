@@ -11,7 +11,7 @@ extension ECSManager: WorldSystemService {
 
 	/// The count of systems
 	public var systemCount: Int {
-		componentSystems.count
+		prioritySortedSystems.count
 	}
 
   /// Updates all systems with no increase in system time

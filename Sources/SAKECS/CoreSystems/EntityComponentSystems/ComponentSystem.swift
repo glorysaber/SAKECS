@@ -14,10 +14,10 @@ internal protocol ComponentStorage {
 }
 
 /// Holds all the components of a single type
-internal class ComponentSystem<Component: EntityComponent>: ComponentStorage {
+class ComponentSystem<Component: EntityComponent>: ComponentStorage {
 
   var componentCount: Int {
-    return componentMap.count
+    componentMap.count
   }
 
   var componentMap = [Entity: Component]()
@@ -39,11 +39,5 @@ internal class ComponentSystem<Component: EntityComponent>: ComponentStorage {
   }
 
   /// Gets the family ID of the component that this system stores
-  internal var componentFamilyID: ComponentFamilyID = {
-    return ComponentFamilyID(componentType: Component.self)
-  }()
-
-//  internal static var typeID: ComponentSystemTypeID = {
-//    return ComponentSystemTypeID(id: ObjectIdentifier(self).hashValue)
-//  }()
+  let componentFamilyID = Component.familyID
 }

@@ -8,47 +8,45 @@
 import Foundation
 import os.log
 
-extension ECSManager: WorldEntityComponentService {
+extension ECSManager {
+
+	/// Gets the total component count of all componentTypes
+	public var componentCount: Int {
+		componentSystem.componentCount
+	}
 
   /// Sets a component to an entity and notifies any interested parties.
   public func set<ComponentType: EntityComponent>(component: ComponentType, to entity: Entity) {
     guard entitySystem.contains(entity) else { return }
     let familyID = component.familyID
-    if componentSystems[familyID] == nil {
-      let componentSystem = ComponentSystem<ComponentType>()
-      componentSystem.set(component, to: entity)
-      componentSystems[familyID] = componentSystem
-    } else {
-      guard let componentSystem = componentSystems[familyID] as? ComponentSystem<ComponentType> else { return }
-      componentSystem.set(component, to: entity)
-    }
+		componentSystem.set(component, to: entity)
 
-    updateMaskWith(entity: entity, removed: false, familyID: ComponentType.familyID)
+    updateMaskWith(entity: entity, removed: false, familyID: familyID)
   }
 
   /// IF the component exists for the entity gets it. Otherwise returns nil.
   public func get<ComponentType: EntityComponent>(
 		componentType: ComponentType.Type, for entity: Entity) -> ComponentType? {
-    let familyID = ComponentFamilyID(componentType: componentType)
-    guard let componentSystem = componentSystems[familyID] as? ComponentSystem<ComponentType> else { return nil }
-
-    return componentSystem.getComponent(for: entity)
-  }
-
-  /// Removes the component from the entity and notifies those interested
-  internal func remove(familyID: ComponentFamilyID, from entity: Entity) {
-    componentSystems[familyID]?.removeComponent(from: entity)
-
-    updateMaskWith(entity: entity, removed: true, familyID: familyID)
+		componentSystem.get(componentType, for: entity)
   }
 
   /// Removes the component from the entity and notifies those interested
   public func remove<ComponentType: EntityComponent>(componentType: ComponentType.Type, from entity: Entity) {
-    let familyID = ComponentFamilyID(componentType: componentType)
-    guard componentSystems[familyID] != nil else { return }
+		guard componentSystem.contains(componentType) == true else { return }
 
-    remove(familyID: familyID, from: entity)
+		componentSystem.remove(componentType, from: entity)
+		updateMaskWith(entity: entity, removed: true, familyID: componentType.familyID)
   }
+
+	public func removeComponent(
+		with familyID: ComponentFamilyID,
+		from entity: Entity
+	) {
+		guard componentSystem.containsComponent(with: familyID) else { return }
+
+		componentSystem.removeComponent(with: familyID, from: entity)
+		updateMaskWith(entity: entity, removed: true, familyID: familyID)
+	}
 
   /// Updates an entities mask and notifies the parties interested.
   private func updateMaskWith(entity: Entity, removed: Bool, familyID: ComponentFamilyID) {

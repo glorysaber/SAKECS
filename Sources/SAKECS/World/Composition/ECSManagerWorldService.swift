@@ -7,7 +7,49 @@
 //
 
 struct ECSManagerWorldService {
-	let manager = ECSManager()
+	let manager = ECSManagerComposer().compose_v0_0_1()
+}
+
+extension ECSManagerWorldService: WorldEntityComponentService {
+	var componentCount: Int {
+		manager.componentCount
+	}
+
+	func contains<ComponentType>(_ componentType: ComponentType.Type) -> Bool where ComponentType: EntityComponent {
+		manager.componentSystem.contains(componentType)
+	}
+
+	func containsComponent(
+		with familID: ComponentFamilyID
+	) -> Bool {
+		manager.componentSystem.containsComponent(with: familID)
+	}
+
+	func set<ComponentType>(_ component: ComponentType, to entity: Entity) where ComponentType: EntityComponent {
+		manager.set(component: component, to: entity)
+	}
+
+	func get<ComponentType>(
+		_ componentType: ComponentType.Type,
+		for entity: Entity
+	) -> ComponentType? where ComponentType: EntityComponent {
+		manager.get(componentType: componentType, for: entity)
+	}
+
+	func removeComponent(with familyID: ComponentFamilyID, from entity: Entity) {
+		manager.removeComponent(with: familyID, from: entity)
+	}
+
+	func remove<ComponentType>(
+		_ componentType: ComponentType.Type,
+		from entity: Entity
+	) where ComponentType: EntityComponent {
+		manager.remove(componentType: componentType, from: entity)
+	}
+
+	func remove(entity: Entity) {
+		manager.destroy(entity: entity)
+	}
 }
 
 extension ECSManagerWorldService: WorldSystemService {
@@ -43,6 +85,14 @@ extension ECSManagerWorldService: WorldSystemService {
 }
 
 extension ECSManagerWorldService: WorldTagService {
+	func contains<Raw>(tag: Raw) -> Bool  where Raw: RawRepresentable, Raw.RawValue == EntityTag {
+		manager.entitySystem.contains(tag.rawValue)
+	}
+
+	func does<Raw>(entity: Entity, contain tag: Raw) -> Bool where Raw: RawRepresentable, Raw.RawValue == EntityTag {
+		manager.entitySystem.entityByTag[tag.rawValue]?.contains(entity) ?? false
+	}
+
 	func add<Raw>(tag: Raw, to entity: Entity) where Raw: RawRepresentable, Raw.RawValue == EntityTag {
 		manager.add(tag: tag, to: entity)
 	}
@@ -61,8 +111,12 @@ extension ECSManagerWorldService: WorldTagService {
 }
 
 extension ECSManagerWorldService: WorldEntityService {
-	var componentCount: Int {
-		manager.componentCount
+	var entityCount: Int {
+		manager.entitySystem.allEntities.count
+	}
+
+	func contains(entity: Entity) -> Bool {
+		manager.entitySystem.contains(entity)
 	}
 
 	func destroy(entity: Entity) {
@@ -80,28 +134,4 @@ extension ECSManagerWorldService: WorldEntityService {
 	func createEntities(_ amount: Int) -> [Entity] {
 		manager.createEntities(amount)
 	}
-}
-
-extension ECSManagerWorldService: WorldEntityComponentService {
-	func set<ComponentType>(
-		component: ComponentType,
-		to entity: Entity
-	) where ComponentType: EntityComponent {
-		manager.set(component: component, to: entity)
-	}
-
-	func get<ComponentType>(
-		componentType: ComponentType.Type,
-		for entity: Entity
-	) -> ComponentType? where ComponentType: EntityComponent {
-		manager.get(componentType: componentType, for: entity)
-	}
-
-	func remove<ComponentType>(
-		componentType: ComponentType.Type,
-		from entity: Entity
-	) where ComponentType: EntityComponent {
-		manager.remove(componentType: componentType, from: entity)
-	}
-
 }

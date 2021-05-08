@@ -7,14 +7,7 @@
 
 import Foundation
 
-extension ECSManager: WorldEntityService {
-
-  /// Gets the total component count of all componentTypes
-	public var componentCount: Int {
-    return componentSystems.values.reduce(0) {
-      return $0 + $1.componentCount
-    }
-  }
+extension ECSManager {
 
   /// removes an entity from all systems
 	public func destroy(entity: Entity) {
@@ -22,16 +15,10 @@ extension ECSManager: WorldEntityService {
 
     let dead = MetaEntity(entity: entity, ecs: self)
 
-    for component in dead.itemsContained.components {
-      remove(familyID: component, from: entity)
-    }
+		componentSystem.remove(entity: entity)
 
     for tag in dead.itemsContained.tags {
       remove(tag: tag, from: entity)
-    }
-
-    for componentSystem in componentSystems.values {
-      componentSystem.removeComponent(from: entity)
     }
 
     updateMaskWith(entity: entity, added: false)

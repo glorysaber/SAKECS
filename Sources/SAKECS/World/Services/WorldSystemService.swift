@@ -30,5 +30,4 @@ public protocol WorldSystemService {
 
 	/// gets a system of a type
 	func getSystems<SystemType: EntityComponentSystem>(ofType: SystemType.Type) -> [SystemType]
-
 }

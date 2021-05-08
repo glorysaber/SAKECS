@@ -13,31 +13,38 @@ public typealias Component = EntityComponent
 public struct ComponentFamilyID: Hashable {
   internal let id: ObjectIdentifier
 
-  /// gets the family ID for the component
-  init(component: EntityComponent) {
-    self.id = ObjectIdentifier(type(of: component))
-  }
-
   /// Gets the family ID for the component Type
-  init(componentType: EntityComponent.Type) {
-    self.id = ObjectIdentifier(componentType)
+	fileprivate init<Component: EntityComponent>(componentType: Component.Type) {
+		self.id = ObjectIdentifier(Component.self)
   }
+}
+
+private enum StaticComponentFamilyID<Component: EntityComponent> {
+	/// The Family Id of the ComponentType
+	fileprivate static var familyID: ComponentFamilyID {
+		ComponentFamilyID(componentType: Component.self)
+	}
 }
 
 /// Used to give MultiComponent capabilities
 public protocol EntityComponent {
+	static var familyID: ComponentFamilyID { get }
+
   /// A Type Unique Identifier
 	init()
 }
 
 extension EntityComponent {
-	/// Gets a component's family ID
-	public var familyID: ComponentFamilyID {
-    ComponentFamilyID(component: self)
-  }
 
-  /// The Family Id of the ComponentType
-  public static var familyID: ComponentFamilyID {
-		ComponentFamilyID(componentType: self)
-  }
+	var familyID: ComponentFamilyID {
+		Self.familyID
+	}
+
+	public static func getFamilyID() -> ComponentFamilyID {
+		getFamilyID(type: Self.self)
+	}
+
+	private static func getFamilyID<T: EntityComponent>(type: T.Type) -> ComponentFamilyID {
+		StaticComponentFamilyID<T>.familyID
+	}
 }

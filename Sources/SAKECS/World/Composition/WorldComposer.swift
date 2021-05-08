@@ -16,7 +16,7 @@ struct WorldComposer {
 			systems: adapter,
 			tags: adapter,
 			entities: adapter,
-			entityComponents: adapter
+			entityComponents: adapter.manager.componentSystem
 		)
 	}
 }

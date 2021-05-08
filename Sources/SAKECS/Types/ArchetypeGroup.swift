@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol ArchetypeGroup {
+public protocol ComponentBranch {
 	/// Count of entities
 	var entityCount: Int { get }
 
@@ -20,9 +20,6 @@ public protocol ArchetypeGroup {
 
 	/// Take this into account to reduce allocations
 	var minimumCapacity: Int { get }
-
-	/// Makes a copy of the group with all enitties being unassigned.
-	var archetype: Self { get }
 
 	// MARK: Storage
 
@@ -77,4 +74,9 @@ public protocol ArchetypeGroup {
 		_ componentType: Component.Type,
 		for entity: Entity
 	) -> Component?
+}
+
+public protocol ArchetypeGroup: ComponentBranch {
+	/// Makes a copy of the group with all enitties being unassigned.
+	var archetype: Self { get }
 }
