@@ -59,7 +59,7 @@
 		CCDA56E325E1B89F004DBFBE /* WorldComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDA56E225E1B89F004DBFBE /* WorldComposer.swift */; };
 		CCDA56E625E1B8E6004DBFBE /* ECSManagerWorldService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDA56E525E1B8E6004DBFBE /* ECSManagerWorldService.swift */; };
 		CCE4D5E525D63317000E8172 /* MutableValueReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE4D5E425D63317000E8172 /* MutableValueReference.swift */; };
-		CCFF976A26350D2100B7DB30 /* WorldTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCFF976926350D2100B7DB30 /* WorldTree.swift */; };
+		CCFF976A26350D2100B7DB30 /* ArchetypeTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCFF976926350D2100B7DB30 /* ArchetypeTree.swift */; };
 		CCFF9775263529BD00B7DB30 /* ECSManagerComponentSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCFF9774263529BD00B7DB30 /* ECSManagerComponentSystem.swift */; };
 /* End PBXBuildFile section */
 
@@ -135,7 +135,7 @@
 		CCDA56E225E1B89F004DBFBE /* WorldComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldComposer.swift; sourceTree = "<group>"; };
 		CCDA56E525E1B8E6004DBFBE /* ECSManagerWorldService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECSManagerWorldService.swift; sourceTree = "<group>"; };
 		CCE4D5E425D63317000E8172 /* MutableValueReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutableValueReference.swift; sourceTree = "<group>"; };
-		CCFF976926350D2100B7DB30 /* WorldTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldTree.swift; sourceTree = "<group>"; };
+		CCFF976926350D2100B7DB30 /* ArchetypeTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchetypeTree.swift; sourceTree = "<group>"; };
 		CCFF9774263529BD00B7DB30 /* ECSManagerComponentSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECSManagerComponentSystem.swift; sourceTree = "<group>"; wrapsLines = 1; };
 /* End PBXFileReference section */
 
@@ -380,7 +380,7 @@
 				CC3322DC25BD0825000978FD /* ArchetypeBranch.swift */,
 				CC6106F825A1213B001F120B /* ComponentMatrix.swift */,
 				CC61070C25A2522B001F120B /* ComponentRow.swift */,
-				CCFF976926350D2100B7DB30 /* WorldTree.swift */,
+				CCFF976926350D2100B7DB30 /* ArchetypeTree.swift */,
 				CC7E97DA2646504200BE66C2 /* ComponentArchetype.swift */,
 			);
 			path = Structure;
@@ -592,7 +592,7 @@
 				CC4AA28124AA81BA0025C805 /* EntityComponentSystem.swift in Sources */,
 				CCFF9775263529BD00B7DB30 /* ECSManagerComponentSystem.swift in Sources */,
 				CC4AA29324AA86660025C805 /* EntityComponent.swift in Sources */,
-				CCFF976A26350D2100B7DB30 /* WorldTree.swift in Sources */,
+				CCFF976A26350D2100B7DB30 /* ArchetypeTree.swift in Sources */,
 				CC4AA29824AA86700025C805 /* ECSManager+Systems.swift in Sources */,
 				CC6024E625AAA17D00841C71 /* EntityComponentChunk.swift in Sources */,
 				CC61070D25A2522B001F120B /* ComponentRow.swift in Sources */,

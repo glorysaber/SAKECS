@@ -30,9 +30,19 @@ class ECSComponentTests: XCTestCase {
 		let enities = ecs.createEntities(100)
 		guard enities.isEmpty == false else { XCTAssert(false, "ECS failed to created 100 entities"); return }
 
-    struct StringComponent: Component { let value: String = "" }
-    struct IntComponent: Component { let value: Int = 0 }
-    struct BoolComponent: Component { let value: Bool = true }
+    struct StringComponent: Component {
+			static let familyIDStatic: ComponentFamilyID = getFamilyIDStatic()
+			let value: String = ""
+
+		}
+    struct IntComponent: Component {
+			static let familyIDStatic: ComponentFamilyID = getFamilyIDStatic()
+			let value: Int = 0
+		}
+    struct BoolComponent: Component {
+			static let familyIDStatic: ComponentFamilyID = getFamilyIDStatic()
+			let value: Bool = true
+		}
   }
 
 }

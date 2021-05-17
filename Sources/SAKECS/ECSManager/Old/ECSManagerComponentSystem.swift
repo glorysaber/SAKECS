@@ -18,12 +18,6 @@ class ECSManagerComponentSystem: WorldEntityComponentService {
 
 	private var componentSystems = [ComponentFamilyID: ComponentStorage]()
 
-	func contains<ComponentType: EntityComponent>(
-		_ componentType: ComponentType.Type
-	) -> Bool {
-		containsComponent(with: componentType.familyID)
-	}
-
 	func containsComponent(
 		with familyID: ComponentFamilyID
 	) -> Bool {
@@ -59,16 +53,6 @@ class ECSManagerComponentSystem: WorldEntityComponentService {
 		from entity: Entity
 	) {
 		componentSystems[familyID]?.removeComponent(from: entity)
-	}
-
-	public func remove<ComponentType: EntityComponent>(
-		_ componentType: ComponentType.Type,
-		from entity: Entity
-	) {
-		let familyID = componentType.familyID
-		guard componentSystems[familyID] != nil else { return }
-
-		removeComponent(with: familyID, from: entity)
 	}
 
 	func remove(entity: Entity) {

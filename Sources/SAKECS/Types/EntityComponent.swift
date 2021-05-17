@@ -45,18 +45,18 @@ public protocol EntityComponent {
 
 extension EntityComponent {
 
-	var familyID: ComponentFamilyID {
+	public var familyID: ComponentFamilyID {
 		Self.familyID
 	}
 
-	static var familyID: ComponentFamilyID {
+	public static var familyID: ComponentFamilyID {
 		// Switch to this once SE-0309 is implemented.
 //		Self.familyIDStatic.familyID
 		Self.familyIDStatic
 	}
 
 	// Remove once SE-0309 is implemented.
-	static func getFamilyIDStatic() -> ComponentFamilyID {
+	public static func getFamilyIDStatic() -> ComponentFamilyID {
 		StaticComponentFamilyID<Self>().familyID
 	}
 }

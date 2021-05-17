@@ -9,16 +9,16 @@
 import Foundation
 
 public final class MutableValueReference<Element> {
-	public var value: Element
+	public var wrappedValue: Element
 
 	public init(_ value: Element) {
-		self.value = value
+		self.wrappedValue = value
 	}
 }
 
 extension MutableValueReference: CustomStringConvertible {
 	public var description: String {
-		"\(value)"
+		"\(wrappedValue)"
 	}
 }
 

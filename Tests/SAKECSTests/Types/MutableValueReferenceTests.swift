@@ -17,13 +17,13 @@ class MutableValueReferenceTests: XCTestCase {
 		// its characteristics change...
 		let sut = MutableValueReference(1)
 
-		XCTAssertEqual(sut.value, 1)
+		XCTAssertEqual(sut.wrappedValue, 1)
 
 		let sut2 = sut
 
-		sut.value = 2
+		sut.wrappedValue = 2
 
-		XCTAssertEqual(sut.value, sut2.value)
+		XCTAssertEqual(sut.wrappedValue, sut2.wrappedValue)
 	}
 
 }

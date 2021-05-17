@@ -15,10 +15,6 @@ extension ECSManagerWorldService: WorldEntityComponentService {
 		manager.componentCount
 	}
 
-	func contains<ComponentType>(_ componentType: ComponentType.Type) -> Bool where ComponentType: EntityComponent {
-		manager.componentSystem.contains(componentType)
-	}
-
 	func containsComponent(
 		with familID: ComponentFamilyID
 	) -> Bool {
@@ -38,13 +34,6 @@ extension ECSManagerWorldService: WorldEntityComponentService {
 
 	func removeComponent(with familyID: ComponentFamilyID, from entity: Entity) {
 		manager.removeComponent(with: familyID, from: entity)
-	}
-
-	func remove<ComponentType>(
-		_ componentType: ComponentType.Type,
-		from entity: Entity
-	) where ComponentType: EntityComponent {
-		manager.remove(componentType: componentType, from: entity)
 	}
 
 	func remove(entity: Entity) {

@@ -41,7 +41,7 @@ extension MutableArray: Collection {
 	}
 
 	public var first: Element? {
-		internalArray.first?.value
+		internalArray.first?.wrappedValue
 	}
 
 	public var startIndex: Index {
@@ -54,11 +54,11 @@ extension MutableArray: Collection {
 
 	public subscript(_ position: Index) -> Element {
 		get {
-			internalArray[position].value
+			internalArray[position].wrappedValue
 		}
 		set {
 			makeSureIsUniquelyReferenced(at: position)
-			internalArray[position].value = newValue
+			internalArray[position].wrappedValue = newValue
 		}
 	}
 
@@ -89,6 +89,11 @@ extension MutableArray {
 	public mutating func firstContainer(where predicate: (Container) throws -> Bool) rethrows -> Container? {
 		makeSureIsUniquelyReferenced()
 		return try internalArray.first(where: predicate)
+	}
+
+	public mutating func firstContainer() -> Container? {
+		makeSureIsUniquelyReferenced()
+		return internalArray.first
 	}
 
 	public mutating func forEachContainer(_ body: (Container) throws -> Void) rethrows {
@@ -140,7 +145,7 @@ private extension MutableArray {
 		guard isEmpty == false else { return }
 
 		if !isKnownUniquelyReferenced(&internalArray[index]) {
-			internalArray = internalArray.map { Container($0.value) }
+			internalArray = internalArray.map { Container($0.wrappedValue) }
 		}
 	}
 }

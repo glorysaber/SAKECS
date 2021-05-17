@@ -9,6 +9,9 @@
 import Foundation
 
 public protocol ComponentBranch {
+
+	var componentArchetype: ComponentArchetype { get }
+
 	/// Count of entities
 	var entityCount: Int { get }
 
@@ -48,6 +51,10 @@ public protocol ComponentBranch {
 	/// - Returns: true if the entity componentType exists, false otherwise
 	func contains<Component: EntityComponent>(_ componentType: Component.Type) -> Bool
 
+	/// - Parameter familyID: The component family Id to use to look up
+	/// - Returns: true if the entity familyID exists, false otherwise
+	func containsComponent(with familyID: ComponentFamilyID) -> Bool
+
 	/// If the given enity exists, set this component.
 	/// If the component does not exist in the chunk does nothing.
 	/// - Parameters:
@@ -65,6 +72,11 @@ public protocol ComponentBranch {
 	///   - componentType: The component type to remove
 	mutating func remove<Component: EntityComponent>(_ componentType: Component.Type)
 
+	/// removes the  componentType matching the given familyID if it exists
+	/// - Parameters:
+	///   - componentType: The component type to remove
+	mutating func removeComponent(with familyID: ComponentFamilyID)
+
 	/// Gets the given component for the entity or nil otherwise
 	/// - Parameters:
 	///   - componentType: The component type to get
@@ -76,7 +88,11 @@ public protocol ComponentBranch {
 	) -> Component?
 }
 
-public protocol ArchetypeGroup: ComponentBranch {
+public protocol ArchetypeDeepCopy {
 	/// Makes a copy of the group with all enitties being unassigned.
 	var archetype: Self { get }
+
+	func copyComponents(for entity: Entity, to destination: inout Self, destinationEntity: Entity)
 }
+
+public typealias ArchetypeGroup = ComponentBranch & ArchetypeDeepCopy

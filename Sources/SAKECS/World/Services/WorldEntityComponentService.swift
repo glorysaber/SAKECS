@@ -63,3 +63,22 @@ public protocol WorldEntityComponentService {
 	/// - Parameter entity: The identifier for the entity.
 	func remove(entity: Entity)
 }
+
+extension WorldEntityComponentService {
+	/// Checks if an enity contains a given component
+	/// - Parameter componentType: The type of  component to check for
+	func contains<ComponentType>(_ componentType: ComponentType.Type) -> Bool where ComponentType: EntityComponent {
+		 containsComponent(with: ComponentType.familyID)
+	}
+
+	/// A possibly expensive operation
+	/// - Parameters:
+	///   - componentType: The type of component to remove
+	///   - entity: The entity to remove the component from
+	func remove<ComponentType: EntityComponent>(
+		_ componentType: ComponentType.Type,
+		from entity: Entity
+	) {
+		removeComponent(with: ComponentType.familyID, from: entity)
+	}
+}

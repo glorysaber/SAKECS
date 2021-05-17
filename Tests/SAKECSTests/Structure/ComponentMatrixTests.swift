@@ -172,8 +172,11 @@ class ComponentMatrixTests: XCTestCase {
 
 	// MARK: Helpers
 
-	private struct NullComponent: EntityComponent {}
+	private struct NullComponent: EntityComponent {
+		static let familyIDStatic: ComponentFamilyID = getFamilyIDStatic()
+	}
 	private struct IntComponent: EntityComponent, Hashable, Comparable {
+		static let familyIDStatic: ComponentFamilyID = getFamilyIDStatic()
 
 		static func < (lhs: ComponentMatrixTests.IntComponent, rhs: ComponentMatrixTests.IntComponent) -> Bool {
 			lhs.value < rhs.value

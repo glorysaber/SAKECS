@@ -60,7 +60,7 @@ class MutableArrayTests: XCTestCase {
 
 		let sut2 = sut
 
-		sut.getContainer(for: 1).value = 0
+		sut.getContainer(for: 1).wrappedValue = 0
 
 		XCTAssertEqual(sut2[1], 4)
 		XCTAssertEqual(sut[1], 0)

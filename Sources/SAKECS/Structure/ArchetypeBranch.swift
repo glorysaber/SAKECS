@@ -19,6 +19,8 @@ public struct ArchetypeBranch<Chunk: ArchetypeGroup> {
 
 	typealias Container = MutableValueReference<Chunk>
 
+	public var componentArchetype: ComponentArchetype
+
 	/**
 	All of the chunks should be of the same archetype, this must
 	be gaurenteed by the branch..
@@ -32,9 +34,14 @@ public struct ArchetypeBranch<Chunk: ArchetypeGroup> {
 	private var sharedComponentsIndexes = [ComponentFamilyID: Int]()
 	private var sharedComponents = [EntityComponent]()
 
-	public init(columnsInEachChunk: Int, chunkConstructor: @escaping () -> Chunk) {
+	public init(
+		columnsInEachChunk: Int,
+		componentArchetype: ComponentArchetype = [],
+		chunkConstructor: @escaping () -> Chunk
+	) {
 		self.chunkConstructor = chunkConstructor
 		self.columnsInEachChunk = columnsInEachChunk
+		self.componentArchetype = ComponentArchetype()
 		_ = addChunk()
 	}
 
@@ -42,6 +49,7 @@ public struct ArchetypeBranch<Chunk: ArchetypeGroup> {
 		self.chunkConstructor = branch.chunkConstructor
 		self.columnsInEachChunk = branch.columnsInEachChunk
 		self.chunks = MutableArray(branch.chunks.map { $0.archetype })
+		self.componentArchetype = branch.componentArchetype
 	}
 }
 
@@ -95,6 +103,25 @@ extension ArchetypeBranch {
 
 // MARK: - ArchetypeGroup
 extension ArchetypeBranch: ArchetypeGroup {
+
+	public func containsComponent(with familyID: ComponentFamilyID) -> Bool {
+		componentArchetype.required.contains(familyID)
+	}
+
+	public mutating func removeComponent(with familyID: ComponentFamilyID) {
+		chunks.firstContainer()?.removeComponent(with: familyID)
+		componentArchetype -= familyID
+	}
+
+	// MARK: - Moving Data
+
+	public func copyComponents(for entity: Entity, to destination: inout Self, destinationEntity: Entity) {
+		let sourceChunk = chunks.first(where: { $0.contains(entity) })
+		guard let destinationChunk = destination.chunks.firstContainer(where: { $0.contains(destinationEntity) }) else {
+			fatalError("Precondition failure, there is no entity \(destinationEntity)")
+		}
+		sourceChunk?.copyComponents(for: entity, to: &destinationChunk.wrappedValue, destinationEntity: destinationEntity)
+	}
 
 	public var archetype: ArchetypeBranch<Chunk> {
 		Self(self)
@@ -150,10 +177,12 @@ extension ArchetypeBranch: ArchetypeGroup {
 
 	public mutating func add<Component: EntityComponent>(_ componentType: Component.Type) {
 		chunks.forEachContainer { $0.add(componentType) }
+		componentArchetype += Component.familyID
 	}
 
 	public mutating func remove<Component: EntityComponent>(_ componentType: Component.Type) {
 		chunks.forEachContainer { $0.remove(componentType) }
+		componentArchetype -= Component.familyID
 	}
 
 	public func get<Component: EntityComponent>(_ componentType: Component.Type, for entity: Entity) -> Component? {
@@ -201,54 +230,54 @@ private extension ArchetypeBranch {
 
 extension MutableValueReference where Element: ArchetypeGroup {
 	var entityCount: Int {
-		value.entityCount
+		wrappedValue.entityCount
 	}
 
 	var componentTypeCount: Int {
-		value.componentTypeCount
+		wrappedValue.componentTypeCount
 	}
 
 	var freeIndexCount: Int {
-		value.freeIndexCount
+		wrappedValue.freeIndexCount
 	}
 
 	var minimumCapacity: Int {
-		value.minimumCapacity
+		wrappedValue.minimumCapacity
 	}
 
 	func reserveCapacity(_ minimumCapcity: Int) {
-		value.reserveCapacity(minimumCapcity)
+		wrappedValue.reserveCapacity(minimumCapcity)
 	}
 
 	func contains(_ entity: Entity) -> Bool {
-		value.contains(entity)
+		wrappedValue.contains(entity)
 	}
 
 	func add(entity: Entity) {
-		value.add(entity: entity)
+		wrappedValue.add(entity: entity)
 	}
 
 	func remove(entity: Entity) {
-		value.remove(entity: entity)
+		wrappedValue.remove(entity: entity)
 	}
 
 	func contains<Component: EntityComponent>(_ componentType: Component.Type) -> Bool {
-		value.contains(componentType)
+		wrappedValue.contains(componentType)
 	}
 
 	func set<Component: EntityComponent>(_ component: Component, for entity: Entity) {
-		value.set(component, for: entity)
+		wrappedValue.set(component, for: entity)
 	}
 
 	func add<Component: EntityComponent>(_ componentType: Component.Type) {
-		value.add(componentType)
+		wrappedValue.add(componentType)
 	}
 
 	func remove<Component: EntityComponent>(_ componentType: Component.Type) {
-		value.remove(componentType)
+		wrappedValue.remove(componentType)
 	}
 
 	func get<Component: EntityComponent>(_ componentType: Component.Type, for entity: Entity) -> Component? {
-		value.get(componentType, for: entity)
+		wrappedValue.get(componentType, for: entity)
 	}
 }

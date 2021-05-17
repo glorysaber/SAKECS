@@ -17,14 +17,18 @@ private protocol RowContainerProtocol: AnyObject {
 	/// Gets the count of the columns of the stored row
 	var count: Int { get }
 
-	/// Grows the columns of the stored row
-	/// - Parameter toGrowBy: The number of columns to grow by
-	func growColumns(by toGrowBy: Int) -> ComponentColumnIndices
-
 	/// The contained element
 	var containedElement: ComponentRowProtocol { get }
 
 	var deepCopy: Self { get }
+
+	/// Grows the columns of the stored row
+	/// - Parameter toGrowBy: The number of columns to grow by
+	func growColumns(by toGrowBy: Int) -> ComponentColumnIndices
+
+	func getComponent(at index: ComponentColumnIndex) -> EntityComponent
+
+	func set(component: EntityComponent, at index: ComponentColumnIndex)
 }
 
 // MARK: - ComponentRowIndex
@@ -58,8 +62,16 @@ public struct ComponentMatrix {
 
 	/// A contianer for each row to allow mutability
 	private final class RowContainer<Component: EntityComponent>: RowContainerProtocol, ArrayElementContainer {
+		func getComponent(at index: ComponentColumnIndex) -> EntityComponent {
+			row[index]
+		}
 
-		var value: RowContainerProtocol {
+		func set(component: EntityComponent, at index: ComponentColumnIndex) {
+			guard let storableComponent = component as? Component else { fatalError("Set incorrect component type.") }
+			row[index] = storableComponent
+		}
+
+		var wrappedValue: RowContainerProtocol {
 			 self
 		}
 
@@ -91,6 +103,10 @@ public struct ComponentMatrix {
 		}
 	}
 
+	public var componentArchetype: ComponentArchetype {
+		ComponentArchetype(required: Array(componentFamilyMatrixRowMap.keys))
+	}
+
 	/// The counts of the different types of Components
 	public var containedComponentTypesCount: Int {
 		componentFamilyMatrixRowMap.count
@@ -107,14 +123,33 @@ public struct ComponentMatrix {
 	/// The components storage
 	private var matrix = [RowContainerProtocol]()
 
+	/// Used to check if we are uniquely referenced or not.
 	private var nullReference = NullClass()
 
 	public init() {}
 
+	func copyComponents(
+		for sourceColumnIndex: ComponentColumnIndex,
+		to destination: inout Self,
+		destinationColumnIndex: ComponentColumnIndex
+	) {
+		for (family, sourceRowIndex) in componentFamilyMatrixRowMap {
+			guard let destinationRowIndex = destination.componentFamilyMatrixRowMap[family] else { continue }
+			destination.matrix[destinationRowIndex.index]
+				.set(component: matrix[sourceRowIndex.index].getComponent(at: sourceColumnIndex), at: destinationColumnIndex)
+		}
+	}
+
 	/// Checks if the component type is contained
 	/// - Parameter type: the type to check for
 	public func contains<Component: EntityComponent>(_ type: Component.Type) -> Bool {
-		componentFamilyMatrixRowMap.keys.contains(type.familyID)
+		containsComponent(with: Component.familyID)
+	}
+
+	/// Checks if the component type is contained
+	/// - Parameter type: the type to check for
+	public func containsComponent(with familyID: ComponentFamilyID) -> Bool {
+		componentFamilyMatrixRowMap.keys.contains(familyID)
 	}
 
 	/// Gets the components of the given type, returns an empty array otherwise.
@@ -192,8 +227,15 @@ public struct ComponentMatrix {
 	/// O(C) Time complexity wher C is the number of component types
 	/// - Parameter type: The component type being removed
 	public mutating func remove<Component: EntityComponent>(_ type: Component.Type) {
+		removeComponent(with: Component.familyID)
+	}
+
+	/// Removes a component type from the matrix
+	/// O(C) Time complexity wher C is the number of component types
+	/// - Parameter type: The component type being removed
+	public mutating func removeComponent(with familyID: ComponentFamilyID) {
 		makeSureIsUniquelyReferenced()
-		guard let componentMatrixRowToRemove = componentFamilyMatrixRowMap[Component.familyID] else {
+		guard let componentMatrixRowToRemove = componentFamilyMatrixRowMap[familyID] else {
 			// Do nothing as we do not have that componenet type
 			return
 		}
@@ -203,7 +245,7 @@ public struct ComponentMatrix {
 		}
 
 		matrix.remove(at: componentMatrixRowToRemove.index)
-		componentFamilyMatrixRowMap.removeValue(forKey: Component.familyID)
+		componentFamilyMatrixRowMap.removeValue(forKey: familyID)
 	}
 
 	/// Adds a new component type to the internal storage.  O(1) Time Complexity operation.

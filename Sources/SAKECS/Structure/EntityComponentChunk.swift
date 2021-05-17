@@ -17,6 +17,8 @@ public struct EntityComponentChunk {
 
 	// MARK: - Properties
 
+	public private(set) var componentArchetype: ComponentArchetype = []
+
 	/// Count of entities
 	public var entityCount: Int {
 		entities.count
@@ -58,11 +60,19 @@ public struct EntityComponentChunk {
 	private lazy var growStorageToMatchOnce: Void = {
 		growStorageToMatch()
 	}()
-
 }
 
 // MARK: - ArchetypeGroup
 extension EntityComponentChunk: ArchetypeGroup {
+
+	// MARK: - Moving Data
+
+	public func copyComponents(for entity: Entity, to destination: inout Self, destinationEntity: Entity) {
+		guard let sourceIndex = entities[entity] else { return }
+		let destinationIndex = destination.getAndSetIndex(for: destinationEntity)
+
+		components.copyComponents(for: sourceIndex, to: &destination.components, destinationColumnIndex: destinationIndex)
+	}
 
 	// MARK: - Entities
 
@@ -84,10 +94,7 @@ extension EntityComponentChunk: ArchetypeGroup {
 	}
 
 	public mutating func add(entity: Entity) {
-		entities[entity] =
-			emptyColumnsIndices.first ??
-			components.addColumns(1).first ??
-			.invalid
+		getAndSetIndex(for: entity)
 	}
 
 	public mutating func remove(entity: Entity) {
@@ -100,6 +107,10 @@ extension EntityComponentChunk: ArchetypeGroup {
 
 	public func contains<Component: EntityComponent>(_ componentType: Component.Type) -> Bool {
 		components.contains(componentType)
+	}
+
+	public func containsComponent(with familyID: ComponentFamilyID) -> Bool {
+		components.containsComponent(with: familyID)
 	}
 
 	public mutating func set<Component: EntityComponent>(_ component: Component, for entity: Entity) {
@@ -118,6 +129,10 @@ extension EntityComponentChunk: ArchetypeGroup {
 
 	public mutating func remove<Component: EntityComponent>(_ componentType: Component.Type) {
 		components.remove(componentType)
+	}
+
+	public mutating func removeComponent(with familyID: ComponentFamilyID) {
+		components.removeComponent(with: familyID)
 	}
 
 	public func get<Component: EntityComponent>(
@@ -147,5 +162,14 @@ private extension EntityComponentChunk {
 		}
 
 		precondition(entities.count <= components.componentColumns)
+	}
+
+	@discardableResult
+	mutating func getAndSetIndex(for entity: Entity) -> ComponentColumnIndex {
+		let index = emptyColumnsIndices.first ??
+			components.addColumns(1).first ??
+			.invalid
+		entities[entity] = index
+		return index
 	}
 }

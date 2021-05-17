@@ -11,7 +11,7 @@ import Foundation
 public protocol ArrayElementContainer: AnyObject {
 	associatedtype Element
 
-	var value: Element { get }
+	var wrappedValue: Element { get }
 
 	/// Make a deep copy
 	var deepCopy: Self { get }
@@ -19,6 +19,6 @@ public protocol ArrayElementContainer: AnyObject {
 
 extension MutableValueReference: ArrayElementContainer {
 	public var deepCopy: MutableValueReference<Element> {
-		MutableValueReference(value)
+		MutableValueReference(wrappedValue)
 	}
 }
