@@ -11,38 +11,57 @@ import SAKECS
 
 class ECSComponentTests: XCTestCase {
 
-  var ecs: ECSManager?
-
-  override func setUp() {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-
-		ecs = ECSManagerComposer().compose_v0_0_1()
-  }
-
-  override func tearDown() {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    ecs = nil
-  }
-
   func testComponent() {
-    guard let ecs = ecs else { XCTAssert(false, "ECS not initialized"); return }
+    let ecs = makeSUT()
 
 		let enities = ecs.createEntities(100)
 		guard enities.isEmpty == false else { XCTAssert(false, "ECS failed to created 100 entities"); return }
 
-    struct StringComponent: Component {
-			static let familyIDStatic: ComponentFamilyID = getFamilyIDStatic()
-			let value: String = ""
-
-		}
-    struct IntComponent: Component {
-			static let familyIDStatic: ComponentFamilyID = getFamilyIDStatic()
-			let value: Int = 0
-		}
-    struct BoolComponent: Component {
-			static let familyIDStatic: ComponentFamilyID = getFamilyIDStatic()
-			let value: Bool = true
-		}
+		ecs.set(component: IntComponent(1), to: enities[0])
+		XCTAssertEqual(ecs.get(componentType: IntComponent.self, for: enities[0]), .some(IntComponent(1)))
+		ecs.set(component: BoolComponent(true), to: enities[0])
+		XCTAssertEqual(ecs.get(componentType: IntComponent.self, for: enities[0]), .some(IntComponent(1)))
+		XCTAssertEqual(ecs.get(componentType: BoolComponent.self, for: enities[0]), .some(BoolComponent(true)))
   }
 
+}
+
+// MARK: - Helpers
+private extension ECSComponentTests {
+	func makeSUT() -> ECSManager {
+		ECSManagerComposer().compose_v0_0_2()
+	}
+}
+
+private struct StringComponent: EntityComponent, Equatable {
+	static let familyIDStatic: ComponentFamilyID = getFamilyIDStatic()
+	var value: String = ""
+
+	init() {}
+
+	internal init(_ value: String) {
+		self.value = value
+	}
+}
+
+private struct IntComponent: EntityComponent, Equatable {
+	static let familyIDStatic: ComponentFamilyID = getFamilyIDStatic()
+	var value: Int = 2
+
+	init() {}
+
+	internal init(_ value: Int) {
+		self.value = value
+	}
+}
+
+private struct BoolComponent: EntityComponent, Equatable {
+	static let familyIDStatic: ComponentFamilyID = getFamilyIDStatic()
+	var value: Bool = false
+
+	init() {}
+
+	internal init(_ value: Bool) {
+		self.value = value
+	}
 }

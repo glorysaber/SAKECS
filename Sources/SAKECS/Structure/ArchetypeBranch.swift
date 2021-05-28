@@ -113,16 +113,6 @@ extension ArchetypeBranch: ArchetypeGroup {
 		componentArchetype -= familyID
 	}
 
-	// MARK: - Moving Data
-
-	public func copyComponents(for entity: Entity, to destination: inout Self, destinationEntity: Entity) {
-		let sourceChunk = chunks.first(where: { $0.contains(entity) })
-		guard let destinationChunk = destination.chunks.firstContainer(where: { $0.contains(destinationEntity) }) else {
-			fatalError("Precondition failure, there is no entity \(destinationEntity)")
-		}
-		sourceChunk?.copyComponents(for: entity, to: &destinationChunk.wrappedValue, destinationEntity: destinationEntity)
-	}
-
 	public var archetype: ArchetypeBranch<Chunk> {
 		Self(self)
 	}
@@ -189,6 +179,16 @@ extension ArchetypeBranch: ArchetypeGroup {
 		chunks.first(where: { $0.contains(entity) })?
 			.get(componentType, for: entity)
 	}
+
+	// MARK: - Moving Data
+
+	public func copyComponents(for entity: Entity, to destination: inout Self, destinationEntity: Entity) {
+		let sourceChunk = chunks.first(where: { $0.contains(entity) })
+		guard let destinationChunk = destination.chunks.firstContainer(where: { $0.contains(destinationEntity) }) else {
+			fatalError("Precondition failure, there is no entity \(destinationEntity)")
+		}
+		sourceChunk?.copyComponents(for: entity, to: &destinationChunk.wrappedValue, destinationEntity: destinationEntity)
+	}
 }
 
 // MARK: - RandomAccessCollection
@@ -225,59 +225,5 @@ private extension ArchetypeBranch {
 		let container = Container(chunk)
 		chunks.append(container)
 		return container
-	}
-}
-
-extension MutableValueReference where Element: ArchetypeGroup {
-	var entityCount: Int {
-		wrappedValue.entityCount
-	}
-
-	var componentTypeCount: Int {
-		wrappedValue.componentTypeCount
-	}
-
-	var freeIndexCount: Int {
-		wrappedValue.freeIndexCount
-	}
-
-	var minimumCapacity: Int {
-		wrappedValue.minimumCapacity
-	}
-
-	func reserveCapacity(_ minimumCapcity: Int) {
-		wrappedValue.reserveCapacity(minimumCapcity)
-	}
-
-	func contains(_ entity: Entity) -> Bool {
-		wrappedValue.contains(entity)
-	}
-
-	func add(entity: Entity) {
-		wrappedValue.add(entity: entity)
-	}
-
-	func remove(entity: Entity) {
-		wrappedValue.remove(entity: entity)
-	}
-
-	func contains<Component: EntityComponent>(_ componentType: Component.Type) -> Bool {
-		wrappedValue.contains(componentType)
-	}
-
-	func set<Component: EntityComponent>(_ component: Component, for entity: Entity) {
-		wrappedValue.set(component, for: entity)
-	}
-
-	func add<Component: EntityComponent>(_ componentType: Component.Type) {
-		wrappedValue.add(componentType)
-	}
-
-	func remove<Component: EntityComponent>(_ componentType: Component.Type) {
-		wrappedValue.remove(componentType)
-	}
-
-	func get<Component: EntityComponent>(_ componentType: Component.Type, for entity: Entity) -> Component? {
-		wrappedValue.get(componentType, for: entity)
 	}
 }

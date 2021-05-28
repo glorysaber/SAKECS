@@ -13,6 +13,7 @@ typealias EntityComponentTree = ArchetypeTree<EntityComponentBranch>
 class ArchetypeTree<Branch: ArchetypeGroup>: WorldEntityComponentService {
 
 	private var branches = MutableArray<Branch>()
+	private let branchConstructor: () -> Branch
 
 	var componentCount: Int {
 		branches.reduce(Set<ComponentFamilyID>()) {
@@ -21,26 +22,36 @@ class ArchetypeTree<Branch: ArchetypeGroup>: WorldEntityComponentService {
 		.count
 	}
 
+	init(branchConstructor: @escaping () -> Branch) {
+		self.branchConstructor = branchConstructor
+	}
+
 	func containsComponent(with familyID: ComponentFamilyID) -> Bool {
 		branches.contains { $0.componentArchetype.required.contains(familyID) }
 	}
 
-	func set<ComponentType: EntityComponent>(_ componentType: ComponentType, to entity: Entity) {
+	func set<ComponentType: EntityComponent>(_ component: ComponentType, to entity: Entity) {
 
-		guard let sourceBranch = mutableBranch(for: entity) else { return }
+		guard let sourceBranch = mutableBranch(for: entity) else {
+			// Create a branch
+			let newBranch = newMutableBranch()
+			newBranch.add(ComponentType.self)
+			newBranch.add(entity: entity)
+			newBranch.set(component, for: entity)
+			return
+		}
 
 		guard !sourceBranch.contains(ComponentType.self) else {
 			// We are just changing a components value.
-			sourceBranch.set(componentType, for: entity)
+			sourceBranch.set(component, for: entity)
 			return
 		}
 
 		// The new Archtype for the entitys
-		let destinationArchetype = sourceBranch.componentArchetype + componentType.familyID
+		let destinationArchetype = sourceBranch.componentArchetype + component.familyID
 		let destinationBranch: MutableValueReference<Branch>
 
-		if let existingBranchForNewArcheType = branches
-				.firstContainer(where: { $0.componentArchetype == destinationArchetype }) {
+		if let existingBranchForNewArcheType = mutableBranch(for: destinationArchetype) {
 			destinationBranch = existingBranchForNewArcheType
 		} else {
 			// First Create the branch for the archetype
@@ -52,13 +63,17 @@ class ArchetypeTree<Branch: ArchetypeGroup>: WorldEntityComponentService {
 
 			// Now get its mutable container
 			guard let newBranch = branches.firstContainer(where: { $0.componentArchetype == destinationArchetype }) else {
-				assert(false, "We cannot find the branch we just created.")
+				fatalError("We cannot find the branch we just created.")
 			}
 
 			destinationBranch = newBranch
 		}
 
 		move(entity: entity, from: sourceBranch, to: destinationBranch)
+		destinationBranch.set(component, for: entity)
+		print(destinationBranch)
+		print(sourceBranch)
+		print(branches)
 	}
 
 	func get<ComponentType: EntityComponent>(_ componentType: ComponentType.Type, for entity: Entity) -> ComponentType? {
@@ -79,8 +94,7 @@ class ArchetypeTree<Branch: ArchetypeGroup>: WorldEntityComponentService {
 		let destinationArchetype = sourceBranch.componentArchetype - familyID
 		let destinationBranch: MutableValueReference<Branch>
 
-		if let existingBranchForNewArcheType = branches
-				.firstContainer(where: { $0.componentArchetype == destinationArchetype }) {
+		if let existingBranchForNewArcheType = mutableBranch(for: destinationArchetype) {
 			destinationBranch = existingBranchForNewArcheType
 		} else {
 			// First Create the branch for the archetype
@@ -91,8 +105,8 @@ class ArchetypeTree<Branch: ArchetypeGroup>: WorldEntityComponentService {
 			}
 
 			// Now get its mutable container
-			guard let newBranch = branches.firstContainer(where: { $0.componentArchetype == destinationArchetype }) else {
-				assert(false, "We cannot find the branch we just created.")
+			guard let newBranch = mutableBranch(for: destinationArchetype) else {
+				fatalError("We cannot find the branch we just created.")
 			}
 
 			destinationBranch = newBranch
@@ -111,103 +125,70 @@ private extension ArchetypeTree {
 	private func mutableBranch(for entity: Entity) -> MutableValueReference<Branch>? {
 		branches
 			// There should only be one instance where an entity appears.
-			.firstContainer(
-				where: { $0.contains(entity) }
-			)
+			.firstContainer { $0.contains(entity) }
+
 	}
 
 	private func branch(for entity: Entity) -> Branch? {
 		branches
 			// There should only be one instance where an entity appears.
-			.first(
-				where: { $0.contains(entity) }
-			)
+			.first { $0.contains(entity) }
 	}
 
-	func move(
+	private func branch(for archetype: ComponentArchetype) -> Branch? {
+		branches
+			// There should only be one instance where an archetype exists
+			.first { $0.componentArchetype == archetype }
+	}
+
+	private func mutableBranch(for archetype: ComponentArchetype) -> MutableValueReference<Branch>? {
+		branches
+			// There should only be one instance where an archetype exists.
+			.firstContainer { $0.componentArchetype == archetype }
+	}
+
+	private func newMutableBranch(archetype: ComponentArchetype = []) -> MutableValueReference<Branch> {
+		let mutableBranch = MutableValueReference(branchConstructor())
+
+		branches.append(mutableBranch)
+
+		archetype.required.forEach { $0.componentType.add(to: mutableBranch) }
+
+		return mutableBranch
+	}
+
+	/// Moves the given entity to a new branch remove it from the old one.
+	/// - Parameters:
+	///   - entity: The entity to mvoe
+	///   - sourceBranch: The source branch to move from
+	///   - destinationBranch: The destination branch.
+	private func move(
 		entity: Entity,
-		from destinationBranch: MutableValueReference<Branch>,
-		to sourceBranch: MutableValueReference<Branch>
+		from sourceBranch: MutableValueReference<Branch>,
+		to destinationBranch: MutableValueReference<Branch>
 	) {
+		// The destiantion branch must already have the given entity.
 		destinationBranch.add(entity: entity)
-		sourceBranch.wrappedValue.copyComponents(for: entity, to: &destinationBranch.wrappedValue, destinationEntity: entity)
+
+		sourceBranch.wrappedValue.copyComponents(
+			for: entity,
+			to: &destinationBranch.wrappedValue,
+			destinationEntity: entity
+		)
+
+		// We no longer need the original entity
 		sourceBranch.remove(entity: entity)
 	}
 }
 
-extension MutableValueReference: ComponentBranch where Element: ComponentBranch {
+// MARK: - Dynamic Type Helpers
 
-	public var componentArchetype: ComponentArchetype {
-		wrappedValue.componentArchetype
-	}
+private extension EntityComponent {
 
-	public var entityCount: Int {
-		wrappedValue.entityCount
-	}
-
-	public var componentTypeCount: Int {
-		wrappedValue.componentTypeCount
-	}
-
-	public var freeIndexCount: Int {
-		wrappedValue.freeIndexCount
-	}
-
-	public var minimumCapacity: Int {
-		wrappedValue.minimumCapacity
-	}
-
-	public func reserveCapacity(_ minimumCapcity: Int) {
-		wrappedValue.reserveCapacity(minimumCapcity)
-	}
-
-	public func contains(_ entity: Entity) -> Bool {
-		wrappedValue.contains(entity)
-	}
-
-	public func add(entity: Entity) {
-		wrappedValue.add(entity: entity)
-	}
-
-	public func remove(entity: Entity) {
-		wrappedValue.remove(entity: entity)
-	}
-
-	public func contains<Component>(_ componentType: Component.Type) -> Bool where Component: EntityComponent {
-		wrappedValue.contains(componentType)
-	}
-
-	public func set<Component>(
-		_ component: Component,
-		for entity: Entity
-	) where Component: EntityComponent {
-		wrappedValue.set(component, for: entity)
-	}
-
-	public func add<Component>(
-		_ componentType: Component.Type
-	) where Component: EntityComponent {
-		wrappedValue.add(componentType)
-	}
-
-	public func remove<Component>(
-		_ componentType: Component.Type
-	) where Component: EntityComponent {
-		wrappedValue.remove(componentType)
-	}
-
-	public func get<Component>(
-		_ componentType: Component.Type,
-		for entity: Entity
-	) -> Component? where Component: EntityComponent {
-		wrappedValue.get(componentType, for: entity)
-	}
-
-	public func containsComponent(with familyID: ComponentFamilyID) -> Bool {
-		wrappedValue.containsComponent(with: familyID)
-	}
-
-	public func removeComponent(with familyID: ComponentFamilyID) {
-		wrappedValue.removeComponent(with: familyID)
+	/// Used to add a generic type to a branch.
+	/// - Parameters:
+	///   - branch: The branch to add the component to
+	static func add<Branch: ComponentBranch>(to branch: MutableValueReference<Branch>) {
+		branch.add(Self.self)
 	}
 }

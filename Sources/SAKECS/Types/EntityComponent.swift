@@ -7,16 +7,27 @@
 
 import Foundation
 
-public typealias Component = EntityComponent
-
 /// Is used to identify a component type
-public struct ComponentFamilyID: Hashable {
+public struct ComponentFamilyID {
   internal let id: ObjectIdentifier
+	internal let componentType: EntityComponent.Type
 
   /// Gets the family ID for the component Type
 	fileprivate init<Component: EntityComponent>(componentType: Component.Type) {
-		self.id = ObjectIdentifier(Component.self)
+		self.id = ObjectIdentifier(componentType)
+		self.componentType = componentType
   }
+}
+
+extension ComponentFamilyID: Hashable {
+	public static func == (lhs: ComponentFamilyID, rhs: ComponentFamilyID) -> Bool {
+		lhs.id == rhs.id &&
+			lhs.componentType == rhs.componentType
+	}
+
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(id)
+	}
 }
 
 // Exclusively used to store the familyID in each type that conforms to  EntityComponent.

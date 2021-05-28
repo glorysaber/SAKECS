@@ -10,6 +10,7 @@ import Foundation
 
 public protocol ComponentBranch {
 
+	/// Makes a copy of the current branches memory layout but with no cotents. 
 	var componentArchetype: ComponentArchetype { get }
 
 	/// Count of entities

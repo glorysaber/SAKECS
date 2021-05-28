@@ -8,11 +8,16 @@
 
 import Foundation
 
+private class NullClass {}
+
 /// Acts like an array but allows structs to be mutable if declared in a variable with COW semantics.
 public struct MutableArray<Element> {
 	public typealias Container = MutableValueReference<Element>
 
 	private var internalArray: [Container]
+
+	/// Used to check if we are uniquely referenced or not.
+	private var nullReference = NullClass()
 
 	public init() {
 		internalArray = []
@@ -57,7 +62,7 @@ extension MutableArray: Collection {
 			internalArray[position].wrappedValue
 		}
 		set {
-			makeSureIsUniquelyReferenced(at: position)
+			makeSureIsUniquelyReferenced()
 			internalArray[position].wrappedValue = newValue
 		}
 	}
@@ -82,7 +87,7 @@ extension MutableArray {
 	public mutating func getContainer(for index: Index) -> Container {
 		// Due to returning mutable references, we need to copy our cotents if not
 		// uniquely referenced.
-		makeSureIsUniquelyReferenced(at: index)
+		makeSureIsUniquelyReferenced()
 		return internalArray[index]
 	}
 
@@ -141,10 +146,10 @@ extension MutableArray: Sequence {
 // MARK: - Private helpers
 private extension MutableArray {
 	/// Call this function to make sure we are uniquely referenced before making mutating changes.
-	mutating func makeSureIsUniquelyReferenced(at index: Index = 0) {
+	mutating func makeSureIsUniquelyReferenced() {
 		guard isEmpty == false else { return }
 
-		if !isKnownUniquelyReferenced(&internalArray[index]) {
+		if !isKnownUniquelyReferenced(&nullReference) {
 			internalArray = internalArray.map { Container($0.wrappedValue) }
 		}
 	}

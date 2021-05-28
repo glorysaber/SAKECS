@@ -279,8 +279,6 @@ extension ComponentMatrix: RandomAccessCollection {
 			matrix[rowIndex.index].containedElement
 	}
 
-	public typealias Element = ComponentRowProtocol
-
 	public var startIndex: ComponentRowIndex {
 		ComponentRowIndex(matrix.startIndex)
 	}
@@ -310,7 +308,6 @@ extension ComponentMatrix: RandomAccessCollection {
 	}
 
 	public struct Iterator: IteratorProtocol {
-		public typealias Element = ComponentRowProtocol
 
 		private let matrix: [RowContainerProtocol]
 		private var position = 0
@@ -372,6 +369,8 @@ public extension ComponentMatrix {
 	}
 }
 
+// MARK: - helper
+
 private extension ComponentMatrix {
 	/// Call this function to make sure we are uniquely referenced before making mutating changes.
 	mutating func makeSureIsUniquelyReferenced() {
@@ -383,7 +382,6 @@ private extension ComponentMatrix {
 }
 
 // MARK: - description
-
 extension ComponentMatrix: CustomStringConvertible, CustomDebugStringConvertible {
 	public var description: String {
 		"The matrix consists of \(count) types of components and \(componentColumns) columns"
