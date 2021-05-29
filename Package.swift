@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
 	name: "SAKECS",
-	platforms: [.macOS(.v10_14),
+	platforms: [.macOS(.v10_15),
 							.iOS(.v13),
 							.tvOS(.v13),
 							.watchOS(.v6)
