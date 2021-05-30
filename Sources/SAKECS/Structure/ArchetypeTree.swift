@@ -122,6 +122,14 @@ class ArchetypeTree<Branch: ArchetypeGroup>: WorldEntityComponentService {
 
 // MARK: - Helper
 private extension ArchetypeTree {
+
+	/// Gets the component types the given entity.
+	/// - Parameter entity: The entity to get component types for
+	/// - Return Set<ComponentFamilyID>: empty if entity does not exist
+	func componentTypes(for entity: Entity) -> Set<ComponentFamilyID> {
+		branch(for: entity)?.componentArchetype.required ?? []
+	}
+
 	private func mutableBranch(for entity: Entity) -> MutableValueReference<Branch>? {
 		branches
 			// There should only be one instance where an entity appears.

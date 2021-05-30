@@ -102,6 +102,7 @@ class EntityComponentChunkTests: XCTestCase {
 	private struct NullComponent: EntityComponent {
 		static let familyIDStatic: ComponentFamilyID = getFamilyIDStatic()
 	}
+	
 	private struct IntComponent: EntityComponent, Hashable, Comparable {
 		static let familyIDStatic: ComponentFamilyID = getFamilyIDStatic()
 

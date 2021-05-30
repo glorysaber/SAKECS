@@ -63,4 +63,9 @@ public class ECSManager {
     }
   }
 
+	enum MaskUpdate {
+		case removed
+		case added
+		case modified
+	}
 }

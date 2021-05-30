@@ -80,6 +80,24 @@ class SAKECSTests: XCTestCase {
     }
   }
 
+	func test_regression_removalEventsPerComponentWhenDestroyingEntity() {
+		guard let ecs = ecs else { XCTAssert(false); return }
+
+		let entity = ecs.createEntity()!
+		ecs.set(component: StringComponent(), to: entity)
+
+		let expectation = XCTestExpectation(description: "Waiting for an event to be fired.")
+
+		let disposable = ecs.events.componentEvent.register(for: .removed(StringComponent.familyID)) { _ in
+			expectation.fulfill()
+		}
+
+		ecs.destroy(entity: entity)
+
+		wait(for: [expectation], timeout: 1)
+		disposable.dispose()
+	}
+
   func testEvents() {
 
   }
@@ -88,4 +106,38 @@ class SAKECSTests: XCTestCase {
 
   }
 
+}
+
+// MARK: Private Helper Types
+private struct StringComponent: EntityComponent, Equatable {
+	static let familyIDStatic: ComponentFamilyID = getFamilyIDStatic()
+	var value: String = ""
+
+	init() {}
+
+	internal init(_ value: String) {
+		self.value = value
+	}
+}
+
+private struct IntComponent: EntityComponent, Equatable {
+	static let familyIDStatic: ComponentFamilyID = getFamilyIDStatic()
+	var value: Int = 2
+
+	init() {}
+
+	internal init(_ value: Int) {
+		self.value = value
+	}
+}
+
+private struct BoolComponent: EntityComponent, Equatable {
+	static let familyIDStatic: ComponentFamilyID = getFamilyIDStatic()
+	var value: Bool = false
+
+	init() {}
+
+	internal init(_ value: Bool) {
+		self.value = value
+	}
 }

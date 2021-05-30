@@ -15,13 +15,13 @@ extension ECSManager {
 
     let dead = MetaEntity(entity: entity, ecs: self)
 
-		componentSystem.remove(entity: entity)
+		removeAllComponents(for: entity)
 
     for tag in dead.itemsContained.tags {
       remove(tag: tag, from: entity)
     }
 
-    updateMaskWith(entity: entity, added: false)
+		updateMaskWith(entity: entity, update: .removed)
   }
 
   /// Removes a group of entities from all entities
@@ -36,7 +36,7 @@ extension ECSManager {
 	public func createEntity() -> Entity? {
     guard let entity = try? entitySystem.newEntity() else { return nil }
 
-    updateMaskWith(entity: entity, added: true)
+		updateMaskWith(entity: entity, update: .added)
 
     return entity
   }
@@ -54,24 +54,27 @@ extension ECSManager {
       }
 
       entities.append(entity)
-      updateMaskWith(entity: entity, added: true)
+			updateMaskWith(entity: entity, update: .added)
     }
 
     return entities
   }
 
   /// Updates all an entities mask
-  private func updateMaskWith(entity: Entity, added: Bool) {
-    if added {
-      for system in prioritySortedSystems where system.entityQuery.isSatisfied(by: ContainedItems()) {
-        system.entitiesMatchingQuery.insert(entity)
-      }
-      events.entityEvent.raise(ChangeType.set, value: entity)
-    } else {
-      for system in prioritySortedSystems {
-        system.entitiesMatchingQuery.remove(entity)
-      }
-      events.entityEvent.raise(ChangeType.removed, value: entity)
-    }
+	private func updateMaskWith(entity: Entity, update: MaskUpdate) {
+		switch update {
+		case .added:
+			for system in prioritySortedSystems where system.entityQuery.isSatisfied(by: ContainedItems()) {
+				system.entitiesMatchingQuery.insert(entity)
+			}
+			events.entityEvent.raise(ChangeType.set, value: entity)
+		case .removed:
+			for system in prioritySortedSystems {
+				system.entitiesMatchingQuery.remove(entity)
+			}
+			events.entityEvent.raise(ChangeType.removed, value: entity)
+		case .modified:
+			events.entityEvent.raise(ChangeType.set, value: entity)
+		}
   }
 }
