@@ -18,8 +18,8 @@ class EntityComponentChunkTests: XCTestCase {
 		sut.add(entity: 3)
 
 		XCTAssertEqual(sut.entityCount, 2)
-		XCTAssertTrue(sut.contains(1))
-		XCTAssertTrue(sut.contains(3))
+		XCTAssertTrue(sut.contains(entity: 1))
+		XCTAssertTrue(sut.contains(entity: 3))
 	}
 
 	func test_doesNotContainEntity() {
@@ -28,7 +28,7 @@ class EntityComponentChunkTests: XCTestCase {
 		sut.add(entity: 1)
 		sut.add(entity: 3)
 
-		XCTAssertFalse(sut.contains(2))
+		XCTAssertFalse(sut.contains(entity: 2))
 	}
 
 	func test_addingSameEntityDoesNotDuplicate() {
@@ -38,7 +38,7 @@ class EntityComponentChunkTests: XCTestCase {
 		sut.add(entity: 1)
 
 		XCTAssertEqual(sut.entityCount, 1)
-		XCTAssertTrue(sut.contains(1))
+		XCTAssertTrue(sut.contains(entity: 1))
 	}
 
 	func test_removeEntity() {
@@ -56,7 +56,7 @@ class EntityComponentChunkTests: XCTestCase {
 
 		sut.add(entity: 1)
 
-		sut.add(NullComponent.self)
+		sut.add(component: NullComponent.self)
 
 		XCTAssertEqual(sut.componentTypeCount, 1)
 	}
@@ -64,8 +64,8 @@ class EntityComponentChunkTests: XCTestCase {
 	func test_addsComponentTypeOnlyOnce() {
 		var sut = EntityComponentChunk()
 
-		sut.add(NullComponent.self)
-		sut.add(NullComponent.self)
+		sut.add(component: NullComponent.self)
+		sut.add(component: NullComponent.self)
 
 		XCTAssertEqual(sut.componentTypeCount, 1)
 	}
@@ -73,8 +73,8 @@ class EntityComponentChunkTests: XCTestCase {
 	func test_addsMultipleComponentTypes() {
 		var sut = EntityComponentChunk()
 
-		sut.add(NullComponent.self)
-		sut.add(IntComponent.self)
+		sut.add(component: NullComponent.self)
+		sut.add(component: IntComponent.self)
 
 		XCTAssertEqual(sut.componentTypeCount, 2)
 	}
@@ -83,38 +83,50 @@ class EntityComponentChunkTests: XCTestCase {
 		var sut = EntityComponentChunk()
 
 		sut.add(entity: 1)
-		sut.add(NullComponent.self)
-		sut.add(IntComponent.self)
+		sut.add(component: NullComponent.self)
+		sut.add(component: IntComponent.self)
 
-		sut.set(IntComponent(2), for: 1)
+		sut.set(component: IntComponent(2), for: 1)
 
-		XCTAssertEqual(sut.get(IntComponent.self, for: 1)?.value, 2)
+		XCTAssertEqual(sut.get(component: IntComponent.self, for: 1)?.value, 2)
 	}
 
 	func test_addRemovingComponents() {
 		var (sut, _) = makeSUT(with: 10)
 
-		XCTAssertTrue(sut.contains(NullComponent.self))
-		sut.remove(NullComponent.self)
-		XCTAssertFalse(sut.contains(NullComponent.self))
+		XCTAssertTrue(sut.contains(component: NullComponent.self))
+		sut.remove(component: NullComponent.self)
+		XCTAssertFalse(sut.contains(component: NullComponent.self))
 	}
 
-	private struct NullComponent: EntityComponent {}
-	private struct IntComponent: EntityComponent, Hashable, Comparable {
+	func test_AddingEntitiesWithTwoChunksAndRemovingComponent() {
+		var sut = EntityComponentChunk()
 
-		static func < (lhs: Self, rhs: Self) -> Bool {
-			lhs.value < rhs.value
-		}
+		sut.add(entity: 1)
+		sut.add(entity: 2)
 
-		let value: Int
+		sut.add(component: IntComponent.self)
 
-		init() {
-			self.init(0)
-		}
+		sut.add(component: NullComponent.self)
 
-		init(_ value: Int) {
-			self.value = value
-		}
+		sut.add(entity: 3)
+
+		// ERROR: SAME INDEX SHARED BETWEEN 4 and 3 in CHUNK 2 when using 2 columns per CHUNK.
+		sut.add(entity: 4)
+
+		// Values are not getting changed.
+		sut.set(component: IntComponent(1), for: 1)
+		sut.set(component: IntComponent(2), for: 2)
+		sut.set(component: IntComponent(3), for: 3)
+		sut.set(component: IntComponent(4), for: 4)
+
+		XCTAssertEqual(sut.get(component: IntComponent.self, for: 2), IntComponent(2))
+		XCTAssertEqual(sut.get(component: IntComponent.self, for: 3), IntComponent(3))
+
+		sut.remove(componentWith: .int)
+
+		XCTAssertNil(sut.get(component: IntComponent.self, for: 2))
+		XCTAssertNil(sut.get(component: IntComponent.self, for: 3))
 	}
 
 	/// Returns a sut with two component types, Int and Null, with the specified number of columns,
@@ -122,14 +134,14 @@ class EntityComponentChunkTests: XCTestCase {
 	private func makeSUT(with numberOfColumns: Int) -> (EntityComponentChunk, [Entity: IntComponent]) {
 		var sut = EntityComponentChunk()
 
-		sut.add(NullComponent.self)
-		sut.add(IntComponent.self)
+		sut.add(component: NullComponent.self)
+		sut.add(component: IntComponent.self)
 
 		var entitiesAndComps = [Entity: IntComponent]()
 
 		for entity in 0...20 {
 			sut.add(entity: Entity(entity))
-			sut.set(IntComponent(entity), for: Entity(entity))
+			sut.set(component: IntComponent(entity), for: Entity(entity))
 			entitiesAndComps[Entity(entity)] = IntComponent(entity)
 		}
 

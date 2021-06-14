@@ -22,11 +22,11 @@ public struct EntityQuery {
 		requiredTags: [EntityTag] = [],
 		withoutTags illegalTags: [EntityTag] = []) {
 		requiredComponents = required.reduce(into: Set<ComponentFamilyID>()) {
-			$0.insert(ComponentFamilyID(componentType: $1))
+			$0.insert($1.familyID)
 		}
 
 		illegalComponents = without.reduce(into: Set<ComponentFamilyID>()) {
-			$0.insert(ComponentFamilyID(componentType: $1))
+			$0.insert($1.familyID)
 		}
 
 		self.requiredTags = Set(requiredTags)

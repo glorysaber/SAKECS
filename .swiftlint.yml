@@ -24,6 +24,8 @@ opt_in_rules: # some rules are only opt-in
   - discouraged_optional_collection
   - empty_collection_literal
   - unused_import
+  - attributes
+  - yoda_condition
 included: # paths to include during linting. `--path` is ignored if present.
   - Sources
   - Tests

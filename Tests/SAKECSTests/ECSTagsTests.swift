@@ -7,16 +7,20 @@
 //
 
 import XCTest
-@testable import SAKECS
+import SAKECS
 
 class ECSTagsTests: XCTestCase {
 
   var ecs: ECSManager?
 
+	let middle = 24...74
+	let firstHalf = 0...49
+	let secondHalf = 50...99
+
   override func setUp() {
     // Put setup code here. This method is called before the invocation of each test method in the class.
 
-    ecs = ECSManager()
+    ecs = ECSManagerComposer().compose_v0_0_2()
   }
 
   override func tearDown() {
@@ -27,19 +31,19 @@ class ECSTagsTests: XCTestCase {
   func tagTestsSetup() -> [Entity] {
     guard let ecs = ecs else { XCTFail("Should not be empty"); return [] }
 
-		let entities = ecs.createEntities(10000)
+		let entities = ecs.createEntities(1000)
 		guard entities.isEmpty == false else { XCTFail("Should not be empty"); return [] }
 
     // Adding the Tags
-    for entity in entities[0...499] {
+    for entity in entities[0...49] {
       ecs.add(tag: Portion.firstHalf, to: entity)
     }
 
-    for entity in entities[500...999] {
+    for entity in entities[50...99] {
       ecs.add(tag: Portion.secondHalf, to: entity)
     }
 
-    for entity in entities[249...749] {
+    for entity in entities[middle] {
       ecs.add(tag: Portion.middle, to: entity)
     }
 
@@ -58,19 +62,19 @@ class ECSTagsTests: XCTestCase {
     do {
       // Checking the tags were added to the correct entities
 
-      for entity in entities[0...499] {
+      for entity in entities[firstHalf] {
         let tags = try ecs.entitySystem.getTags(for: entity)
         XCTAssert(tags.contains(Portion.firstHalf.rawValue))
         XCTAssert(!tags.contains(Portion.secondHalf.rawValue))
       }
 
-      for entity in entities[500...999] {
+      for entity in entities[50...99] {
         let tags = try ecs.entitySystem.getTags(for: entity)
         XCTAssert(!tags.contains(Portion.firstHalf.rawValue))
         XCTAssert(tags.contains(Portion.secondHalf.rawValue))
       }
 
-      for entity in entities[249...749] {
+      for entity in entities[middle] {
         let tags = try ecs.entitySystem.getTags(for: entity)
         XCTAssert(tags.contains(Portion.middle.rawValue))
       }
@@ -99,19 +103,19 @@ class ECSTagsTests: XCTestCase {
     do {
 
       // Getting all components with a tag
-      let firstHalf = ecs.entitySystem.getEntities(with: [Portion.firstHalf])
-      for entity in entities[0...499] { // entities[1] no longer has the tag
-        XCTAssert(firstHalf.contains(entity))
+      let entitiesWithFirstHalfTag = ecs.entitySystem.getEntities(with: [Portion.firstHalf])
+      for entity in entities[firstHalf] { // entities[1] no longer has the tag
+        XCTAssert(entitiesWithFirstHalfTag.contains(entity))
       }
 
-      let secondHalf = ecs.entitySystem.getEntities(with: [Portion.secondHalf])
-      for entity in entities[500...999] {
-        XCTAssert(secondHalf.contains(entity))
+      let entitiesWithSecondHalfTag = ecs.entitySystem.getEntities(with: [Portion.secondHalf])
+      for entity in entities[secondHalf] {
+        XCTAssert(entitiesWithSecondHalfTag.contains(entity))
       }
 
-      let middle = ecs.entitySystem.getEntities(with: [Portion.middle])
-      for entity in entities[249...749] {
-        XCTAssert(middle.contains(entity))
+      let entitiesWithMiddleTag = ecs.entitySystem.getEntities(with: [Portion.middle])
+      for entity in entities[middle] {
+        XCTAssert(entitiesWithMiddleTag.contains(entity))
       }
     }
   }
@@ -122,14 +126,14 @@ class ECSTagsTests: XCTestCase {
 		let entities = tagTestsSetup()
 		guard entities.isEmpty == false else { XCTFail("Should not be empty"); return }
 
-    let firstHalf = ecs.entitySystem.getEntities(without: [Portion.secondHalf])
-    for entity in entities[0...499] { // entities[1] no longer has the tag
-      XCTAssert(firstHalf.contains(entity))
+    let entitiesWithFirstHalfTag = ecs.entitySystem.getEntities(without: [Portion.secondHalf])
+    for entity in entities[firstHalf] { // entities[1] no longer has the tag
+      XCTAssert(entitiesWithFirstHalfTag.contains(entity))
     }
 
-    let secondHalf = ecs.entitySystem.getEntities(without: [Portion.firstHalf])
-    for entity in entities[500...999] {
-      XCTAssert(secondHalf.contains(entity))
+    let entitiesWithSecondHalfTag = ecs.entitySystem.getEntities(without: [Portion.firstHalf])
+    for entity in entities[secondHalf] {
+      XCTAssert(entitiesWithSecondHalfTag.contains(entity))
     }
   }
 
@@ -140,10 +144,10 @@ class ECSTagsTests: XCTestCase {
 		guard entities.isEmpty == false else { XCTFail("Should not be empty"); return }
 
     let firstHalfOfMiddle = ecs.entitySystem.getEntities(with: [Portion.middle, Portion.firstHalf])
-    XCTAssert(firstHalfOfMiddle == Set(entities[249...499]))
+		XCTAssert(firstHalfOfMiddle == Set(entities[middle.clamped(to: firstHalf)]))
 
     let secondHalfOfMiddle = ecs.entitySystem.getEntities(with: [Portion.middle, Portion.secondHalf])
-    XCTAssert(secondHalfOfMiddle == Set(entities[500...749]))
+		XCTAssert(secondHalfOfMiddle == Set(entities[middle.clamped(to: secondHalf)]))
   }
 
   func testGettingEntitiesWithAnyTags() {
@@ -153,11 +157,11 @@ class ECSTagsTests: XCTestCase {
 		guard entities.isEmpty == false else { XCTFail("Should not be empty"); return }
 
     let middleAndFirstHalf = ecs.entitySystem.getEntities(withAny: [Portion.firstHalf, Portion.middle])
-		XCTAssertEqual(middleAndFirstHalf, Set(entities[0...749]),
+		XCTAssertEqual(middleAndFirstHalf, Set(entities[firstHalf.lowerBound...middle.upperBound]),
 									 "Query result of any with tags [firstHalf, middle] did not contain all expected entities")
 
     let middleAndSecondHalf = ecs.entitySystem.getEntities(withAny: [Portion.secondHalf, Portion.middle])
-    XCTAssertEqual(middleAndSecondHalf, Set(entities[249...999]),
+		XCTAssertEqual(middleAndSecondHalf, Set(entities[middle.lowerBound...secondHalf.upperBound]),
 									 "Query result of any with tags [secondHalf, middle] did not contain all expected entities")
   }
 
@@ -172,8 +176,8 @@ class ECSTagsTests: XCTestCase {
       case one, two, three, none
     }
 
-    ecs.add(tag: "one", to: entities[0])
-    XCTAssertNotNil(try? ecs.entitySystem.add("two", to: entities[1]))
+		ecs.add(tag: Tags.one, to: entities[0])
+		ecs.add(tag: Tags.two, to: entities[1])
 
     ecs.add(tag: Tags.three, to: entities[2])
 

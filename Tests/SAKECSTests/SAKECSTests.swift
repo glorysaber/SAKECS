@@ -7,35 +7,22 @@
 //
 
 import XCTest
-@testable import SAKECS
+import SAKECS
 import SAKBase
 
 class SAKECSTests: XCTestCase {
 
-  var ecs: ECSManager?
-
-  override func setUp() {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-
-    ecs = ECSManager()
-  }
-
-  override func tearDown() {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    ecs = nil
-  }
-
   /// Tests ECSManager StartUp State
   func testECSManagerInitialization() {
     StartUpCheck: do {
-      guard let ecs = ecs else { XCTAssert(false); return }
+			let ecs = makeSUT()
 
       XCTAssert(ecs.active) // Should be active by default
 
       XCTAssert(ecs.componentCount == 0)
       XCTAssert(ecs.systemTime ~= 0.0000)
 
-      XCTAssertTrue(ecs.componentSystems.isEmpty)
+			XCTAssertEqual(ecs.systemCount, 0)
       XCTAssertTrue(ecs.entitySystem.allEntities.isEmpty)
       XCTAssertTrue(ecs.entityMasks.isEmpty)
     }
@@ -46,7 +33,7 @@ class SAKECSTests: XCTestCase {
     // Use XCTAssert and related functions to verify your tests produce the correct results.
 
     AddingAndRemoval: do {
-      guard let ecs = ecs else { XCTAssert(false); return }
+			let ecs = makeSUT()
 
       ecs.destroy(entity: ecs.createEntity()!)
       XCTAssertTrue(ecs.entitySystem.allEntities.isEmpty)
@@ -61,31 +48,28 @@ class SAKECSTests: XCTestCase {
     }
 
     MassAddAndRemoval: do {
-      guard let ecs = ecs else { XCTAssert(false); return }
+			let ecs = makeSUT()
 
-			let entities = ecs.createEntities(10000)
-			guard entities.count == 10000 else { XCTFail("Failed to Create 10000 Entitites"); return }
-      XCTAssert(ecs.entitySystem.allEntities.count == 10000)
+			let entities = ecs.createEntities(1000)
+			guard entities.count == 1000 else { XCTFail("Failed to Create 10000 Entitites"); return }
+      XCTAssert(ecs.entitySystem.allEntities.count == 1000)
 
-      for _ in 0..<10000 {
-        XCTAssert(ecs.entitySystem.contains(entities.randomElement()!))
+			for entity in entities.shuffled() {
+        XCTAssert(ecs.entitySystem.contains(entity))
       }
 
-      for _ in 0..<10000 {
-        let random = entities.randomElement()!
-        ecs.entitySystem.destroy(random)
-        XCTAssert(!ecs.entitySystem.contains(random))
+      for entity in entities.shuffled() {
+				ecs.destroy(entity: entity)
+        XCTAssert(!ecs.entitySystem.contains(entity))
       }
-
     }
   }
 
-  func testEvents() {
+}
 
-  }
-
-  func testSystems() {
-
-  }
-
+// MARK: - Helpers
+private extension SAKECSTests {
+	func makeSUT() -> ECSManager {
+		ECSManagerComposer().compose_v0_0_1()
+	}
 }

@@ -7,32 +7,134 @@
 //
 
 import XCTest
-@testable import SAKECS
+import SAKECS
 
 class ECSComponentTests: XCTestCase {
 
-  var ecs: ECSManager?
+	// Mark - Adding and Retrieving
 
-  override func setUp() {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+  func test_addComponentsAndGetThem() {
+    let ecs = makeSUT()
 
-    ecs = ECSManager()
+		guard
+			let entity = ecs.createEntity()
+		else { XCTFail("ECS failed to created entity"); return }
+
+		ecs.set(component: 1, to: entity)
+		XCTAssertEqual(ecs.getInt(for: entity), 1)
+		XCTAssertEqual(ecs.getBool(for: entity), nil)
+
+		// Add new component and make sure we can still get original component
+		ecs.set(component: true, to: entity)
+		XCTAssertEqual(ecs.getInt(for: entity), 1)
+		XCTAssertEqual(ecs.getBool(for: entity), true)
   }
 
-  override func tearDown() {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    ecs = nil
-  }
+	func test_addComponentsToTwoEntitesAndGetThem() {
+		let ecs = makeSUT()
 
-  func testComponent() {
-    guard let ecs = ecs else { XCTAssert(false, "ECS not initialized"); return }
+		guard
+			let entity1 = ecs.createEntity(),
+			let entity2 = ecs.createEntity()
+		else {
+			XCTFail("ECS failed to created entity")
+			return
+		}
 
-		let enities = ecs.createEntities(100)
-		guard enities.isEmpty == false else { XCTAssert(false, "ECS failed to created 100 entities"); return }
+		ecs.set(component: 1, to: entity1)
+		ecs.set(component: 2, to: entity2)
+		ecs.set(component: true, to: entity2)
 
-    struct StringComponent: Component { let value: String = "" }
-    struct IntComponent: Component { let value: Int = 0 }
-    struct BoolComponent: Component { let value: Bool = true }
-  }
+		XCTAssertEqual(ecs.getInt(for: entity1), 1)
+		XCTAssertEqual(ecs.getBool(for: entity1), nil)
+		XCTAssertEqual(ecs.getInt(for: entity2), 2)
+		XCTAssertEqual(ecs.getBool(for: entity2), true)
 
+	}
+
+	func test_addThreeSeperateComponentsToThreeEntitesAndGetThem() {
+		let ecs = makeSUT()
+
+		guard
+			let entity1 = ecs.createEntity(),
+			let entity2 = ecs.createEntity(),
+			let entity3 = ecs.createEntity()
+		else {
+			XCTFail("ECS failed to created entity")
+			return
+		}
+
+		ecs.set(component: 1, to: entity1)
+
+		ecs.set(component: true, to: entity2)
+
+		ecs.set(component: "3", to: entity3)
+
+		XCTAssertEqual(ecs.getBool(for: entity2), true)
+		XCTAssertEqual(ecs.getInt(for: entity1), 1)
+		XCTAssertEqual(ecs.getString(for: entity3), "3")
+
+		// Make sure each only has its own.
+		XCTAssertEqual(ecs.getBool(for: entity1), nil)
+		XCTAssertEqual(ecs.getInt(for: entity3), nil)
+		XCTAssertEqual(ecs.getString(for: entity2), nil)
+	}
+
+	func test_setMultipleTimes() {
+		let ecs = makeSUT()
+
+		guard
+			let entity1 = ecs.createEntity(),
+			let entity2 = ecs.createEntity()
+		else {
+			XCTFail("ECS failed to created entity")
+			return
+		}
+
+		ecs.set(component: 10, to: entity1)
+		ecs.set(component: 100, to: entity1)
+
+		ecs.set(component: 20, to: entity2)
+		ecs.set(component: 200, to: entity2)
+
+		XCTAssertEqual(ecs.getInt(for: entity1), 100)
+		XCTAssertEqual(ecs.getInt(for: entity2), 200)
+	}
+
+	func test_removingComponents() {
+		let ecs = makeSUT()
+
+		guard
+			let entity1 = ecs.createEntity(),
+			let entity2 = ecs.createEntity(),
+			let entity3 = ecs.createEntity()
+		else {
+			XCTFail("ECS failed to created entity")
+			return
+		}
+
+		ecs.set(component: 1, to: entity1)
+
+		ecs.set(component: true, to: entity2)
+
+		ecs.set(component: false, to: entity3)
+		ecs.set(component: "3", to: entity3)
+		ecs.remove(componentWith: .string, from: entity3)
+
+		XCTAssertEqual(ecs.getBool(for: entity2), true)
+		XCTAssertEqual(ecs.getInt(for: entity1), 1)
+		XCTAssertEqual(ecs.getString(for: entity3), nil)
+
+		// Make sure each only has its own.
+		XCTAssertEqual(ecs.getBool(for: entity1), nil)
+		XCTAssertEqual(ecs.getInt(for: entity3), nil)
+		XCTAssertEqual(ecs.getString(for: entity2), nil)
+	}
+}
+
+// MARK: - Helpers
+private extension ECSComponentTests {
+	func makeSUT() -> ECSManager {
+		ECSManagerComposer().compose_v0_0_2()
+	}
 }

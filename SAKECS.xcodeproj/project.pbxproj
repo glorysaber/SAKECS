@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CC1DD1D425D6CBE6003B18A1 /* MutableArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1DD1D325D6CBE6003B18A1 /* MutableArrayTests.swift */; };
+		CC2ABD0E267440A4003C34B7 /* SAKBase in Frameworks */ = {isa = PBXBuildFile; productRef = CC2ABD0D267440A4003C34B7 /* SAKBase */; };
+		CC2ABD10267448FD003C34B7 /* MutableValueReference+AnyComponentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2ABD0F267448FD003C34B7 /* MutableValueReference+AnyComponentRow.swift */; };
+		CC2DFB6D267676E500DB1841 /* AnyEntityComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2DFB6C267676E500DB1841 /* AnyEntityComponent.swift */; };
+		CC2DFB6F267681B500DB1841 /* ECSManager+AnyEntityComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2DFB6E267681B500DB1841 /* ECSManager+AnyEntityComponent.swift */; };
+		CC2DFB722676827300DB1841 /* ComponentBranch+AnyEntityComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2DFB712676827300DB1841 /* ComponentBranch+AnyEntityComponent.swift */; };
+		CC2DFB742676828D00DB1841 /* ComponentMatrix+AnyEntityComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2DFB732676828D00DB1841 /* ComponentMatrix+AnyEntityComponent.swift */; };
 		CC3322D925BD06F1000978FD /* ArchetypeBranchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3322D825BD06F1000978FD /* ArchetypeBranchTests.swift */; };
 		CC3322DD25BD0825000978FD /* ArchetypeBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3322DC25BD0825000978FD /* ArchetypeBranch.swift */; };
 		CC3322E125BD0D9C000978FD /* ArchetypeGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3322E025BD0D9C000978FD /* ArchetypeGroup.swift */; };
@@ -25,7 +30,6 @@
 		CC4AA28924AA81BF0025C805 /* EntitySystem+Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16623D78B0E0027CD2B /* EntitySystem+Entity.swift */; };
 		CC4AA28A24AA81BF0025C805 /* EntitySystem+Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16423D78B0E0027CD2B /* EntitySystem+Tags.swift */; };
 		CC4AA28B24AA81BF0025C805 /* EntitySystem+RawRepresentableTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16723D78B0E0027CD2B /* EntitySystem+RawRepresentableTags.swift */; };
-		CC4AA28D24AA81FB0025C805 /* SAKBase in Frameworks */ = {isa = PBXBuildFile; productRef = CC4AA28C24AA81FB0025C805 /* SAKBase */; };
 		CC4AA28E24AA865E0025C805 /* MetaEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17023D78B0E0027CD2B /* MetaEntity.swift */; };
 		CC4AA28F24AA865E0025C805 /* MetaEntity+Sythesized.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C16E23D78B0E0027CD2B /* MetaEntity+Sythesized.swift */; };
 		CC4AA29024AA865E0025C805 /* MetaEntity+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1C17123D78B0E0027CD2B /* MetaEntity+Components.swift */; };
@@ -46,10 +50,27 @@
 		CC61070325A12162001F120B /* ComponentMatrixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC61070225A12162001F120B /* ComponentMatrixTests.swift */; };
 		CC61070D25A2522B001F120B /* ComponentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC61070C25A2522B001F120B /* ComponentRow.swift */; };
 		CC61071125A252CE001F120B /* ComponentRowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC61071025A252CE001F120B /* ComponentRowTests.swift */; };
-		CC8110D125D84852004D8038 /* MutableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8110D025D84852004D8038 /* MutableArray.swift */; };
-		CC8110D525D84F93004D8038 /* MutableValueReferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8110D425D84F93004D8038 /* MutableValueReferenceTests.swift */; };
-		CC8110D725D9574F004D8038 /* ContainerArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8110D625D9574F004D8038 /* ContainerArray.swift */; };
-		CCE4D5E525D63317000E8172 /* MutableValueReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE4D5E425D63317000E8172 /* MutableValueReference.swift */; };
+		CC7E97DB2646504200BE66C2 /* ComponentArchetype.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7E97DA2646504200BE66C2 /* ComponentArchetype.swift */; };
+		CC8CE53A26755853004D999B /* AnyComponentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8CE53926755853004D999B /* AnyComponentRow.swift */; };
+		CC9245202661DB3100FE344D /* MutableValueReference+ComponentBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC92451F2661DB3100FE344D /* MutableValueReference+ComponentBranch.swift */; };
+		CC9245252662746E00FE344D /* WorldSystemService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9245222662746E00FE344D /* WorldSystemService.swift */; };
+		CC9245262662746E00FE344D /* WorldTagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9245232662746E00FE344D /* WorldTagService.swift */; };
+		CC9245272662746E00FE344D /* WorldEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9245242662746E00FE344D /* WorldEntityService.swift */; };
+		CC9ECB8F26768D4800DEBC20 /* IntComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9ECB8226768CB500DEBC20 /* IntComponent.swift */; };
+		CC9ECB9026768D4800DEBC20 /* NullComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9ECB8C26768CE600DEBC20 /* NullComponent.swift */; };
+		CC9ECB9126768D4800DEBC20 /* ECSManager+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9ECB7C26768C4900DEBC20 /* ECSManager+Components.swift */; };
+		CC9ECB9226768D4800DEBC20 /* StringComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9ECB8026768CA200DEBC20 /* StringComponent.swift */; };
+		CC9ECB9326768D4800DEBC20 /* ComponentFamilyID+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB9049E266725E600220563 /* ComponentFamilyID+Components.swift */; };
+		CC9ECB9426768D4800DEBC20 /* AnyEntityComponent+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9ECB7E26768C6A00DEBC20 /* AnyEntityComponent+Components.swift */; };
+		CC9ECB9526768D4800DEBC20 /* BoolComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9ECB8426768CC300DEBC20 /* BoolComponent.swift */; };
+		CC9ECB992676939100DEBC20 /* ComponentColumnIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9ECB982676939100DEBC20 /* ComponentColumnIndex.swift */; };
+		CCADF7AB25DEAF21002974A8 /* WorldEntityComponentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCADF7AA25DEAF21002974A8 /* WorldEntityComponentService.swift */; };
+		CCB9049C266725C900220563 /* ECSEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB9049B266725C900220563 /* ECSEventsTests.swift */; };
+		CCC4ADD4263F810600B4D0BE /* ECSManagerComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC4ADD3263F810600B4D0BE /* ECSManagerComposer.swift */; };
+		CCF2E026267436A50021A569 /* ComponentRowProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF2E025267436A50021A569 /* ComponentRowProtocol.swift */; };
+		CCF2E028267438000021A569 /* ComponentRow+ComponentRowProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF2E027267438000021A569 /* ComponentRow+ComponentRowProtocol.swift */; };
+		CCFF976A26350D2100B7DB30 /* ArchetypeTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCFF976926350D2100B7DB30 /* ArchetypeTree.swift */; };
+		CCFF9775263529BD00B7DB30 /* ECSManagerComponentSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCFF9774263529BD00B7DB30 /* ECSManagerComponentSystem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,7 +84,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		CC1DD1D325D6CBE6003B18A1 /* MutableArrayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutableArrayTests.swift; sourceTree = "<group>"; };
+		CC2ABD0C26743FC8003C34B7 /* SAKBase */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SAKBase; path = ../SAKBase; sourceTree = "<group>"; };
+		CC2ABD0F267448FD003C34B7 /* MutableValueReference+AnyComponentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MutableValueReference+AnyComponentRow.swift"; sourceTree = "<group>"; };
+		CC2DFB6C267676E500DB1841 /* AnyEntityComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyEntityComponent.swift; sourceTree = "<group>"; };
+		CC2DFB6E267681B500DB1841 /* ECSManager+AnyEntityComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ECSManager+AnyEntityComponent.swift"; sourceTree = "<group>"; };
+		CC2DFB712676827300DB1841 /* ComponentBranch+AnyEntityComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ComponentBranch+AnyEntityComponent.swift"; sourceTree = "<group>"; };
+		CC2DFB732676828D00DB1841 /* ComponentMatrix+AnyEntityComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ComponentMatrix+AnyEntityComponent.swift"; sourceTree = "<group>"; };
 		CC3322D825BD06F1000978FD /* ArchetypeBranchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchetypeBranchTests.swift; sourceTree = "<group>"; };
 		CC3322DC25BD0825000978FD /* ArchetypeBranch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchetypeBranch.swift; sourceTree = "<group>"; };
 		CC3322E025BD0D9C000978FD /* ArchetypeGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchetypeGroup.swift; sourceTree = "<group>"; };
@@ -78,9 +104,22 @@
 		CC61070225A12162001F120B /* ComponentMatrixTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentMatrixTests.swift; sourceTree = "<group>"; };
 		CC61070C25A2522B001F120B /* ComponentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentRow.swift; sourceTree = "<group>"; };
 		CC61071025A252CE001F120B /* ComponentRowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentRowTests.swift; sourceTree = "<group>"; };
-		CC8110D025D84852004D8038 /* MutableArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutableArray.swift; sourceTree = "<group>"; };
-		CC8110D425D84F93004D8038 /* MutableValueReferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutableValueReferenceTests.swift; sourceTree = "<group>"; };
-		CC8110D625D9574F004D8038 /* ContainerArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerArray.swift; sourceTree = "<group>"; };
+		CC7E97DA2646504200BE66C2 /* ComponentArchetype.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentArchetype.swift; sourceTree = "<group>"; };
+		CC8CE53926755853004D999B /* AnyComponentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyComponentRow.swift; sourceTree = "<group>"; };
+		CC92451F2661DB3100FE344D /* MutableValueReference+ComponentBranch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MutableValueReference+ComponentBranch.swift"; sourceTree = "<group>"; };
+		CC9245222662746E00FE344D /* WorldSystemService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldSystemService.swift; sourceTree = "<group>"; };
+		CC9245232662746E00FE344D /* WorldTagService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldTagService.swift; sourceTree = "<group>"; };
+		CC9245242662746E00FE344D /* WorldEntityService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldEntityService.swift; sourceTree = "<group>"; };
+		CC9ECB7C26768C4900DEBC20 /* ECSManager+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ECSManager+Components.swift"; sourceTree = "<group>"; };
+		CC9ECB7E26768C6A00DEBC20 /* AnyEntityComponent+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnyEntityComponent+Components.swift"; sourceTree = "<group>"; };
+		CC9ECB8026768CA200DEBC20 /* StringComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringComponent.swift; sourceTree = "<group>"; };
+		CC9ECB8226768CB500DEBC20 /* IntComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntComponent.swift; sourceTree = "<group>"; };
+		CC9ECB8426768CC300DEBC20 /* BoolComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolComponent.swift; sourceTree = "<group>"; };
+		CC9ECB8C26768CE600DEBC20 /* NullComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NullComponent.swift; sourceTree = "<group>"; };
+		CC9ECB982676939100DEBC20 /* ComponentColumnIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentColumnIndex.swift; sourceTree = "<group>"; };
+		CCADF7AA25DEAF21002974A8 /* WorldEntityComponentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldEntityComponentService.swift; sourceTree = "<group>"; };
+		CCB9049B266725C900220563 /* ECSEventsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECSEventsTests.swift; sourceTree = "<group>"; };
+		CCB9049E266725E600220563 /* ComponentFamilyID+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ComponentFamilyID+Components.swift"; sourceTree = "<group>"; };
 		CCC1C15B23D78B0E0027CD2B /* CentralEventSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CentralEventSystem.swift; sourceTree = "<group>"; };
 		CCC1C15C23D78B0E0027CD2B /* EventSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventSystem.swift; sourceTree = "<group>"; };
 		CCC1C15E23D78B0E0027CD2B /* EntityComponentEventSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityComponentEventSystem.swift; sourceTree = "<group>"; };
@@ -99,9 +138,8 @@
 		CCC1C17023D78B0E0027CD2B /* MetaEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetaEntity.swift; sourceTree = "<group>"; };
 		CCC1C17123D78B0E0027CD2B /* MetaEntity+Components.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MetaEntity+Components.swift"; sourceTree = "<group>"; };
 		CCC1C17323D78B0E0027CD2B /* EntityTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityTag.swift; sourceTree = "<group>"; };
-		CCC1C17523D78B0E0027CD2B /* EntityAssemblage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityAssemblage.swift; sourceTree = "<group>"; };
 		CCC1C17723D78B0E0027CD2B /* ECSManager+Tags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ECSManager+Tags.swift"; sourceTree = "<group>"; };
-		CCC1C17823D78B0E0027CD2B /* ECSManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ECSManager.swift; sourceTree = "<group>"; };
+		CCC1C17823D78B0E0027CD2B /* ECSManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ECSManager.swift; sourceTree = "<group>"; wrapsLines = 1; };
 		CCC1C17923D78B0E0027CD2B /* ECSManager+Components.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ECSManager+Components.swift"; sourceTree = "<group>"; };
 		CCC1C17A23D78B0E0027CD2B /* ECSManager+Entities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ECSManager+Entities.swift"; sourceTree = "<group>"; };
 		CCC1C17B23D78B0E0027CD2B /* ECSManager+Systems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ECSManager+Systems.swift"; sourceTree = "<group>"; };
@@ -113,8 +151,12 @@
 		CCC1C1BC23D78C0F0027CD2B /* Systems.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Systems.md; sourceTree = "<group>"; };
 		CCC1C1BD23D78C0F0027CD2B /* Design.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Design.md; sourceTree = "<group>"; };
 		CCC1C1BF23D78C0F0027CD2B /* EntitiesWithTypes.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = EntitiesWithTypes.jpg; sourceTree = "<group>"; };
+		CCC4ADD3263F810600B4D0BE /* ECSManagerComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECSManagerComposer.swift; sourceTree = "<group>"; };
 		CCC4E80825A0050700E0EAFD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		CCE4D5E425D63317000E8172 /* MutableValueReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutableValueReference.swift; sourceTree = "<group>"; };
+		CCF2E025267436A50021A569 /* ComponentRowProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentRowProtocol.swift; sourceTree = "<group>"; };
+		CCF2E027267438000021A569 /* ComponentRow+ComponentRowProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ComponentRow+ComponentRowProtocol.swift"; sourceTree = "<group>"; };
+		CCFF976926350D2100B7DB30 /* ArchetypeTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchetypeTree.swift; sourceTree = "<group>"; };
+		CCFF9774263529BD00B7DB30 /* ECSManagerComponentSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECSManagerComponentSystem.swift; sourceTree = "<group>"; wrapsLines = 1; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,7 +164,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC4AA28D24AA81FB0025C805 /* SAKBase in Frameworks */,
+				CC2ABD0E267440A4003C34B7 /* SAKBase in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,20 +179,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CC1DD1D025D6CBBC003B18A1 /* Types */ = {
+		CC2ABD0B26743FC8003C34B7 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				CC1DD1D325D6CBE6003B18A1 /* MutableArrayTests.swift */,
-				CC8110D425D84F93004D8038 /* MutableValueReferenceTests.swift */,
+				CC2ABD0C26743FC8003C34B7 /* SAKBase */,
 			);
-			path = Types;
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		CC2DFB702676824900DB1841 /* AnyEntityComponentExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				CC2DFB6E267681B500DB1841 /* ECSManager+AnyEntityComponent.swift */,
+				CC2DFB712676827300DB1841 /* ComponentBranch+AnyEntityComponent.swift */,
+				CC2DFB732676828D00DB1841 /* ComponentMatrix+AnyEntityComponent.swift */,
+			);
+			path = AnyEntityComponentExtensions;
+			sourceTree = "<group>";
+		};
+		CC2DFB752676836500DB1841 /* ComponentRow */ = {
+			isa = PBXGroup;
+			children = (
+				CC8CE53926755853004D999B /* AnyComponentRow.swift */,
+				CC61070C25A2522B001F120B /* ComponentRow.swift */,
+				CC9ECB982676939100DEBC20 /* ComponentColumnIndex.swift */,
+				CCF2E027267438000021A569 /* ComponentRow+ComponentRowProtocol.swift */,
+			);
+			path = ComponentRow;
 			sourceTree = "<group>";
 		};
 		CC4AA25E24AA811D0025C805 /* SAKECS */ = {
 			isa = PBXGroup;
 			children = (
-				CCC4E83525A0079B00E0EAFD /* Structure */,
 				CC4AA26724AA816C0025C805 /* SAKECS.h */,
+				CCC4E83525A0079B00E0EAFD /* Structure */,
 				CCC1C15923D78B0E0027CD2B /* CoreSystems */,
 				CCC1C16823D78B0E0027CD2B /* Types */,
 				CCC1C17623D78B0E0027CD2B /* ECSManager */,
@@ -167,11 +229,45 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		CC92451E2661DB0F00FE344D /* MutableValueRefExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				CC92451F2661DB3100FE344D /* MutableValueReference+ComponentBranch.swift */,
+				CC2ABD0F267448FD003C34B7 /* MutableValueReference+AnyComponentRow.swift */,
+			);
+			path = MutableValueRefExtensions;
+			sourceTree = "<group>";
+		};
+		CC9245212662735700FE344D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				CC9245242662746E00FE344D /* WorldEntityService.swift */,
+				CC9245222662746E00FE344D /* WorldSystemService.swift */,
+				CC9245232662746E00FE344D /* WorldTagService.swift */,
+				CCADF7AA25DEAF21002974A8 /* WorldEntityComponentService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		CCB9049D266725D500220563 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				CCB9049E266725E600220563 /* ComponentFamilyID+Components.swift */,
+				CC9ECB7E26768C6A00DEBC20 /* AnyEntityComponent+Components.swift */,
+				CC9ECB7C26768C4900DEBC20 /* ECSManager+Components.swift */,
+				CC9ECB8026768CA200DEBC20 /* StringComponent.swift */,
+				CC9ECB8226768CB500DEBC20 /* IntComponent.swift */,
+				CC9ECB8426768CC300DEBC20 /* BoolComponent.swift */,
+				CC9ECB8C26768CE600DEBC20 /* NullComponent.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		CCC1C14323D78AC70027CD2B = {
 			isa = PBXGroup;
 			children = (
+				CC2ABD0B26743FC8003C34B7 /* Packages */,
 				CCC4E80825A0050700E0EAFD /* README.md */,
-				CCC1C17423D78B0E0027CD2B /* Unimplemented */,
 				CCC1C1BA23D78C0F0027CD2B /* Documentation */,
 				CCC1C1BE23D78C0F0027CD2B /* Resources */,
 				CCC1C15823D78B0E0027CD2B /* Sources */,
@@ -179,7 +275,11 @@
 				CCC1C14E23D78AC70027CD2B /* Products */,
 				CCC1C1AB23D78BB00027CD2B /* Frameworks */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
+			usesTabs = 1;
+			wrapsLines = 1;
 		};
 		CCC1C14E23D78AC70027CD2B /* Products */ = {
 			isa = PBXGroup;
@@ -242,9 +342,14 @@
 		CCC1C16823D78B0E0027CD2B /* Types */ = {
 			isa = PBXGroup;
 			children = (
-				CCE4D5E325D63303000E8172 /* Helper */,
+				CC2DFB702676824900DB1841 /* AnyEntityComponentExtensions */,
+				CC9245212662735700FE344D /* Services */,
+				CC92451E2661DB0F00FE344D /* MutableValueRefExtensions */,
 				CCC1C16923D78B0E0027CD2B /* EntityComponent.swift */,
 				CCC1C16A23D78B0E0027CD2B /* ContainedItems.swift */,
+				CC7E97DA2646504200BE66C2 /* ComponentArchetype.swift */,
+				CCF2E025267436A50021A569 /* ComponentRowProtocol.swift */,
+				CC2DFB6C267676E500DB1841 /* AnyEntityComponent.swift */,
 				CCC1C16B23D78B0E0027CD2B /* Entity.swift */,
 				CCC1C16C23D78B0E0027CD2B /* EntityQuery.swift */,
 				CCC1C16D23D78B0E0027CD2B /* MetaEntity */,
@@ -265,22 +370,16 @@
 			path = MetaEntity;
 			sourceTree = "<group>";
 		};
-		CCC1C17423D78B0E0027CD2B /* Unimplemented */ = {
-			isa = PBXGroup;
-			children = (
-				CCC1C17523D78B0E0027CD2B /* EntityAssemblage.swift */,
-			);
-			path = Unimplemented;
-			sourceTree = "<group>";
-		};
 		CCC1C17623D78B0E0027CD2B /* ECSManager */ = {
 			isa = PBXGroup;
 			children = (
-				CCC1C17723D78B0E0027CD2B /* ECSManager+Tags.swift */,
+				CCFF97732635298400B7DB30 /* Old */,
 				CCC1C17823D78B0E0027CD2B /* ECSManager.swift */,
+				CCC1C17723D78B0E0027CD2B /* ECSManager+Tags.swift */,
 				CCC1C17923D78B0E0027CD2B /* ECSManager+Components.swift */,
 				CCC1C17A23D78B0E0027CD2B /* ECSManager+Entities.swift */,
 				CCC1C17B23D78B0E0027CD2B /* ECSManager+Systems.swift */,
+				CCC4ADD3263F810600B4D0BE /* ECSManagerComposer.swift */,
 			);
 			path = ECSManager;
 			sourceTree = "<group>";
@@ -288,11 +387,12 @@
 		CCC1C19B23D78B2E0027CD2B /* SAKECSTests */ = {
 			isa = PBXGroup;
 			children = (
-				CC1DD1D025D6CBBC003B18A1 /* Types */,
+				CCB9049D266725D500220563 /* Helpers */,
 				CCC4E84A25A1092500E0EAFD /* Structure */,
 				CCC1C1A523D78B600027CD2B /* ECSComponentTests.swift */,
 				CCC1C1A623D78B600027CD2B /* ECSTagsTests.swift */,
 				CCC1C1A723D78B600027CD2B /* SAKECSTests.swift */,
+				CCB9049B266725C900220563 /* ECSEventsTests.swift */,
 			);
 			path = SAKECSTests;
 			sourceTree = "<group>";
@@ -329,7 +429,8 @@
 				CC6024DE25AAA16900841C71 /* EntityComponentChunk.swift */,
 				CC3322DC25BD0825000978FD /* ArchetypeBranch.swift */,
 				CC6106F825A1213B001F120B /* ComponentMatrix.swift */,
-				CC61070C25A2522B001F120B /* ComponentRow.swift */,
+				CCFF976926350D2100B7DB30 /* ArchetypeTree.swift */,
+				CC2DFB752676836500DB1841 /* ComponentRow */,
 			);
 			path = Structure;
 			sourceTree = "<group>";
@@ -345,14 +446,12 @@
 			path = Structure;
 			sourceTree = "<group>";
 		};
-		CCE4D5E325D63303000E8172 /* Helper */ = {
+		CCFF97732635298400B7DB30 /* Old */ = {
 			isa = PBXGroup;
 			children = (
-				CCE4D5E425D63317000E8172 /* MutableValueReference.swift */,
-				CC8110D025D84852004D8038 /* MutableArray.swift */,
-				CC8110D625D9574F004D8038 /* ContainerArray.swift */,
+				CCFF9774263529BD00B7DB30 /* ECSManagerComponentSystem.swift */,
 			);
-			path = Helper;
+			path = Old;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -385,7 +484,7 @@
 			);
 			name = SAKECS;
 			packageProductDependencies = (
-				CC4AA28C24AA81FB0025C805 /* SAKBase */,
+				CC2ABD0D267440A4003C34B7 /* SAKBase */,
 			);
 			productName = SAKECS;
 			productReference = CC4AA26524AA816C0025C805 /* SAKECS.framework */;
@@ -438,7 +537,6 @@
 			);
 			mainGroup = CCC1C14323D78AC70027CD2B;
 			packageReferences = (
-				CC86A99324AA648000D06E0D /* XCRemoteSwiftPackageReference "SAKBase" */,
 			);
 			productRefGroup = CCC1C14E23D78AC70027CD2B /* Products */;
 			projectDirPath = "";
@@ -511,33 +609,48 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC7E97DB2646504200BE66C2 /* ComponentArchetype.swift in Sources */,
 				CC4AA29224AA86660025C805 /* ContainedItems.swift in Sources */,
+				CCADF7AB25DEAF21002974A8 /* WorldEntityComponentService.swift in Sources */,
+				CC2DFB6F267681B500DB1841 /* ECSManager+AnyEntityComponent.swift in Sources */,
+				CC8CE53A26755853004D999B /* AnyComponentRow.swift in Sources */,
+				CCF2E026267436A50021A569 /* ComponentRowProtocol.swift in Sources */,
 				CC4AA28B24AA81BF0025C805 /* EntitySystem+RawRepresentableTags.swift in Sources */,
+				CC9245262662746E00FE344D /* WorldTagService.swift in Sources */,
 				CC4AA28A24AA81BF0025C805 /* EntitySystem+Tags.swift in Sources */,
 				CC4AA28224AA81BA0025C805 /* EntityComponentEventSystem.swift in Sources */,
+				CCC4ADD4263F810600B4D0BE /* ECSManagerComposer.swift in Sources */,
 				CC6106F925A1213B001F120B /* ComponentMatrix.swift in Sources */,
+				CC2ABD10267448FD003C34B7 /* MutableValueReference+AnyComponentRow.swift in Sources */,
 				CC4AA28124AA81BA0025C805 /* EntityComponentSystem.swift in Sources */,
+				CCFF9775263529BD00B7DB30 /* ECSManagerComponentSystem.swift in Sources */,
 				CC4AA29324AA86660025C805 /* EntityComponent.swift in Sources */,
+				CCFF976A26350D2100B7DB30 /* ArchetypeTree.swift in Sources */,
 				CC4AA29824AA86700025C805 /* ECSManager+Systems.swift in Sources */,
 				CC6024E625AAA17D00841C71 /* EntityComponentChunk.swift in Sources */,
 				CC61070D25A2522B001F120B /* ComponentRow.swift in Sources */,
 				CC4AA29624AA86660025C805 /* EntityTag.swift in Sources */,
+				CC9245272662746E00FE344D /* WorldEntityService.swift in Sources */,
+				CC9ECB992676939100DEBC20 /* ComponentColumnIndex.swift in Sources */,
 				CC4AA27F24AA81B60025C805 /* EventSystem.swift in Sources */,
-				CC8110D725D9574F004D8038 /* ContainerArray.swift in Sources */,
 				CC4AA29524AA86660025C805 /* Entity.swift in Sources */,
+				CC2DFB742676828D00DB1841 /* ComponentMatrix+AnyEntityComponent.swift in Sources */,
 				CC4AA28924AA81BF0025C805 /* EntitySystem+Entity.swift in Sources */,
-				CCE4D5E525D63317000E8172 /* MutableValueReference.swift in Sources */,
 				CC4AA29A24AA86700025C805 /* ECSManager+Components.swift in Sources */,
 				CC4AA28824AA81BF0025C805 /* EntitySystem.swift in Sources */,
 				CC4AA29024AA865E0025C805 /* MetaEntity+Components.swift in Sources */,
 				CC4AA28F24AA865E0025C805 /* MetaEntity+Sythesized.swift in Sources */,
+				CC2DFB722676827300DB1841 /* ComponentBranch+AnyEntityComponent.swift in Sources */,
+				CC9245202661DB3100FE344D /* MutableValueReference+ComponentBranch.swift in Sources */,
 				CC3322DD25BD0825000978FD /* ArchetypeBranch.swift in Sources */,
+				CC9245252662746E00FE344D /* WorldSystemService.swift in Sources */,
 				CC4AA28024AA81B60025C805 /* CentralEventSystem.swift in Sources */,
 				CC4AA28324AA81BA0025C805 /* ComponentSystem.swift in Sources */,
 				CC4AA29924AA86700025C805 /* ECSManager+Entities.swift in Sources */,
+				CCF2E028267438000021A569 /* ComponentRow+ComponentRowProtocol.swift in Sources */,
 				CC4AA28E24AA865E0025C805 /* MetaEntity.swift in Sources */,
-				CC8110D125D84852004D8038 /* MutableArray.swift in Sources */,
 				CC4AA29724AA86700025C805 /* ECSManager+Tags.swift in Sources */,
+				CC2DFB6D267676E500DB1841 /* AnyEntityComponent.swift in Sources */,
 				CC4AA29124AA865E0025C805 /* MetaEntity+Tags.swift in Sources */,
 				CC3322E125BD0D9C000978FD /* ArchetypeGroup.swift in Sources */,
 				CC4AA29B24AA86700025C805 /* ECSManager.swift in Sources */,
@@ -549,15 +662,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC9ECB9026768D4800DEBC20 /* NullComponent.swift in Sources */,
 				CC61071125A252CE001F120B /* ComponentRowTests.swift in Sources */,
+				CC9ECB8F26768D4800DEBC20 /* IntComponent.swift in Sources */,
+				CC9ECB9426768D4800DEBC20 /* AnyEntityComponent+Components.swift in Sources */,
 				CC4AA27E24AA81AD0025C805 /* ECSComponentTests.swift in Sources */,
+				CC9ECB9526768D4800DEBC20 /* BoolComponent.swift in Sources */,
+				CC9ECB9326768D4800DEBC20 /* ComponentFamilyID+Components.swift in Sources */,
+				CC9ECB9126768D4800DEBC20 /* ECSManager+Components.swift in Sources */,
 				CC4AA27C24AA81AD0025C805 /* ECSTagsTests.swift in Sources */,
+				CC9ECB9226768D4800DEBC20 /* StringComponent.swift in Sources */,
 				CC6024D925AAA15600841C71 /* EntityComponentChunkTests.swift in Sources */,
+				CCB9049C266725C900220563 /* ECSEventsTests.swift in Sources */,
 				CC3322D925BD06F1000978FD /* ArchetypeBranchTests.swift in Sources */,
 				CC61070325A12162001F120B /* ComponentMatrixTests.swift in Sources */,
-				CC1DD1D425D6CBE6003B18A1 /* MutableArrayTests.swift in Sources */,
 				CC4AA27D24AA81AD0025C805 /* SAKECSTests.swift in Sources */,
-				CC8110D525D84F93004D8038 /* MutableValueReferenceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -585,13 +704,11 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Stephen-Kac.SAKECS";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -615,13 +732,11 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Stephen-Kac.SAKECS";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -641,13 +756,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N3S44ULQD4;
 				INFOPLIST_FILE = Tests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Stephen-Kac.SAKECSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -664,13 +777,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N3S44ULQD4;
 				INFOPLIST_FILE = Tests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Stephen-Kac.SAKECSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -732,7 +843,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -740,8 +852,10 @@
 				SUPPORTED_PLATFORMS = "macosx iphoneos appletvos watchos appletvsimulator iphonesimulator watchsimulator";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TVOS_DEPLOYMENT_TARGET = 14.5;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 7.5;
 			};
 			name = Debug;
 		};
@@ -791,15 +905,18 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = "macosx iphoneos appletvos watchos appletvsimulator iphonesimulator watchsimulator";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				TVOS_DEPLOYMENT_TARGET = 14.5;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 7.5;
 			};
 			name = Release;
 		};
@@ -835,21 +952,9 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		CC86A99324AA648000D06E0D /* XCRemoteSwiftPackageReference "SAKBase" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:glorysaber/SAKBase.git";
-			requirement = {
-				branch = develop;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		CC4AA28C24AA81FB0025C805 /* SAKBase */ = {
+		CC2ABD0D267440A4003C34B7 /* SAKBase */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CC86A99324AA648000D06E0D /* XCRemoteSwiftPackageReference "SAKBase" */;
 			productName = SAKBase;
 		};
 /* End XCSwiftPackageProductDependency section */

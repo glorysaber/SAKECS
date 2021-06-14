@@ -7,37 +7,60 @@
 
 import Foundation
 
-public typealias Component = EntityComponent
-
 /// Is used to identify a component type
-public struct ComponentFamilyID: Hashable {
+public struct ComponentFamilyID {
   internal let id: ObjectIdentifier
-
-  /// gets the family ID for the component
-  init(component: EntityComponent) {
-    self.id = ObjectIdentifier(type(of: component))
-  }
+	internal let componentType: EntityComponent.Type
 
   /// Gets the family ID for the component Type
-  init(componentType: EntityComponent.Type) {
-    self.id = ObjectIdentifier(componentType)
+	fileprivate init<Component: EntityComponent>(componentType: Component.Type) {
+		self.id = ObjectIdentifier(componentType)
+		self.componentType = componentType
   }
 }
 
-/// Used to give MultiComponent capabilities
+extension ComponentFamilyID: Hashable {
+	public static func == (lhs: ComponentFamilyID, rhs: ComponentFamilyID) -> Bool {
+		// Checking the object Identifiers equivalence is enough
+		// as its unique
+		lhs.id == rhs.id
+	}
+
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(id)
+	}
+}
+
+// Exclusively used to store the familyID in each type that conforms to  EntityComponent.
+public struct StaticComponentFamilyID<Component: EntityComponent> {
+
+	/// The Family Id of the ComponentType
+	fileprivate var familyID: ComponentFamilyID =
+		ComponentFamilyID(componentType: Component.self)
+}
+
+/// A basic component type.
 public protocol EntityComponent {
+
+	/// Use getFamilyIDStatic
+	static var familyIDStatic: ComponentFamilyID { get }
+
   /// A Type Unique Identifier
 	init()
 }
 
 extension EntityComponent {
-	/// Gets a component's family ID
-	public var familyID: ComponentFamilyID {
-    ComponentFamilyID(component: self)
-  }
 
-  /// The Family Id of the ComponentType
-  public static var familyID: ComponentFamilyID {
-		ComponentFamilyID(componentType: self)
-  }
+	public var familyID: ComponentFamilyID {
+		Self.familyID
+	}
+
+	public static var familyID: ComponentFamilyID {
+		Self.familyIDStatic
+	}
+
+	// Remove once SE-0309 is implemented.
+	public static func getFamilyIDStatic() -> ComponentFamilyID {
+		StaticComponentFamilyID<Self>().familyID
+	}
 }

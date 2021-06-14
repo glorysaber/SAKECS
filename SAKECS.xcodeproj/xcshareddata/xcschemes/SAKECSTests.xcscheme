@@ -22,6 +22,16 @@
                ReferencedContainer = "container:SAKECS.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "SAKBaseTests"
+               BuildableName = "SAKBaseTests"
+               BlueprintName = "SAKBaseTests"
+               ReferencedContainer = "container:../SAKBase">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

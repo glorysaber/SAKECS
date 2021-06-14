@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SAKBase
 // While we can have any ArchetypeGroup we do expect them all to be the same
 // And having them as hetrogenous types is inefficient. Fixing this later
 // would require an API change at the site of initialization, so I am declaring this now.
@@ -18,6 +19,8 @@ public typealias EntityComponentBranch = ArchetypeBranch<EntityComponentChunk>
 public struct ArchetypeBranch<Chunk: ArchetypeGroup> {
 
 	typealias Container = MutableValueReference<Chunk>
+
+	public var componentArchetype: ComponentArchetype
 
 	/**
 	All of the chunks should be of the same archetype, this must
@@ -32,9 +35,14 @@ public struct ArchetypeBranch<Chunk: ArchetypeGroup> {
 	private var sharedComponentsIndexes = [ComponentFamilyID: Int]()
 	private var sharedComponents = [EntityComponent]()
 
-	public init(columnsInEachChunk: Int, chunkConstructor: @escaping () -> Chunk) {
+	public init(
+		columnsInEachChunk: Int,
+		componentArchetype: ComponentArchetype = [],
+		chunkConstructor: @escaping () -> Chunk
+	) {
 		self.chunkConstructor = chunkConstructor
 		self.columnsInEachChunk = columnsInEachChunk
+		self.componentArchetype = ComponentArchetype()
 		_ = addChunk()
 	}
 
@@ -42,6 +50,7 @@ public struct ArchetypeBranch<Chunk: ArchetypeGroup> {
 		self.chunkConstructor = branch.chunkConstructor
 		self.columnsInEachChunk = branch.columnsInEachChunk
 		self.chunks = MutableArray(branch.chunks.map { $0.archetype })
+		self.componentArchetype = branch.componentArchetype
 	}
 }
 
@@ -94,10 +103,17 @@ extension ArchetypeBranch {
 }
 
 // MARK: - ArchetypeGroup
-extension ArchetypeBranch: ArchetypeGroup {
+extension ArchetypeBranch: ComponentBranch {
 
-	public var archetype: ArchetypeBranch<Chunk> {
-		Self(self)
+	public func contains(componentWith familyID: ComponentFamilyID) -> Bool {
+		componentArchetype.required.contains(familyID)
+	}
+
+	public mutating func remove(componentWith familyID: ComponentFamilyID) {
+		chunks.modifying { modifyingChunks in
+			modifyingChunks.forEach { $0.remove(componentWith: familyID) }
+		}
+		componentArchetype -= familyID
 	}
 
 	public var entityCount: Int {
@@ -116,49 +132,97 @@ extension ArchetypeBranch: ArchetypeGroup {
 		chunks.first?.componentTypeCount ?? 0
 	}
 
-	public mutating func reserveCapacity(_ minimumCapcity: Int) {
-		if minimumCapcity > self.minimumCapacity {
-			chunks.forEachContainer { $0.reserveCapacity(minimumCapcity) }
+	public mutating func reserveCapacity(_ minimumCapacity: Int) {
+		if minimumCapacity > self.minimumCapacity {
+			chunks.modifying { container in
+				container.forEach { $0.reserveCapacity(minimumCapacity) }
+			}
 		}
 	}
 
-	public func contains(_ entity: Entity) -> Bool {
-		chunks.contains { $0.contains(entity) }
+	public func contains(entity: Entity) -> Bool {
+		chunks.contains { $0.contains(entity: entity) }
 	}
 
 	public mutating func add(entity: Entity) {
-		guard contains(entity) == false else { return }
+		guard contains(entity: entity) == false else { return }
 
-		let chunk = chunks.firstContainer { $0.minimumCapacity > $0.entityCount } ?? addChunk()
+		let mutableChunk = chunks.modifying { mutableChunks in
+			mutableChunks
+				.first { $0.minimumCapacity > $0.entityCount }
+		} ?? { addChunk() }()
 
-		chunk.add(entity: entity)
+		mutableChunk.add(entity: entity)
 	}
 
 	public mutating func remove(entity: Entity) {
-		chunks.firstContainer(where: { $0.contains(entity) })?
+		chunks.modifying { mutableChunks in
+			mutableChunks.first(where: { $0.contains(entity: entity) })?
 			.remove(entity: entity)
+		}
 	}
 
-	public func contains<Component: EntityComponent>(_ componentType: Component.Type) -> Bool {
-		chunks.contains { $0.contains(componentType) }
+	public func contains<Component: EntityComponent>(component componentType: Component.Type) -> Bool {
+		chunks.contains { $0.contains(component: componentType) }
 	}
 
-	public mutating func set<Component: EntityComponent>(_ component: Component, for entity: Entity) {
-		chunks.firstContainer(where: { $0.contains(entity) })?
-			.set(component, for: entity)
+	public mutating func set<Component: EntityComponent>(component: Component, for entity: Entity) {
+		chunks.modifying { mutableChunks in
+			let chunk = mutableChunks.first(where: { $0.contains(entity: entity) })
+			chunk?.set(component: component, for: entity)
+		}
 	}
 
-	public mutating func add<Component: EntityComponent>(_ componentType: Component.Type) {
-		chunks.forEachContainer { $0.add(componentType) }
+	public mutating func add<Component: EntityComponent>(component componentType: Component.Type) {
+		chunks.modifying { mutableChunks in
+			mutableChunks.forEach { $0.add(component: componentType) }
+		}
+		componentArchetype += Component.familyID
 	}
 
-	public mutating func remove<Component: EntityComponent>(_ componentType: Component.Type) {
-		chunks.forEachContainer { $0.remove(componentType) }
+	public mutating func remove<Component: EntityComponent>(component componentType: Component.Type) {
+		chunks.modifying { mutableChunks in
+			mutableChunks.forEach { $0.remove(component: componentType) }
+		}
+
+		componentArchetype -= Component.familyID
 	}
 
-	public func get<Component: EntityComponent>(_ componentType: Component.Type, for entity: Entity) -> Component? {
-		chunks.first(where: { $0.contains(entity) })?
-			.get(componentType, for: entity)
+	public func get<Component: EntityComponent>(
+		component componentType: Component.Type,
+		for entity: Entity
+	) -> Component? {
+		chunks.first(where: { $0.contains(entity: entity) })?
+			.get(component: componentType, for: entity)
+	}
+}
+
+// MARK: - ArchetypeDeepCopy
+extension ArchetypeBranch: ArchetypeDeepCopy {
+
+	public var archetype: ArchetypeBranch<Chunk> {
+		Self(self)
+	}
+
+	public func copyComponents(
+		for entity: Entity,
+		to destination: inout Self,
+		destinationEntity: Entity
+	) {
+		let sourceChunk = chunks.first(where: { $0.contains(entity: entity) })
+
+		destination.chunks.modifying { mutableDestinationChunks in
+			guard let destinationChunk = mutableDestinationChunks.first(where: { $0.contains(entity: destinationEntity) }) else {
+				fatalError("Precondition failure, there is no entity \(destinationEntity)")
+			}
+
+			sourceChunk?
+				.copyComponents(
+					for: entity,
+						 to: &destinationChunk.wrappedValue,
+						 destinationEntity: destinationEntity
+				)
+		}
 	}
 }
 
@@ -188,67 +252,15 @@ extension ArchetypeBranch: RandomAccessCollection {
 // MARK: - Chunk Management
 private extension ArchetypeBranch {
 	mutating func addChunk() -> Container {
-		let chunk = chunks.first?.archetype ?? {
-			var chunk = chunkConstructor()
-			chunk.reserveCapacity(columnsInEachChunk)
-			return chunk
-		}()
-		let container = Container(chunk)
-		chunks.append(container)
-		return container
-	}
-}
-
-extension MutableValueReference where Element: ArchetypeGroup {
-	var entityCount: Int {
-		value.entityCount
-	}
-
-	var componentTypeCount: Int {
-		value.componentTypeCount
-	}
-
-	var freeIndexCount: Int {
-		value.freeIndexCount
-	}
-
-	var minimumCapacity: Int {
-		value.minimumCapacity
-	}
-
-	func reserveCapacity(_ minimumCapcity: Int) {
-		value.reserveCapacity(minimumCapcity)
-	}
-
-	func contains(_ entity: Entity) -> Bool {
-		value.contains(entity)
-	}
-
-	func add(entity: Entity) {
-		value.add(entity: entity)
-	}
-
-	func remove(entity: Entity) {
-		value.remove(entity: entity)
-	}
-
-	func contains<Component: EntityComponent>(_ componentType: Component.Type) -> Bool {
-		value.contains(componentType)
-	}
-
-	func set<Component: EntityComponent>(_ component: Component, for entity: Entity) {
-		value.set(component, for: entity)
-	}
-
-	func add<Component: EntityComponent>(_ componentType: Component.Type) {
-		value.add(componentType)
-	}
-
-	func remove<Component: EntityComponent>(_ componentType: Component.Type) {
-		value.remove(componentType)
-	}
-
-	func get<Component: EntityComponent>(_ componentType: Component.Type, for entity: Entity) -> Component? {
-		value.get(componentType, for: entity)
+		chunks.modifying { mutableChunks in
+			let chunk = mutableChunks.first?.wrappedValue.archetype ?? {
+				var chunk = chunkConstructor()
+				chunk.reserveCapacity(columnsInEachChunk)
+				return chunk
+			}()
+			let container = Container(chunk)
+			mutableChunks.append(container)
+			return container
+		}
 	}
 }

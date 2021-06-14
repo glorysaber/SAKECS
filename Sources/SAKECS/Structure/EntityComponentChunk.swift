@@ -17,6 +17,8 @@ public struct EntityComponentChunk {
 
 	// MARK: - Properties
 
+	public private(set) var componentArchetype: ComponentArchetype = []
+
 	/// Count of entities
 	public var entityCount: Int {
 		entities.count
@@ -58,11 +60,19 @@ public struct EntityComponentChunk {
 	private lazy var growStorageToMatchOnce: Void = {
 		growStorageToMatch()
 	}()
-
 }
 
 // MARK: - ArchetypeGroup
 extension EntityComponentChunk: ArchetypeGroup {
+
+	// MARK: - Moving Data
+
+	public func copyComponents(for entity: Entity, to destination: inout Self, destinationEntity: Entity) {
+		guard let sourceIndex = entities[entity] else { return }
+		let destinationIndex = destination.getAndSetIndex(for: destinationEntity)
+
+		components.copyComponents(for: sourceIndex, to: &destination.components, destinationColumnIndex: destinationIndex)
+	}
 
 	// MARK: - Entities
 
@@ -79,15 +89,12 @@ extension EntityComponentChunk: ArchetypeGroup {
 		return newArchetype
 	}
 
-	public func contains(_ entity: Entity) -> Bool {
+	public func contains(entity: Entity) -> Bool {
 		entities.keys.contains(entity)
 	}
 
 	public mutating func add(entity: Entity) {
-		entities[entity] =
-			emptyColumnsIndices.first ??
-			components.addColumns(1).first ??
-			.invalid
+		getAndSetIndex(for: entity)
 	}
 
 	public mutating func remove(entity: Entity) {
@@ -98,17 +105,24 @@ extension EntityComponentChunk: ArchetypeGroup {
 
 	// MARK: Components
 
-	public func contains<Component: EntityComponent>(_ componentType: Component.Type) -> Bool {
-		components.contains(componentType)
+	public func contains<Component: EntityComponent>(component componentType: Component.Type) -> Bool {
+		components.contains(rowOf: componentType)
 	}
 
-	public mutating func set<Component: EntityComponent>(_ component: Component, for entity: Entity) {
-		guard let columnIndex = entities[entity] else { return }
-		components.set(component, for: columnIndex)
+	public func contains(componentWith familyID: ComponentFamilyID) -> Bool {
+		components.contains(rowWith: familyID)
 	}
 
-	public mutating func add<Component: EntityComponent>(_ componentType: Component.Type) {
-		components.add(componentType)
+	public mutating func set<Component: EntityComponent>(component: Component, for entity: Entity) {
+		guard
+			let columnIndex = entities[entity],
+			columnIndex != .invalid
+		else { return }
+		components.set(component: component, for: columnIndex)
+	}
+
+	public mutating func add<Component: EntityComponent>(component componentType: Component.Type) {
+		components.add(rowFor: componentType)
 
 		// We can get into a situation where an entity has already been added but the components
 		// storage has no columns. This should be optimized away by most modern cpus by branch prediction
@@ -116,16 +130,23 @@ extension EntityComponentChunk: ArchetypeGroup {
 		_ = growStorageToMatchOnce
 	}
 
-	public mutating func remove<Component: EntityComponent>(_ componentType: Component.Type) {
-		components.remove(componentType)
+	public mutating func remove<Component: EntityComponent>(component componentType: Component.Type) {
+		components.remove(rowOf: componentType)
+	}
+
+	public mutating func remove(componentWith familyID: ComponentFamilyID) {
+		components.remove(rowWith: familyID)
 	}
 
 	public func get<Component: EntityComponent>(
-		_ componentType: Component.Type,
+		component componentType: Component.Type,
 		for entity: Entity
 	) -> Component? {
-		guard let columnIndex = entities[entity] else { return nil }
-		return components.get(componentType, for: columnIndex)
+		guard
+			let columnIndex = entities[entity],
+			columnIndex != .invalid
+		else { return nil }
+		return components.get(component: componentType, for: columnIndex)
 	}
 }
 
@@ -140,12 +161,21 @@ private extension EntityComponentChunk {
 
 		let columnsToAdd = Swift.max(entities.count - components.componentColumns, minimumCapacity)
 		let newIndexes = components.addColumns(columnsToAdd)
-		emptyColumnsIndices.formUnion(newIndexes)
+		emptyColumnsIndices.formUnion(ClosedRange(newIndexes))
 
 		for (entity, column) in entities where column == .invalid && emptyColumnsIndices.isEmpty == false {
 			entities[entity] = emptyColumnsIndices.removeFirst()
 		}
 
 		precondition(entities.count <= components.componentColumns)
+	}
+
+	@discardableResult
+	mutating func getAndSetIndex(for entity: Entity) -> ComponentColumnIndex {
+		let index = emptyColumnsIndices.popFirst() ??
+		components.addColumns(1).first ??
+			.invalid
+		entities[entity] = index
+		return index
 	}
 }

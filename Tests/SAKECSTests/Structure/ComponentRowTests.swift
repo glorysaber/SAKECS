@@ -86,8 +86,13 @@ class ComponentRowTests: XCTestCase {
 		XCTAssertEqual(allComponents.count, 0)
 	}
 
-	private class NullComponent: EntityComponent { required init() {} }
+	private class NullComponent: EntityComponent {
+		static let familyIDStatic: ComponentFamilyID = getFamilyIDStatic()
+		required init() {}
+	}
 	private struct IntComponent: EntityComponent, Equatable {
+		static let familyIDStatic: ComponentFamilyID = getFamilyIDStatic()
+
 		let value: Int
 
 		init() {

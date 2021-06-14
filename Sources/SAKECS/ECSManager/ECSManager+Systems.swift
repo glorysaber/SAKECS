@@ -7,20 +7,25 @@
 
 import Foundation
 
-public extension ECSManager {
+extension ECSManager: WorldSystemService {
 
-  // Updates all systems with no increase in system time
-  func tick() {
+	/// The count of systems
+	public var systemCount: Int {
+		prioritySortedSystems.count
+	}
+
+  /// Updates all systems with no increase in system time
+  public func tick() {
     increaseSystemTime(by: 0.00)
   }
 
-  // Updates all systems with an increase of 1 in system time
-  func tock() {
+  /// Updates all systems with an increase of 1 in system time
+  public func tock() {
     increaseSystemTime(by: 1.00)
   }
 
   /// Updates all systems and increases the system time
-  func increaseSystemTime(by time: Double) {
+  public func increaseSystemTime(by time: Double) {
     guard active && OperationQueue.current == OperationQueue.main else { return }
 
     systemTime += time
@@ -35,7 +40,7 @@ public extension ECSManager {
   }
 
   /// Adds a system to the ECS to be ran at every system time increase
-  func add(system: EntityComponentSystem) {
+  public func add(system: EntityComponentSystem) {
     OperationQueue.main.addOperation { [weak self, system] in
       let systemType = type(of: system)
       guard let self = self,
@@ -49,7 +54,7 @@ public extension ECSManager {
   }
 
   /// removes a system
-  func remove(system: EntityComponentSystem.Type) {
+  public func remove(system: EntityComponentSystem.Type) {
     OperationQueue.main.addOperation { [weak self] in
       guard let self = self else { return }
       self.prioritySortedSystems.removeAll {
@@ -59,7 +64,7 @@ public extension ECSManager {
   }
 
   /// gets a system of a type
-  func getSystems<SystemType: EntityComponentSystem>(ofType: SystemType.Type) -> [SystemType] {
+  public func getSystems<SystemType: EntityComponentSystem>(ofType: SystemType.Type) -> [SystemType] {
     return prioritySortedSystems.filter { type(of: $0) == ofType } as? [SystemType] ?? [SystemType]()
   }
 

@@ -20,8 +20,8 @@ class ArchetypeBranchTests: XCTestCase {
 		sut.add(entity: 3)
 
 		XCTAssertEqual(sut.entityCount, 2)
-		XCTAssertTrue(sut.contains(1))
-		XCTAssertTrue(sut.contains(3))
+		XCTAssertTrue(sut.contains(entity: 1))
+		XCTAssertTrue(sut.contains(entity: 3))
 	}
 
 	func test_doesNotContainEntity() {
@@ -30,7 +30,7 @@ class ArchetypeBranchTests: XCTestCase {
 		sut.add(entity: 1)
 		sut.add(entity: 3)
 
-		XCTAssertFalse(sut.contains(2))
+		XCTAssertFalse(sut.contains(entity: 2))
 	}
 
 	func test_addingSameEntityDoesNotDuplicate() {
@@ -40,7 +40,7 @@ class ArchetypeBranchTests: XCTestCase {
 		sut.add(entity: 1)
 
 		XCTAssertEqual(sut.entityCount, 1)
-		XCTAssertTrue(sut.contains(1))
+		XCTAssertTrue(sut.contains(entity: 1))
 	}
 
 	func test_removeEntity() {
@@ -58,7 +58,7 @@ class ArchetypeBranchTests: XCTestCase {
 
 		sut.add(entity: 1)
 
-		sut.add(NullComponent.self)
+		sut.add(component: NullComponent.self)
 
 		XCTAssertEqual(sut.componentTypeCount, 1)
 	}
@@ -66,8 +66,8 @@ class ArchetypeBranchTests: XCTestCase {
 	func test_addsComponentTypeOnlyOnce() {
 		var sut = makeSUT()
 
-		sut.add(NullComponent.self)
-		sut.add(NullComponent.self)
+		sut.add(component: NullComponent.self)
+		sut.add(component: NullComponent.self)
 
 		XCTAssertEqual(sut.componentTypeCount, 1)
 	}
@@ -75,8 +75,8 @@ class ArchetypeBranchTests: XCTestCase {
 	func test_addsMultipleComponentTypes() {
 		var sut = makeSUT()
 
-		sut.add(NullComponent.self)
-		sut.add(IntComponent.self)
+		sut.add(component: NullComponent.self)
+		sut.add(component: IntComponent.self)
 
 		XCTAssertEqual(sut.componentTypeCount, 2)
 	}
@@ -85,20 +85,20 @@ class ArchetypeBranchTests: XCTestCase {
 		var sut = makeSUT()
 
 		sut.add(entity: 1)
-		sut.add(NullComponent.self)
-		sut.add(IntComponent.self)
+		sut.add(component: NullComponent.self)
+		sut.add(component: IntComponent.self)
 
-		sut.set(IntComponent(2), for: 1)
+		sut.set(component: IntComponent(2), for: 1)
 
-		XCTAssertEqual(sut.get(IntComponent.self, for: 1)?.value, 2)
+		XCTAssertEqual(sut.get(component: IntComponent.self, for: 1)?.value, 2)
 	}
 
 	func test_addRemovingComponents() {
 		var (sut, _) = makeSUT(with: 10)
 
-		XCTAssertTrue(sut.contains(NullComponent.self))
-		sut.remove(NullComponent.self)
-		XCTAssertFalse(sut.contains(NullComponent.self))
+		XCTAssertTrue(sut.contains(component: NullComponent.self))
+		sut.remove(component: NullComponent.self)
+		XCTAssertFalse(sut.contains(component: NullComponent.self))
 	}
 
 	// MARK: Collection
@@ -131,13 +131,42 @@ class ArchetypeBranchTests: XCTestCase {
 		sut.add(entity: 1)
 		sut.add(entity: 3)
 
-		sut.add(IntComponent.self)
+		sut.add(component: IntComponent.self)
 
 		sut.add(entity: 5)
 		sut.add(entity: 6)
 
 		XCTAssertEqual(sut.entityCount, 4)
-		XCTAssertNotNil(sut.get(IntComponent.self, for: 5))
+		XCTAssertNotNil(sut.get(component: IntComponent.self, for: 5))
+	}
+
+	func test_AddingEntitiesWithTwoChunksAndRemovingComponent() {
+		var sut = makeSUT()
+
+		sut.add(entity: 1)
+		sut.add(entity: 2)
+
+		sut.add(component: IntComponent.self)
+
+		sut.add(component: NullComponent.self)
+
+		sut.add(entity: 3)
+
+		sut.add(entity: 4)
+
+		// Values are not getting changed.
+		sut.set(component: IntComponent(1), for: 1)
+		sut.set(component: IntComponent(2), for: 2)
+		sut.set(component: IntComponent(3), for: 3)
+		sut.set(component: IntComponent(4), for: 4)
+
+		XCTAssertEqual(sut.get(component: IntComponent.self, for: 2), IntComponent(2))
+		XCTAssertEqual(sut.get(component: IntComponent.self, for: 3), IntComponent(3))
+
+		sut.remove(componentWith: .int)
+
+		XCTAssertNil(sut.get(component: IntComponent.self, for: 2))
+		XCTAssertNil(sut.get(component: IntComponent.self, for: 3))
 	}
 
 	// MARK: Shared Components
@@ -161,28 +190,13 @@ class ArchetypeBranchTests: XCTestCase {
 		XCTAssertNotNil(sut.getShared(NullComponent.self))
 	}
 
-	// MARK: Private Helpers
+}
 
-	private struct NullComponent: EntityComponent {}
-	private struct IntComponent: EntityComponent, Hashable, Comparable {
-
-		static func < (lhs: Self, rhs: Self) -> Bool {
-			lhs.value < rhs.value
-		}
-
-		let value: Int
-
-		init() {
-			self.init(0)
-		}
-
-		init(_ value: Int) {
-			self.value = value
-		}
-	}
+// MARK: Private Helpers
+extension ArchetypeBranchTests {
 
 	private func makeSUT() -> EntityComponentBranch {
-		EntityComponentBranch(columnsInEachChunk: 1) {
+		EntityComponentBranch(columnsInEachChunk: 2) {
 			EntityComponentChunk()
 		}
 	}
@@ -194,14 +208,14 @@ class ArchetypeBranchTests: XCTestCase {
 			EntityComponentChunk()
 		}
 
-		sut.add(NullComponent.self)
-		sut.add(IntComponent.self)
+		sut.add(component: NullComponent.self)
+		sut.add(component: IntComponent.self)
 
 		var entitiesAndComps = [Entity: IntComponent]()
 
 		for entity in 0..<numberOfColumns {
 			sut.add(entity: Entity(entity))
-			sut.set(IntComponent(entity), for: Entity(entity))
+			sut.set(component: IntComponent(entity), for: Entity(entity))
 			entitiesAndComps[Entity(entity)] = IntComponent(entity)
 		}
 

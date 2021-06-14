@@ -38,18 +38,24 @@ extension EntityComponentEventSystem {
 
 		for component in components {
 			for change in changes {
+				let disposeContainer: DisposeContainer
 				switch change {
 				case .removed:
-					let disposeContainer = ecs.events.componentEvent.register(
+					disposeContainer = ecs.events.componentEvent.register(
 						for: ChangeEvent.removed(component.familyID),
 						handler: { self.componentChanged($0) })
 					disposables.append(disposeContainer)
-				case .set:
-					let disposeContainer = ecs.events.componentEvent.register(
-						for: ChangeEvent.set(component.familyID),
+				case .added:
+					disposeContainer = ecs.events.componentEvent.register(
+						for: ChangeEvent.added(component.familyID),
 						handler: { self.componentChanged($0) })
-					disposables.append(disposeContainer)
+				case .assigned:
+					disposeContainer = ecs.events.componentEvent.register(
+						for: ChangeEvent.assigned(component.familyID),
+						handler: { self.componentChanged($0) })
 				}
+
+				disposables.append(disposeContainer)
 			}
 		}
 
@@ -66,18 +72,22 @@ extension EntityComponentEventSystem {
 
 		for tag in tags {
 			for change in changes {
+				let disposeContainer: DisposeContainer
 				switch change {
 				case .removed:
-					let disposeContainer = ecs.events.tagEvent.register(
+					disposeContainer = ecs.events.tagEvent.register(
 						for: ChangeEvent.removed(tag),
 						handler: { self.tagChanged($0) })
-					disposables.append(disposeContainer)
-				case .set:
-					let disposeContainer = ecs.events.tagEvent.register(
-						for: ChangeEvent.set(tag),
+				case .assigned:
+					disposeContainer = ecs.events.tagEvent.register(
+						for: ChangeEvent.assigned(tag),
 						handler: { self.tagChanged($0) })
-					disposables.append(disposeContainer)
+				case .added:
+					disposeContainer = ecs.events.tagEvent.register(
+						for: ChangeEvent.added(tag),
+						handler: { self.tagChanged($0) })
 				}
+				disposables.append(disposeContainer)
 			}
 		}
 
@@ -94,18 +104,23 @@ extension EntityComponentEventSystem {
 		var disposables = [DisposeContainer]()
 
 		for change in changes {
+			let disposeContainer: DisposeContainer
 			switch change {
 			case .removed:
-				let disposeContainer = ecs.events.entityEvent.register(
+				disposeContainer = ecs.events.entityEvent.register(
 					for: ChangeType.removed,
 					handler: { self.entityChanged($0) })
 				disposables.append(disposeContainer)
-			case .set:
-				let disposeContainer = ecs.events.entityEvent.register(
-					for: ChangeType.set,
+			case .assigned:
+				disposeContainer = ecs.events.entityEvent.register(
+					for: ChangeType.assigned,
 					handler: { self.entityChanged($0) })
-				disposables.append(disposeContainer)
+			case .added:
+				disposeContainer = ecs.events.entityEvent.register(
+					for: ChangeType.added,
+					handler: { self.entityChanged($0) })
 			}
+			disposables.append(disposeContainer)
 		}
 
 		return disposables

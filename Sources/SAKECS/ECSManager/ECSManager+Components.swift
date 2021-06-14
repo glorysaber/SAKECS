@@ -10,83 +10,102 @@ import os.log
 
 extension ECSManager {
 
+	/// Gets the total component count of all componentTypes
+	public var componentCount: Int {
+		componentSystem.componentCount
+	}
+
   /// Sets a component to an entity and notifies any interested parties.
   public func set<ComponentType: EntityComponent>(component: ComponentType, to entity: Entity) {
     guard entitySystem.contains(entity) else { return }
     let familyID = component.familyID
-    if componentSystems[familyID] == nil {
-      let componentSystem = ComponentSystem<ComponentType>()
-      componentSystem.set(component, to: entity)
-      componentSystems[familyID] = componentSystem
-    } else {
-      guard let componentSystem = componentSystems[familyID] as? ComponentSystem<ComponentType> else { return }
-      componentSystem.set(component, to: entity)
-    }
+		componentSystem.set(component: component, to: entity)
 
-    updateMaskWith(entity: entity, removed: false, familyID: ComponentType.familyID)
+		updateMask(
+			withEntity: entity,
+			update: entityMasks[entity]?.components.contains(familyID) ?? false ? .modified : .added,
+			familyID: familyID
+		)
   }
 
   /// IF the component exists for the entity gets it. Otherwise returns nil.
   public func get<ComponentType: EntityComponent>(
-		componentType: ComponentType.Type, for entity: Entity) -> ComponentType? {
-    let familyID = ComponentFamilyID(componentType: componentType)
-    guard let componentSystem = componentSystems[familyID] as? ComponentSystem<ComponentType> else { return nil }
-
-    return componentSystem.getComponent(for: entity)
+		component: ComponentType.Type, for entity: Entity) -> ComponentType? {
+		componentSystem.get(component: component, for: entity)
   }
 
   /// Removes the component from the entity and notifies those interested
-  internal func remove(familyID: ComponentFamilyID, from entity: Entity) {
-    componentSystems[familyID]?.removeComponent(from: entity)
+  public func remove<ComponentType: EntityComponent>(component: ComponentType.Type, from entity: Entity) {
+		guard componentSystem.contains(component) == true else { return }
 
-    updateMaskWith(entity: entity, removed: true, familyID: familyID)
+		componentSystem.remove(component, from: entity)
+		updateMask(withEntity: entity, update: .removed, familyID: component.familyID)
   }
 
-  /// Removes the component from the entity and notifies those interested
-  public func remove<ComponentType: EntityComponent>(componentType: ComponentType.Type, from entity: Entity) {
-    let familyID = ComponentFamilyID(componentType: componentType)
-    guard componentSystems[familyID] != nil else { return }
+	public func remove(
+		componentWith familyID: ComponentFamilyID,
+		from entity: Entity
+	) {
+		guard componentSystem.contains(componentWith: familyID) else { return }
 
-    remove(familyID: familyID, from: entity)
-  }
+		componentSystem.remove(componentWith: familyID, from: entity)
+		updateMask(withEntity: entity, update: .removed, familyID: familyID)
+	}
+
+	func removeAllComponents(for entity: Entity) {
+
+		entityMasks[entity]?.components.forEach {
+			updateMask(withEntity: entity, update: .removed, familyID: $0)
+		}
+
+		componentSystem.remove(entity: entity)
+	}
 
   /// Updates an entities mask and notifies the parties interested.
-  private func updateMaskWith(entity: Entity, removed: Bool, familyID: ComponentFamilyID) {
-    if entityMasks[entity] == nil {
-      entityMasks[entity] = ContainedItems()
-    }
+	private func updateMask(withEntity: Entity, update: MaskUpdate, familyID: ComponentFamilyID) {
 
-    entityMasks[entity]?.components.insert(familyID)
-    guard let mask = entityMasks[entity]
-      else { os_log(.error, "Entity Mask was nil when it shouldnt have been."); return }
+		var mask = entityMasks[withEntity] ?? {
+			let mask = ContainedItems()
+			entityMasks[withEntity] = mask
+			return mask
+		}()
 
-    let componentRequiredSystems = prioritySortedSystems.filter { $0.entityQuery.requiredComponents.contains(familyID) }
-    let componentIllegalSystems = prioritySortedSystems.filter { $0.entityQuery.illegalComponents.contains(familyID) }
+		let componentRequiredSystems = prioritySortedSystems
+			.filter { $0.entityQuery.requiredComponents.contains(familyID) }
+		let componentIllegalSystems = prioritySortedSystems
+			.filter { $0.entityQuery.illegalComponents.contains(familyID) }
 
-    if removed {
-      for system in componentRequiredSystems {
-        system.entitiesMatchingQuery.remove(entity)
-      }
+		switch update {
+		case .added:
+			mask.addComponent(with: familyID)
+			for system in componentRequiredSystems where
+				!system.entitiesMatchingQuery.contains(withEntity) &&
+				system.entityQuery.isSatisfied(by: mask) {
+				system.entitiesMatchingQuery.insert(withEntity)
+			}
 
-      for system in componentIllegalSystems where !system.entitiesMatchingQuery.contains(entity) {
-        if system.entityQuery.isSatisfied(by: mask) {
-          system.entitiesMatchingQuery.insert(entity)
-        }
-      }
+			for system in componentIllegalSystems {
+				system.entitiesMatchingQuery.remove(withEntity)
+			}
 
-      events.componentEvent.raise(ChangeEvent.removed(familyID), value: entity)
-    } else {
-      for system in componentRequiredSystems where !system.entitiesMatchingQuery.contains(entity) {
-        if system.entityQuery.isSatisfied(by: mask) {
-          system.entitiesMatchingQuery.insert(entity)
-        }
-      }
+			events.componentEvent.raise(ChangeEvent.added(familyID), value: withEntity)
+		case .modified:
+			events.componentEvent.raise(ChangeEvent.assigned(familyID), value: withEntity)
+		case .removed:
+			mask.removeComponent(with: familyID)
+			for system in componentRequiredSystems {
+				system.entitiesMatchingQuery.remove(withEntity)
+			}
 
-      for system in componentIllegalSystems {
-        system.entitiesMatchingQuery.remove(entity)
-      }
+			for system in componentIllegalSystems where
+				!system.entitiesMatchingQuery.contains(withEntity) &&
+				system.entityQuery.isSatisfied(by: mask) {
+				system.entitiesMatchingQuery.insert(withEntity)
+			}
 
-      events.componentEvent.raise(ChangeEvent.set(familyID), value: entity)
-    }
+			events.componentEvent.raise(ChangeEvent.removed(familyID), value: withEntity)
+		}
+
+		entityMasks[withEntity] = mask
   }
 }

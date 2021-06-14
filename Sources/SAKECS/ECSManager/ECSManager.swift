@@ -31,17 +31,30 @@ public class ECSManager {
   /// Processes all the ECS events
   public let events = CentralEventSystem()
 
-  /// All entities with contained items
-  internal var entityMasks = [Entity: ContainedItems]()
+	/// All entities with contained items
+	public internal(set) var entityMasks = [Entity: ContainedItems]()
 
-  /// Holds all the types of components and manages what entity they are set too.
-  internal var componentSystems = [ComponentFamilyID: ComponentStorage]()
+	/// Holds all the types of components and manages what entity they are set too.
+	internal var componentSystem: WorldEntityComponentService
 
-  /// The ECS's current time.
-  public internal(set) var systemTime = 0.0
+	/// The ECS's current time.
+	public internal(set) var systemTime: Double
 
-  /// Initializes a default instance of the ECS
-  public init() {}
+	internal init(
+		entitySystem: EntitySystem = EntitySystem(),
+		prioritySortedSystems: [EntityComponentSystem] = [EntityComponentSystem](),
+		active: Bool = true,
+		entityMasks: [Entity: ContainedItems] = [Entity: ContainedItems](),
+		componentSystem: WorldEntityComponentService,
+		systemTime: Double = 0.0
+	) {
+		self.entitySystem = entitySystem
+		self.prioritySortedSystems = prioritySortedSystems.sorted { $0.priority >= $1.priority }
+		self.active = active
+		self.entityMasks = entityMasks
+		self.componentSystem = componentSystem
+		self.systemTime = systemTime
+	}
 
   /// Properly deinitializes all its variables
   deinit {
@@ -50,4 +63,9 @@ public class ECSManager {
     }
   }
 
+	enum MaskUpdate {
+		case removed
+		case added
+		case modified
+	}
 }

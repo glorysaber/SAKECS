@@ -16,12 +16,28 @@ public class CentralEventSystem {
   public var contactEvent = Event<(Entity, Entity)>()
 }
 
-public enum ChangeEvent<T: Hashable>: Hashable {
-  case removed(T)
-  case set(T)
+public struct ChangeEvent<T: Hashable>: Hashable {
+	public static func added(_ value: T) -> ChangeEvent {
+		ChangeEvent(type: [.added, .assigned], value: value)
+	}
+
+	public static func removed(_ value: T) -> ChangeEvent {
+		ChangeEvent(type: [.removed], value: value)
+	}
+
+	public static func assigned(_ value: T) -> ChangeEvent {
+		ChangeEvent(type: [.assigned], value: value)
+	}
+
+	let type: Set<ChangeType>
+	let value: T
 }
 
 public enum ChangeType: Hashable {
+	// The value type or content was removed, useful if you only care when a type is initially added
   case removed
-  case set
+	// An value was assigned or reassigned, this is useful if you care ANYTIME an event is added/changed
+  case assigned
+	// Value was added when there was no like value before, useful if you only care when a type is initially added
+	case added
 }

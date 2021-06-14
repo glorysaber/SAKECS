@@ -8,7 +8,11 @@
 
 import Foundation
 
-public protocol ArchetypeGroup {
+public protocol ComponentBranch {
+
+	/// Makes a copy of the current branches memory layout but with no cotents. 
+	var componentArchetype: ComponentArchetype { get }
+
 	/// Count of entities
 	var entityCount: Int { get }
 
@@ -21,9 +25,6 @@ public protocol ArchetypeGroup {
 	/// Take this into account to reduce allocations
 	var minimumCapacity: Int { get }
 
-	/// Makes a copy of the group with all enitties being unassigned.
-	var archetype: Self { get }
-
 	// MARK: Storage
 
 	/// Reserves capacity for the given amount of entities. Best used after you have assigned the component types.
@@ -34,7 +35,7 @@ public protocol ArchetypeGroup {
 
 	/// - Parameter entity: The entity to check for
 	/// - Returns: true if the entity record exists, false otherwise
-	func contains(_ entity: Entity) -> Bool
+	func contains(entity: Entity) -> Bool
 
 	/// Adds an entity entry
 	///  It will not produce an index for an entity if
@@ -49,24 +50,33 @@ public protocol ArchetypeGroup {
 
 	/// - Parameter componentType: The component type to check for
 	/// - Returns: true if the entity componentType exists, false otherwise
-	func contains<Component: EntityComponent>(_ componentType: Component.Type) -> Bool
+	func contains<Component: EntityComponent>(component componentType: Component.Type) -> Bool
+
+	/// - Parameter familyID: The component family Id to use to look up
+	/// - Returns: true if the entity familyID exists, false otherwise
+	func contains(componentWith familyID: ComponentFamilyID) -> Bool
 
 	/// If the given enity exists, set this component.
 	/// If the component does not exist in the chunk does nothing.
 	/// - Parameters:
 	///   - component: The object to set
 	///   - entity: the entity to find the column for and set the component
-	mutating func set<Component: EntityComponent>(_ component: Component, for entity: Entity)
+	mutating func set<Component: EntityComponent>(component: Component, for entity: Entity)
 
 	/// Adds the given componentType if it does not already exist
 	/// - Parameters:
 	///   - componentType: The component type to add
-	mutating func add<Component: EntityComponent>(_ componentType: Component.Type)
+	mutating func add<Component: EntityComponent>(component componentType: Component.Type)
 
 	/// removes the given componentType if it exists
 	/// - Parameters:
 	///   - componentType: The component type to remove
-	mutating func remove<Component: EntityComponent>(_ componentType: Component.Type)
+	mutating func remove<Component: EntityComponent>(component componentType: Component.Type)
+
+	/// removes the  componentType matching the given familyID if it exists
+	/// - Parameters:
+	///   - componentType: The component type to remove
+	mutating func remove(componentWith familyID: ComponentFamilyID)
 
 	/// Gets the given component for the entity or nil otherwise
 	/// - Parameters:
@@ -74,7 +84,16 @@ public protocol ArchetypeGroup {
 	///   - entity: The Entity to get the component for
 	/// - Returns: The component if the component exists, nil otherwise
 	func get<Component: EntityComponent>(
-		_ componentType: Component.Type,
+		component componentType: Component.Type,
 		for entity: Entity
 	) -> Component?
 }
+
+public protocol ArchetypeDeepCopy {
+	/// Makes a copy of the group with all enitties being unassigned.
+	var archetype: Self { get }
+
+	func copyComponents(for entity: Entity, to destination: inout Self, destinationEntity: Entity)
+}
+
+public typealias ArchetypeGroup = ComponentBranch & ArchetypeDeepCopy

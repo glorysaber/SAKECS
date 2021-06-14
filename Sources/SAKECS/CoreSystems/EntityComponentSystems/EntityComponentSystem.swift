@@ -9,7 +9,7 @@ import Foundation
 import SAKBase
 
 /// Acts upon entities and their components
-public protocol EntityComponentSystem: class {
+public protocol EntityComponentSystem: AnyObject {
 
   /// Everytime a change happens to an entity, if it matches this query it will be inserted into entitiesMatchingQuery
   var entityQuery: EntityQuery { get set }
