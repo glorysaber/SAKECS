@@ -74,9 +74,6 @@ class ArchetypeTree<Branch: ArchetypeGroup>: WorldEntityComponentService {
 
 		move(entity: entity, from: sourceBranch, to: destinationBranch)
 		destinationBranch.set(component: component, for: entity)
-		print(destinationBranch)
-		print(sourceBranch)
-		print(branches)
 	}
 
 	func get<ComponentType: EntityComponent>(
