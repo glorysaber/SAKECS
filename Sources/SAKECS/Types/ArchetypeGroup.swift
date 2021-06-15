@@ -25,12 +25,6 @@ public protocol ComponentBranch {
 	/// Take this into account to reduce allocations
 	var minimumCapacity: Int { get }
 
-	// MARK: Storage
-
-	/// Reserves capacity for the given amount of entities. Best used after you have assigned the component types.
-	/// - Parameter for: The count of enties to reserve capcity for.
-	mutating func reserveCapacity(_ minimumCapcity: Int)
-
 	// MARK: Entities
 
 	/// - Parameter entity: The entity to check for

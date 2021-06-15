@@ -8,17 +8,19 @@
 
 import Foundation
 
-//public extension ComponentMatrix {
-//	mutating func set(
-//		anyComponent: AnyEntityComponent,
-//		to index: ComponentColumnIndex
-//	) {
-//		anyComponent.component.set(to: &self, to: index)
-//	}
-//}
-//
-//private extension EntityComponent {
-//	func set(to matrix: inout ComponentMatrix, to index: ComponentColumnIndex) {
-//		matrix.set(component: self, for: index)
-//	}
-//}
+public extension ComponentMatrix {
+	@inlinable
+	mutating func set(
+		anyComponent: AnyEntityComponent,
+		to index: ComponentColumnIndex
+	) {
+		anyComponent.component.set(to: &self, to: index)
+	}
+}
+
+extension EntityComponent {
+	@inlinable
+	func set(to matrix: inout ComponentMatrix, to index: ComponentColumnIndex) {
+		matrix.set(component: self, for: index)
+	}
+}

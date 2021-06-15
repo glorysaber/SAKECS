@@ -9,7 +9,7 @@ import Foundation
 import SAKBase
 
 /// A system that allows events to be registered for and raised for a given type
-public class EventSystem<EventKey: Hashable, EventValue: Any> {
+public final class EventSystem<EventKey: Hashable, EventValue: Any> {
 	public typealias RaisedValue = (EventKey, EventValue)
 	public typealias Handler = (RaisedValue) -> Void
 

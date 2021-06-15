@@ -35,35 +35,24 @@ public struct EntityComponentChunk {
 	private var entities = [Entity: ComponentRowIndex]()
 
 	/// The components for the entities
-	private var components = ComponentMatrix()
+	private var components: ComponentMatrix
 
 	/// Unused component ColumnsIndices
-	private var emptyColumnsIndices = Set<ComponentColumnIndex>()
-
-	/// Take this into account to reduce allocations
-	public var minimumCapacity: Int = 0 {
-		didSet {
-			entities.reserveCapacity(minimumCapacity)
-			emptyColumnsIndices.reserveCapacity(minimumCapacity)
-			if minimumCapacity - components.componentColumns > 0 {
-				let newIndexes = components.addColumns(minimumCapacity - components.count)
-				emptyColumnsIndices.formUnion(newIndexes)
-			}
-		}
-	}
+	private var emptyColumnsIndices: Set<ComponentColumnIndex>
 
 	// MARK: - LifeCycle
-	public init() {}
-
-	/// Only for the first get of this variable will it attempt to grow the storage to match...
-	/// Should be equivalent to dispatch_once.
-	private lazy var growStorageToMatchOnce: Void = {
-		growStorageToMatch()
-	}()
+	public init(numberOfComponentsPerType: Int) {
+		components = ComponentMatrix(numberOfColumns: numberOfComponentsPerType)
+		emptyColumnsIndices = Set<ComponentColumnIndex>(ClosedRange(components.columnIndices))
+	}
 }
 
 // MARK: - ArchetypeGroup
 extension EntityComponentChunk: ArchetypeGroup {
+
+	public var minimumCapacity: Int {
+		components.componentColumns
+	}
 
 	// MARK: - Moving Data
 
@@ -75,12 +64,6 @@ extension EntityComponentChunk: ArchetypeGroup {
 	}
 
 	// MARK: - Entities
-
-	public mutating func reserveCapacity(_ minimumCapacity: Int) {
-		if minimumCapacity > self.minimumCapacity {
-			self.minimumCapacity = minimumCapacity
-		}
-	}
 
 	public var archetype: Self {
 		var newArchetype = self
@@ -123,11 +106,6 @@ extension EntityComponentChunk: ArchetypeGroup {
 
 	public mutating func add<Component: EntityComponent>(component componentType: Component.Type) {
 		components.add(rowFor: componentType)
-
-		// We can get into a situation where an entity has already been added but the components
-		// storage has no columns. This should be optimized away by most modern cpus by branch prediction
-		// once it has ran once.
-		_ = growStorageToMatchOnce
 	}
 
 	public mutating func remove<Component: EntityComponent>(component componentType: Component.Type) {
@@ -152,28 +130,9 @@ extension EntityComponentChunk: ArchetypeGroup {
 
 // MARK: - Private Helpers
 private extension EntityComponentChunk {
-	/// Grows the internal storage of a the component matrix to match the
-	/// size of the entities or the minimum component size
-	private mutating func growStorageToMatch() {
-		guard entities.count > components.componentColumns else {
-			return
-		}
-
-		let columnsToAdd = Swift.max(entities.count - components.componentColumns, minimumCapacity)
-		let newIndexes = components.addColumns(columnsToAdd)
-		emptyColumnsIndices.formUnion(ClosedRange(newIndexes))
-
-		for (entity, column) in entities where column == .invalid && emptyColumnsIndices.isEmpty == false {
-			entities[entity] = emptyColumnsIndices.removeFirst()
-		}
-
-		precondition(entities.count <= components.componentColumns)
-	}
-
 	@discardableResult
 	mutating func getAndSetIndex(for entity: Entity) -> ComponentColumnIndex {
 		let index = emptyColumnsIndices.popFirst() ??
-		components.addColumns(1).first ??
 			.invalid
 		entities[entity] = index
 		return index

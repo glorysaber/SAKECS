@@ -31,9 +31,6 @@ public protocol ComponentRowProtocol {
 	/// Returns the position immediately before the given index.
 	func index(before index: ComponentColumnIndex) -> ComponentColumnIndex
 
-	/// Adds the given number of columns using the default required initializer as the default values
-	mutating func growColumns(by toGrowBy: Int) -> ComponentColumnIndices
-
 	/// - Returns: a component with an unknown concrete type
 	func getAnyComponent(at index: ComponentColumnIndex) -> EntityComponent
 

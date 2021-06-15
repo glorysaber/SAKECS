@@ -9,16 +9,18 @@
 import Foundation
 
 public extension ECSManager {
+	@inlinable
 	func set(
 		component anyComponent: AnyEntityComponent,
 		to entity: Entity
 	) {
-		anyComponent.component.set(to: self, for: entity)
+		anyComponent.component.set(to: Unmanaged<ECSManager>.passUnretained(self), for: entity)
 	}
 }
 
-private extension EntityComponent {
-	func set(to ecs: ECSManager, for entity: Entity) {
-		ecs.set(component: self, to: entity)
+internal extension EntityComponent {
+	@usableFromInline
+	func set(to ecs: Unmanaged<ECSManager>, for entity: Entity) {
+		ecs.takeUnretainedValue().set(component: self, to: entity)
 	}
 }

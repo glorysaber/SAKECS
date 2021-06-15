@@ -30,25 +30,21 @@ public struct ArchetypeBranch<Chunk: ArchetypeGroup> {
 	private var chunks = MutableArray<Chunk>()
 
 	private let chunkConstructor: () -> Chunk
-	private let columnsInEachChunk: Int
 
 	private var sharedComponentsIndexes = [ComponentFamilyID: Int]()
 	private var sharedComponents = [EntityComponent]()
 
 	public init(
-		columnsInEachChunk: Int,
 		componentArchetype: ComponentArchetype = [],
 		chunkConstructor: @escaping () -> Chunk
 	) {
 		self.chunkConstructor = chunkConstructor
-		self.columnsInEachChunk = columnsInEachChunk
 		self.componentArchetype = ComponentArchetype()
 		_ = addChunk()
 	}
 
 	private init(_ branch: ArchetypeBranch) {
 		self.chunkConstructor = branch.chunkConstructor
-		self.columnsInEachChunk = branch.columnsInEachChunk
 		self.chunks = MutableArray(branch.chunks.map { $0.archetype })
 		self.componentArchetype = branch.componentArchetype
 	}
@@ -132,15 +128,8 @@ extension ArchetypeBranch: ComponentBranch {
 		chunks.first?.componentTypeCount ?? 0
 	}
 
-	public mutating func reserveCapacity(_ minimumCapacity: Int) {
-		if minimumCapacity > self.minimumCapacity {
-			chunks.modifying { container in
-				container.forEach { $0.reserveCapacity(minimumCapacity) }
-			}
-		}
-	}
-
 	public func contains(entity: Entity) -> Bool {
+		// fixme: Transient memory in chunk read
 		chunks.contains { $0.contains(entity: entity) }
 	}
 
@@ -254,9 +243,7 @@ private extension ArchetypeBranch {
 	mutating func addChunk() -> Container {
 		chunks.modifying { mutableChunks in
 			let chunk = mutableChunks.first?.wrappedValue.archetype ?? {
-				var chunk = chunkConstructor()
-				chunk.reserveCapacity(columnsInEachChunk)
-				return chunk
+				chunkConstructor()
 			}()
 			let container = Container(chunk)
 			mutableChunks.append(container)

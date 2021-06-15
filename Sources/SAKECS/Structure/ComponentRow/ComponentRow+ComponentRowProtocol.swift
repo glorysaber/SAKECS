@@ -9,6 +9,7 @@
 import Foundation
 
 extension ComponentRow: ComponentRowProtocol {
+	@inlinable
 	public func getUnsafelyComponent<AnyComponent: EntityComponent>(at index: ComponentColumnIndex) -> AnyComponent {
 		guard let component = self[index] as? AnyComponent else {
 			fatalError("Non matching component types.")
@@ -17,6 +18,7 @@ extension ComponentRow: ComponentRowProtocol {
 		return component
 	}
 
+	@inlinable
 	public mutating func setUnsafelyComponent<AnyComponent: EntityComponent>(
 		_ anyComponent: AnyComponent, at index: ComponentColumnIndex
 	) {
@@ -25,10 +27,12 @@ extension ComponentRow: ComponentRowProtocol {
 		self[index] = component
 	}
 
+	@inlinable
 	public func getAnyComponent(at index: ComponentColumnIndex) -> EntityComponent {
 		self[index]
 	}
 
+	@inlinable
 	public mutating func setUnsafelyAnyComponent(
 		_ anyComponent: EntityComponent,
 		at index: ComponentColumnIndex

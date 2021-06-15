@@ -9,17 +9,19 @@
 import Foundation
 import SAKBase
 
-//public extension ComponentBranch {
-//	mutating func set(
-//		component anyComponent: AnyEntityComponent,
-//		for entity: Entity
-//	) {
-//		anyComponent.component.set(to: &self, to: entity)
-//	}
-//}
-//
-//private extension EntityComponent {
-//	func set<Branch: ComponentBranch>(to branch: inout Branch, to entity: Entity) {
-//		branch.set(component: self, for: entity)
-//	}
-//}
+public extension ComponentBranch {
+	@inlinable
+	mutating func set(
+		component anyComponent: AnyEntityComponent,
+		for entity: Entity
+	) {
+		anyComponent.component.set(to: &self, to: entity)
+	}
+}
+
+extension EntityComponent {
+	@inlinable
+	func set<Branch: ComponentBranch>(to branch: inout Branch, to entity: Entity) {
+		branch.set(component: self, for: entity)
+	}
+}

@@ -9,48 +9,56 @@
 import Foundation
 
 struct AnyComponentRow {
+	@usableFromInline
 	var row: ComponentRowProtocol
+
+	@inlinable
+	static func getIndexesForRow(ofSize size: Int) -> ComponentColumnIndices {
+		guard size > 0 else { return .emptyInvalid }
+		return ComponentColumnIndex(0)..<ComponentColumnIndex(size)
+	}
 }
 
 extension AnyComponentRow: ComponentRowProtocol {
-	var count: Int {
+	@inlinable var count: Int {
 		row.count
 	}
 
-	var columnIndices: ComponentColumnIndices {
+	@inlinable var columnIndices: ComponentColumnIndices {
 		row.columnIndices
 	}
 
-	var startIndex: ComponentColumnIndex {
+	@inlinable var startIndex: ComponentColumnIndex {
 		row.startIndex
 	}
 
-	var endIndex: ComponentColumnIndex {
+	@inlinable var endIndex: ComponentColumnIndex {
 		row.endIndex
 	}
 
+	@inlinable
 	func index(after index: ComponentColumnIndex) -> ComponentColumnIndex {
 		row.index(after: index)
 	}
 
+	@inlinable
 	func index(before index: ComponentColumnIndex) -> ComponentColumnIndex {
 		row.index(before: index)
 	}
 
-	mutating func growColumns(by toGrowBy: Int) -> ComponentColumnIndices {
-		row.growColumns(by: toGrowBy)
-	}
-
+	@inlinable
 	func getAnyComponent(at index: ComponentColumnIndex) -> EntityComponent {
 		row.getAnyComponent(at: index)
 	}
 
+	@inlinable
 	func getUnsafelyComponent<AnyComponent: EntityComponent>(
 		at index: ComponentColumnIndex
 	) -> AnyComponent {
 		row.getUnsafelyComponent(at: index)
 	}
 
+	@inlinable
 	mutating func setUnsafelyComponent<AnyComponent: EntityComponent>(
 		_ component: AnyComponent,
 		at index: ComponentColumnIndex

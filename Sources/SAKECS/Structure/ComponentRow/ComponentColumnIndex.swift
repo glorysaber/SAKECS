@@ -14,6 +14,7 @@ public typealias ComponentColumnIndices = CountableRange<ComponentColumnIndex>
 /// This index type has a special provission that it is valid in any ComponentRow
 ///  that is the same length or more as the original where the indice originated.
 public struct ComponentColumnIndex: Comparable {
+	@inlinable
 	public static func < (lhs: ComponentColumnIndex, rhs: ComponentColumnIndex) -> Bool {
 		lhs.index < rhs.index
 	}
@@ -22,23 +23,27 @@ public struct ComponentColumnIndex: Comparable {
 	/// so checking against this value is not enough to know if an index is invalid.
 	public static let invalid = ComponentColumnIndex(-1)
 
+	@usableFromInline
 	let index: Int
 
+	@inlinable
 	init(_ index: Int) {
 		self.index = index
 	}
 }
 
 extension ComponentColumnIndex: Strideable {
+	public typealias Stride = Int
+
+	@inlinable
 	public func distance(to other: ComponentColumnIndex) -> Int {
 		other.index - index
 	}
 
+	@inlinable
 	public func advanced(by advances: Int) -> ComponentColumnIndex {
 		ComponentColumnIndex(self.index + advances)
 	}
-
-	public typealias Stride = Int
 }
 
 extension ComponentColumnIndices where Bound == ComponentColumnIndex {

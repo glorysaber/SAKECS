@@ -9,7 +9,7 @@ import Foundation
 import SAKBase
 
 /// Where all events are registered for and stored
-public class CentralEventSystem {
+public final  class CentralEventSystem {
   public var tagEvent = EventSystem<ChangeEvent<EntityTag>, Entity>()
   public var componentEvent = EventSystem<ChangeEvent<ComponentFamilyID>, Entity>()
   public var entityEvent = EventSystem<ChangeType, Entity>()

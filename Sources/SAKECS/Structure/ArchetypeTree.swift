@@ -11,7 +11,7 @@ import SAKBase
 
 typealias EntityComponentTree = ArchetypeTree<EntityComponentBranch>
 
-class ArchetypeTree<Branch: ArchetypeGroup>: WorldEntityComponentService {
+final class ArchetypeTree<Branch: ArchetypeGroup>: WorldEntityComponentService {
 
 	private var branches = MutableArray<Branch>()
 	private let branchConstructor: () -> Branch
@@ -28,7 +28,9 @@ class ArchetypeTree<Branch: ArchetypeGroup>: WorldEntityComponentService {
 	}
 
 	func contains(componentWith familyID: ComponentFamilyID) -> Bool {
-		branches.contains { $0.componentArchetype.required.contains(familyID) }
+		branches.contains {
+			$0.componentArchetype.required.contains(familyID)
+		}
 	}
 
 	func set<ComponentType: EntityComponent>(component: ComponentType, to entity: Entity) {
@@ -140,10 +142,8 @@ private extension ArchetypeTree {
 		}
 	}
 
-	private func branch(for entity: Entity) -> Branch? {
-		branches
-			// There should only be one instance where an entity appears.
-			.first { $0.contains(entity: entity) }
+	private func branch(for entity: Entity) -> ComponentBranch? {
+		mutableBranch(for: entity)
 	}
 
 	private func branch(for archetype: ComponentArchetype) -> Branch? {
@@ -166,7 +166,9 @@ private extension ArchetypeTree {
 			mutableBranches.append(mutableBranch)
 		}
 
-		archetype.required.forEach { $0.componentType.add(to: mutableBranch) }
+		archetype.required.forEach {
+			$0.componentType.add(to: Unmanaged.passUnretained(mutableBranch) )
+		}
 
 		return mutableBranch
 	}
@@ -202,7 +204,7 @@ private extension EntityComponent {
 	/// Used to add a generic type to a branch.
 	/// - Parameters:
 	///   - branch: The branch to add the component to
-	static func add<Branch: ComponentBranch>(to branch: MutableValueReference<Branch>) {
-		branch.add(component: Self.self)
+	static func add<Branch: ComponentBranch>(to unmanagedBranch: Unmanaged<MutableValueReference<Branch>>) {
+		unmanagedBranch.takeUnretainedValue().add(component: Self.self)
 	}
 }

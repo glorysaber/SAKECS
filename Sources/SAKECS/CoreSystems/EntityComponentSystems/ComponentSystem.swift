@@ -14,7 +14,7 @@ internal protocol ComponentStorage {
 }
 
 /// Holds all the components of a single type
-class ComponentSystem<Component: EntityComponent>: ComponentStorage {
+final class ComponentSystem<Component: EntityComponent>: ComponentStorage {
 
   var componentCount: Int {
     componentMap.count

@@ -9,8 +9,6 @@
 import Foundation
 import SAKBase
 
-private class NullClass {}
-
 // MARK: - ComponentRowIndex
 
 /// The row for a component array  in the component matrix
@@ -50,9 +48,7 @@ public struct ComponentMatrix {
 	}
 
 	/// Count of colums in the matrix, as all component arrays must be equal
-	public var componentColumns: Int {
-		matrix.first?.count ?? 0
-	}
+	public var componentColumns: Int
 
 	/// A map of the index for a component family.
 	private var componentFamilyMatrixRowMap = [ComponentFamilyID: ComponentRowIndex]()
@@ -60,7 +56,9 @@ public struct ComponentMatrix {
 	/// The components storage
 	private var matrix = MutableArray<AnyComponentRow>()
 
-	public init() {}
+	public init(numberOfColumns: Int) {
+		componentColumns = numberOfColumns
+	}
 
 	func copyComponents(
 		for sourceColumnIndex: ComponentColumnIndex,
@@ -135,43 +133,6 @@ public struct ComponentMatrix {
 		}
 	}
 
-	public mutating func addColumns(_ columnsToGrowBy: Int) -> ComponentColumnIndices {
-
-		enum Error: Swift.Error {
-			case noIndexes
-			case memoryError
-		}
-
-		do {
-			return try matrix.modifying { mutableMatrix in
-				var iterator = mutableMatrix.makeIterator()
-
-				guard columnsToGrowBy > 0, let firstComponentRow = iterator.next() else { throw Error.noIndexes }
-
-				let firstIndices: ComponentColumnIndices = firstComponentRow.growColumns(by: columnsToGrowBy)
-
-				guard firstIndices.isEmpty == false else {
-					throw Error.noIndexes
-				}
-
-				while let componentRow = iterator.next(), componentRow.count < firstComponentRow.count {
-					let growBy = Swift.min(firstComponentRow.count - componentRow.count, columnsToGrowBy)
-					guard componentRow.growColumns(by: growBy).isEmpty == false else {
-						assertionFailure("Failed to grow columns.")
-						throw Error.memoryError
-					}
-				}
-
-				assert(mutableMatrix.allSatisfy({ $0.count == firstComponentRow.count }),
-							 "Component rows are not equal length")
-
-				return firstIndices
-			}
-		} catch {
-			return .emptyInvalid
-		}
-	}
-
 	/// Removes a component type from the matrix
 	/// O(C) Time complexity wher C is the number of component types
 	/// - Parameter type: The component type being removed
@@ -208,8 +169,7 @@ public struct ComponentMatrix {
 		let componentMatrixRow = ComponentRowIndex(matrix.count)
 
 		// Create a new component array filled with the same number of columns as the other components arrays
-		var componentRow = ComponentRow<Component>()
-		_ = componentRow.growColumns(by: matrix.first?.count ?? 0)
+		let componentRow = ComponentRow<Component>(columnsCount: componentColumns)
 		matrix.append(AnyComponentRow(row: componentRow))
 		componentFamilyMatrixRowMap[Component.familyID] = componentMatrixRow
 		return componentMatrixRow
@@ -260,7 +220,7 @@ extension ComponentMatrix: RandomAccessCollection {
 public extension ComponentMatrix {
 
 	var columnIndices: ComponentColumnIndices {
-		matrix.first?.columnIndices ?? .emptyInvalid
+		AnyComponentRow.getIndexesForRow(ofSize: componentColumns)
 	}
 
 	/// The position of the first element in a nonempty column row,

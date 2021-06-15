@@ -19,8 +19,8 @@ public struct ECSManagerComposer {
 	public func compose_v0_0_2() -> ECSManager {
 		ECSManager(componentSystem: EntityComponentTree(
 			branchConstructor: {
-				ArchetypeBranch(columnsInEachChunk: 500) {
-					EntityComponentChunk()
+				ArchetypeBranch {
+					EntityComponentChunk(numberOfComponentsPerType: 100)
 				}
 			}
 		))

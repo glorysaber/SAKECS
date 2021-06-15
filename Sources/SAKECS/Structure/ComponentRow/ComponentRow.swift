@@ -12,9 +12,10 @@ import Foundation
 public struct ComponentRow<Component: EntityComponent> {
 
 	/// The private component store
-	fileprivate(set) var columns = [Component]()
+	@usableFromInline fileprivate(set) var columns: ContiguousArray<Component>
 
 	/// Gets or sets the given component for the index
+	@inlinable
 	public subscript(column: ComponentColumnIndex) -> Component {
 		get {
 			columns[column.index]
@@ -24,16 +25,12 @@ public struct ComponentRow<Component: EntityComponent> {
 		}
 	}
 
-	public init() {}
-
-	/// Adds the given number of columns
-	public mutating func growColumns(by toGrowBy: Int) -> ComponentColumnIndices {
-		// Will be a valid index once we grow
-		let beginningEndIndex = endIndex
-		columns.append(contentsOf: Array(repeating: Component(), count: toGrowBy))
-		return beginningEndIndex..<endIndex
+	@inlinable
+	public init(columnsCount: Int) {
+		self.columns = ContiguousArray<Component>(repeating: Component(), count: columnsCount)
 	}
 
+	@inlinable
 	public var columnIndices: ComponentColumnIndices {
 		isEmpty ? .emptyInvalid : startIndex..<endIndex
 	}
@@ -43,45 +40,53 @@ extension ComponentRow: RandomAccessCollection {
 
 	public typealias Element = Component
 
+	@inlinable
 	public var startIndex: ComponentColumnIndex {
 		ComponentColumnIndex(columns.startIndex)
 	}
 
+	@inlinable
 	public var endIndex: ComponentColumnIndex {
 		ComponentColumnIndex(columns.endIndex)
 	}
 
+	@inlinable
 	public var count: Int {
 		columns.count
 	}
 
+	@inlinable
 	public var first: Component? {
 		columns.first
 	}
 
+	@inlinable
 	public var last: Component? {
 		columns.last
 	}
 
+	@inlinable
 	public func index(after index: ComponentColumnIndex) -> ComponentColumnIndex {
 		ComponentColumnIndex(columns.index(after: index.index))
 	}
 
+	@inlinable
 	public func index(before index: ComponentColumnIndex) -> ComponentColumnIndex {
 		ComponentColumnIndex(columns.index(before: index.index))
 	}
 
-	public __consuming func makeIterator() -> IndexingIterator<[Component]> {
+	@inlinable
+	public __consuming func makeIterator() -> IndexingIterator<ContiguousArray<Component>> {
 		columns.makeIterator()
 	}
 }
 
 extension ComponentRow: CustomStringConvertible, CustomDebugStringConvertible {
-	public var description: String {
+	@inlinable public var description: String {
 		"The row consists of \(count) elements of component type \(Element.self)"
 	}
 
-	public var debugDescription: String {
+	@inlinable public var debugDescription: String {
 		"""
 		count: \(count)
 		Element: \(Element.self)
@@ -93,13 +98,12 @@ extension ComponentRow: CustomStringConvertible, CustomDebugStringConvertible {
 extension ComponentRow: ExpressibleByArrayLiteral {
 	public typealias ArrayLiteralElement = Component
 
+	@inlinable
 	public init(arrayLiteral elements: Component...) {
-		columns = elements
+		columns = ContiguousArray<Component>(elements)
 	}
 }
 
 extension ComponentRow: Codable where Component: Codable {}
 
 extension ComponentRow: Equatable where Component: Equatable {}
-
-extension ComponentRow: RangeReplaceableCollection {}

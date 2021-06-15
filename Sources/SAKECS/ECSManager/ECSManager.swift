@@ -14,7 +14,7 @@ import SAKBase
 	It allows for Components and Tags to be safely adhered to to an Entity.
 	It also mantains systems and the current systemTime.
  */
-public class ECSManager {
+public final class ECSManager {
 
   /// The system that handles Tags and entities
   public internal(set) var entitySystem = EntitySystem()

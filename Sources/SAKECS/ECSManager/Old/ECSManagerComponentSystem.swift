@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ECSManagerComponentSystem: WorldEntityComponentService {
+final class ECSManagerComponentSystem: WorldEntityComponentService {
 
 	public var componentCount: Int {
 		return componentSystems.values.reduce(0) {
