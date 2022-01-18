@@ -1,3 +1,3 @@
 # SAKECS
 
-A description of this package.
+This is an old version of SAKECS for public viewing.
